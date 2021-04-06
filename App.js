@@ -10,7 +10,7 @@ const mysql = require('mysql');
 }); */
 
 //SETTINGS
-app.set('port', 5000);
+app.set('port', process.env.PORT || 5000);
 //SETUP PUBLIC FOLDER
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
