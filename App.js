@@ -1,27 +1,25 @@
 const express = require('express');
-const app = express();
-const mysql = require('mysql');
+const morgan = require('morgan');
+const path = require('path');
 
-/* const conexion = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: ''
-}); */
+const app = express();
+//const mysql = require('mysql');
+const { mongoose } = require('./conexion_mongodb');
 
 //SETTINGS
-app.set('port', process.env.PORT || 5000);
-//SETUP PUBLIC FOLDER
+app.set('port', process.env.PORT || 3000);
+
+//Middlewares
+app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-//INICIA CONEXION DATABASE
-//conexion.connect();
+
 //RUTAS
-app.get('/', (req, res) => {
-    res.send('WELCOME SERVER OF DATA TIENDITA');
-});
+app.use('/api/productos', require('./routes/ruta_prod'));
 
+//STATIC FILES
+app.use(express.static(path.join(__dirname, 'public')));
 
+//INICIAR SERVER
 app.listen(app.get('port'), () => {
     console.log('Escuchando en el puerto: ', app.get('port'), ' :D');
 });
