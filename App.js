@@ -16,6 +16,8 @@ app.use(express.json());
 //RUTAS
 app.use('/api/productos', require('./routes/ruta_prod'));
 
+app.use('/api/clientes', require('./routes/clientes'));
+
 //STATIC FILES
 app.use(express.static(path.join(__dirname, 'public')));
 
