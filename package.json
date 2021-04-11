@@ -5,7 +5,9 @@
     "main": "App.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon App.js"
+        "start": "node App.js",
+        "dev": "nodemon App.js",
+        "webpack": "webpack --mode development"
     },
     "author": "GabrielHDZ",
     "license": "ISC",
@@ -15,5 +17,17 @@
         "morgan": "^1.10.0",
         "mysql": "^2.18.1",
         "nodemon": "^2.0.7"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.13.15",
+        "@babel/preset-env": "^7.13.15",
+        "@babel/preset-react": "^7.13.13",
+        "babel-loader": "^8.2.2",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "webpack": "^5.31.2",
+        "webpack-cli": "^4.6.0"
     }
 }
