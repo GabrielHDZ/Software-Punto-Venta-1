@@ -1,5 +1,20 @@
 import React,{Component}from 'react';
+import styled from 'styled-components';
+import {FcFullTrash} from 'react-icons/fc';
+import { RiEditLine } from "react-icons/ri";
 
+
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
 class Productos extends Component{
   constructor(){
     super();
@@ -147,12 +162,8 @@ class Productos extends Component{
                           <td>{tarea.titulo}</td>
                           <td>{tarea.descripcion}</td>
                           <td>
-                            <button onClick={() => this.deleteTask(tarea._id)} >
-                              <i>delete</i> 
-                            </button>
-                            <button onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}>
-                              <i>edit</i>
-                            </button>
+                            <Button onClick={() => this.deleteTask(tarea._id)}><FcFullTrash/></Button>
+                            <Button primary onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}><i><RiEditLine/></i></Button>
                           </td>
                         </tr>
                       )
