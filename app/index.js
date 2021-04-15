@@ -6,25 +6,36 @@ import styled from "styled-components";
 import Productos from './pages/productos';
 import Distribuidor from './pages/distribuidores';
 import Clientes from './pages/clientes';
+import {Divisor,DivForm,Input,Form,P} from './components/formularioComponent';
 
-const Title = styled.h1`
-    font-size: 25px;
-    text-align: center;
-    margin-top: 50px;
-    `;
 
-const Diver=styled.section`
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-`;
 
-function Home() {
-    return(
-    <div>
-        <h2>Home</h2>
-    </div>
-    );
+class Home extends Component {
+    render(){
+        return(
+            <Divisor>
+                <DivForm>
+                    <Form>
+                        <P>Producto</P>
+                        <Input type='text' placeholder='Galletas Marias'></Input>
+                        <P>Cantidad</P>
+                        <Input type='number' placeholder='Cantidad en numero'></Input>
+                        <P>Precio unitario</P>
+                        <Input type='number' placeholder='$$'></Input>
+                        <P>Precio total</P>
+                        <Input type='numbre' placeholder='$$'></Input>
+                        <Input type='submit' value='Guardar'></Input>
+                    </Form>
+                    
+                </DivForm>
+                <DivForm>
+                    <h2>DiverDos</h2>
+                </DivForm>
+
+            </Divisor>
+            
+        ); 
+    }
 }
 class App extends Component {
     constructor(){
