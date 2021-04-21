@@ -2,88 +2,30 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
   
 export const Nav = styled.nav`
-  padding: 0 20px;
+  padding: 0 10px;
   min-height: 9vh;
-  background: #1c2022;
-  display: flex;
+  background: #442C2E;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   align-items: center;
 `;
 export const Logo = styled.h1`
+grid-column: 1/2;
+    grid-row: 1 / 3;
 font-size: 25px;
 color: white;
 `;
 
 export const Menu = styled.ul`
-list-style: none;
-display: flex;
-
-li:nth-child(2) {
-  margin: 0px 20px;
-}
-
-@media (max-width: 768px) {
-  display: none;
-}
+grid-column: 2 / 4;
+grid-row: 1 / 3;
+list-style: none; 
+display:flex;
+justify-content:space-evenly;
 `;
 
 export const Item = styled.li``;
-
-export const NavIcon = styled.button`
-background: none;
-cursor: pointer;
-border: none;
-outline: none;
-
-@media (min-width: 769px) {
-  display: none;
-}
-`;
-
-export const Line = styled.span`
-display: block;
-border-radius: 50px;
-width: 25px;
-height: 3px;
-margin: 5px;
-background-color: #fff;
-transition: width 0.4s ease-in-out;
-
-:nth-child(2) {
-  width: ${props => (props.open ? "40%" : "70%")};
-}
-`;
-
-export const Overlay = styled.div`
-position: absolute;
-height: ${props => (props.open ? "91vh" : 0)};
-width: 100vw;
-background: #1c2022;
-transition: height 0.4s ease-in-out;
-
-@media (min-width: 769px) {
-  display: none;
-}
-`;
-
-export const OverlayMenu = styled.ul`
-list-style: none;
-position: absolute;
-left: 50%;
-top: 45%;
-transform: translate(-50%, -50%);
-
-li {
-  opacity: ${props => (props.open ? 1 : 0)};
-  font-size: 25px;
-  margin: 50px 0px;
-  transition: opacity 0.4s ease-in-out;
-}
-
-li:nth-child(2) {
-  margin: 50px 0px;
-}
-`;
 
 export const NavLink = styled(Link)`
   color: white;
