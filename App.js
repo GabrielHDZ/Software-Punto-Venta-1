@@ -15,8 +15,8 @@ app.use(express.json());
 
 //RUTAS
 app.use('/api/productos', require('./routes/ruta_prod'));
-
-app.use('/api/clientes', require('./routes/clientes'));
+app.use('/api/clientes', require('./routes/ruta_clientes'));
+app.use('/api/ventas',require('./routes/ruta_ventas'));
 
 //STATIC FILES
 app.use(express.static(path.join(__dirname, 'public')));

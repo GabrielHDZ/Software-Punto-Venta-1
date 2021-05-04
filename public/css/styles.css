@@ -1,0 +1,27 @@
+* {
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   }
+
+   table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+      color: #212529;
+   }
+   th, td {
+      width: 25%;
+      text-align: left;
+      vertical-align: top;
+      border: 1px solid #000;
+   }
+   button{
+   background: rgb(248, 241, 241);
+   color: #ffffff;
+   font-size: 1em;
+   margin: 1em;
+   padding: 0.25em 1em;
+   border: 2px solid palevioletred;
+   border-radius: 3px;
+   }

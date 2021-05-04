@@ -8,18 +8,36 @@ export const Ul=styled.ul`
     background: #FEDBD0;
     justify-content: space-around;
     list-style: none;
-    margin: 0; 
     background: #FEDBD0;
     @media all and (max-width: 600px) {
         display:flex;
         flex-flow: column wrap;
-        padding: 0;
         
     }`;
+
+
+export const DivButtons=styled.ul`
+    display: flex;
+    flex-direction:row;
+    justify-content:space-around;
+    background:red;
+    padding:0;
+    margin:0;
+    list-style:none;
+    align-items:stretch;
+
+    @media all and (max-width: 600px){
+        display: flex;
+        flex-direction:column;
+        justify-content:space-around;
+    }
+
+`;
 
 export const List=styled.li`
     grid-column: 1/2;
     grid-row: 1 / 3;
+    padding: 1em;
     @media all and (max-width: 600px) {
         border-bottom: none;
     }`;
@@ -27,7 +45,8 @@ export const List=styled.li`
 export const List2=styled.li`
     grid-column: 2 / 4;
     grid-row: 1 / 3;
-    background: #ecf0f1
+    background: #ecf0f1;
+    padding: 1em;
     @media all and (max-width: 600px) {
         border-bottom: none;
     }`;
