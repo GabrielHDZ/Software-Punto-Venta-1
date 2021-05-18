@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {FcFullTrash} from 'react-icons/fc';
 import { RiEditLine } from "react-icons/ri";
 
-
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
   background: ${props => props.primary ? "palevioletred" : "white"};
@@ -124,57 +123,65 @@ class Productos extends Component{
       <div>
         <div>
           <div>
-            <div>
-              <div>
-                <div>
-                  <form onSubmit={this.addTarea}>
-                    <div>
+            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+              modal
+            </button>
+            <div id="miModal" className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5>Agregar Producto</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <form className="container" onSubmit={this.addTarea}>
                       <div>
-                        <input name="titulo" onChange={this.handleChange} value={this.state.titulo} type="text" placeholder="Task Title" autoFocus/>
+                        <div>
+                          <input name="titulo" onChange={this.handleChange} value={this.state.titulo} type="text" placeholder="Task Title" autoFocus/>
+                        </div>
                       </div>
-                    </div>
-                    <div>
                       <div>
-                        <textarea name="descripcion" onChange={this.handleChange} value={this.state.descripcion} cols="30" rows="10" placeholder="Task Description"></textarea>
+                        <div>
+                          <textarea name="descripcion" onChange={this.handleChange} value={this.state.descripcion} cols="30" rows="10" placeholder="Task Description"></textarea>
+                        </div>
                       </div>
-                    </div>
-
-                    <button type="submit">
-                      Send 
-                    </button>
-                  </form>
+                      <button type="submit">
+                        Send 
+                      </button>
+                    </form>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  { 
-                    this.state.tareas.map(tarea => {
-                      return (
-                        <tr key={tarea._id}>
-                          <td>{tarea.titulo}</td>
-                          <td>{tarea.descripcion}</td>
-                          <td>
-                            <Button onClick={() => this.deleteTask(tarea._id)}><FcFullTrash/></Button>
-                            <Button primary onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}><i><RiEditLine/></i></Button>
-                          </td>
-                        </tr>
-                      )
-                    })
-                  }
-                </tbody>
-              </table>
+              </div>  
             </div>
           </div>
         </div>
-
+        <div>
+          <table className="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              { 
+                this.state.tareas.map(tarea => {
+                  return (
+                    <tr key={tarea._id}>
+                      <td>{tarea.titulo}</td>
+                      <td>{tarea.descripcion}</td>
+                      <td>
+                        <Button onClick={() => this.deleteTask(tarea._id)}><FcFullTrash/></Button>
+                        <Button primary onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}><i><RiEditLine/></i></Button>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }

@@ -12,27 +12,21 @@ export const Ul=styled.ul`
     @media all and (max-width: 600px) {
         display:flex;
         flex-flow: column wrap;
-        
     }`;
-
 
 export const DivButtons=styled.ul`
     display: flex;
     flex-direction:row;
     justify-content:space-around;
-    background:red;
     padding:0;
     margin:0;
     list-style:none;
     align-items:stretch;
-
     @media all and (max-width: 600px){
         display: flex;
         flex-direction:column;
         justify-content:space-around;
-    }
-
-`;
+    }`;
 
 export const List=styled.li`
     grid-column: 1/2;

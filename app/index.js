@@ -6,6 +6,9 @@ import Productos from './pages/productos';
 import Distribuidor from './pages/distribuidores';
 import Clientes from './pages/clientes';
 import Ventas from './pages/ventas';
+
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 class App extends Component {
     render() {
         return (
