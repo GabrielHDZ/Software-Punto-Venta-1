@@ -14,6 +14,7 @@ const Button = styled.button`
   border: 2px solid palevioletred;
   border-radius: 3px;
 `;
+
 class Productos extends Component{
   constructor(){
     super();
@@ -71,7 +72,6 @@ class Productos extends Component{
         })
         .catch(err => console.error(err));
     }
-
   }
 
   deleteTask(id) {
@@ -121,40 +121,6 @@ class Productos extends Component{
   render() {
     return (
       <div>
-        <div>
-          <div>
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
-              modal
-            </button>
-            <div id="miModal" className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5>Agregar Producto</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
-                    <form className="container" onSubmit={this.addTarea}>
-                      <div>
-                        <div>
-                          <input name="titulo" onChange={this.handleChange} value={this.state.titulo} type="text" placeholder="Task Title" autoFocus/>
-                        </div>
-                      </div>
-                      <div>
-                        <div>
-                          <textarea name="descripcion" onChange={this.handleChange} value={this.state.descripcion} cols="30" rows="10" placeholder="Task Description"></textarea>
-                        </div>
-                      </div>
-                      <button type="submit">
-                        Send 
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>  
-            </div>
-          </div>
-        </div>
         <div>
           <table className="table table-dark table-striped">
             <thead>

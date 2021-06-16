@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 let dates=new Date();
-let formato=Intl.DateTimeFormat('nl-BE');
+//FORMATO DE FECHA DD/MM/YYYY
+//let formato=Intl.DateTimeFormat('nl-BE');
+//FORMATO DE FECHA MM/DD/YYYY
+let formato=Intl.DateTimeFormat('en-US');
 let fecha=formato.format(dates);
 
 //MODELO DE LAS CARACTERISTICAS DE UNA VENTA REALIZADA
@@ -37,6 +40,5 @@ router.delete('/:id', async(req, res) => {
     await Venta.findByIdAndRemove(req.params.id);
     res.json({ status: 'Venta eliminada, dinero devuelto :(' });
 });
-
 
 module.exports = router;

@@ -8,8 +8,8 @@ import axios from 'axios';
 
 
 class Home extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             nombre:'',
             cantidad:'',
@@ -20,7 +20,6 @@ class Home extends Component {
         };
         this.handleChange=this.handleChange.bind(this);
         this.addTarea=this.addTarea.bind(this);
-
     }
     handleChange(e){
         const{name,value}=e.target;
@@ -34,6 +33,7 @@ class Home extends Component {
     }
 
     addTarea(e){
+        //e Es un evento sintetico
         e.preventDefault(); 
         if(this.state._id){
             fetch(`/api/ventas/${this.state._id}`,{
@@ -55,21 +55,26 @@ class Home extends Component {
                 this.fetchTask();
             });
         }else{
-            fetch('/api/ventas',{
-                method:'POST',
-                body:JSON.stringify(this.state),
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                }
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                console.log('data',data);
-                this.setState({nombre:'',cantidad:'',preciou:'',preciot:''});
-                this.fetchTask();
-            })
-            .catch(err=>console.error(err));
+            //condicion para evaluar si todos los campos del formulario han sido rellenados
+            if(this.state.nombre && this.state.cantidad && this.state.preciou && this.state.preciot){
+                fetch('/api/ventas',{
+                    method:'POST',
+                    body:JSON.stringify(this.state),
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json'
+                    }
+                })
+                .then(res=>res.json())
+                .then(data=>{
+                    console.log('data',data);
+                    this.setState({nombre:'',cantidad:'',preciou:'',preciot:''});
+                    this.fetchTask();
+                })
+                .catch(err=>console.error(err));
+            }else{
+            alert('faltan campos por rellenar');
+            }
         }
     }
 
@@ -125,6 +130,7 @@ class Home extends Component {
     render(){
         return(
                 <Ul>
+                    
                     <List>
                         <Form onSubmit={this.addTarea}>
                             <P>Producto</P>
@@ -160,14 +166,15 @@ class Home extends Component {
                                     <td>{tarea.preciot}</td>
                                     <td>
                                         <DivButtons>
-                                            <button onClick={() => this.deleteTask(tarea._id)}>
+                                            <button onClick={(e) => this.deleteTask(tarea._id,e)}>
                                                 <i><IconContext.Provider value={{ color: "palevioletred", size:"1em"}}>
                                                         <div>
                                                             <BiTrash/>
                                                         </div>
                                                     </IconContext.Provider>
-                                                </i></button>
-                                            <button onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}>
+                                                </i>
+                                            </button>
+                                            <button onClick={this.editTask.bind(this,tarea._id)} style={{margin: '4px'}}>
                                                 <i><IconContext.Provider value={{ color: "palevioletred", size:"1em"}}>
                                                         <div>
                                                             <BiEdit/>

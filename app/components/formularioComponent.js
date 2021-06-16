@@ -8,10 +8,10 @@ export const Ul=styled.ul`
     background: #FEDBD0;
     justify-content: space-around;
     list-style: none;
-    background: #FEDBD0;
     @media all and (max-width: 600px) {
         display:flex;
         flex-flow: column wrap;
+        padding:0;
     }`;
 
 export const DivButtons=styled.ul`

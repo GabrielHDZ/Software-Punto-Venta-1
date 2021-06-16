@@ -1,6 +1,4 @@
 
-
-
 * {
    box-sizing: border-box;
    padding: 0;
@@ -19,15 +17,7 @@
       vertical-align: top;
       border: 1px solid #000;
    }
-   button{
-   background: rgb(248, 241, 241);
-   color: #ffffff;
-   font-size: 1em;
-   margin: 1em;
-   padding: 0.25em 1em;
-   border: 2px solid palevioletred;
-   border-radius: 3px;
-   }
+   
 
    .modal-contenido{
       background: color palevioletred;
@@ -59,7 +49,6 @@
       border-radius: 20px;
       box-sizing: border-box;
       background: #ecf0f3;
-
       box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
    }
 
@@ -73,3 +62,4 @@
 
       box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
    }
+

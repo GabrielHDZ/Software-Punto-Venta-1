@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 
-
 class clientes extends Component{
     render(){
         return(

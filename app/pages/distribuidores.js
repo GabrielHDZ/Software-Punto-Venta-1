@@ -1,6 +1,4 @@
 import React,{Component} from 'react';
-
-
 class distribuidor extends Component{
     render(){
         return(
@@ -8,5 +6,4 @@ class distribuidor extends Component{
         )
     }
 }
-
 export default distribuidor;
