@@ -2,6 +2,9 @@ import React,{Component}from 'react';
 import styled from 'styled-components';
 import {FcFullTrash} from 'react-icons/fc';
 import { RiEditLine } from "react-icons/ri";
+import Modal from '../Modal'
+import Boton_flotante from '../components/Boton_flotante';
+import {Form} from '../components/formularioComponent';
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -14,6 +17,29 @@ const Button = styled.button`
   border: 2px solid palevioletred;
   border-radius: 3px;
 `;
+class Child extends React.Component{
+  constructor(props){
+    super(props)
+  }
+  render(){
+    return(
+      <>
+        <Modal>
+          <div className='modal-background'>
+            <div className='modal-content'>
+              <Form>
+                <h2>Agregar nuevo producto</h2>
+                <input name='nombre'></input>
+                <input name='descripcion' type='text'></input>
+              </Form>
+              <button onClick={this.props.onClick}>Close Modal</button>
+            </div> 
+          </div>
+        </Modal>
+      </>
+    )
+  }
+}
 
 class Productos extends Component{
   constructor(){
@@ -22,10 +48,19 @@ class Productos extends Component{
       titulo:'',
       descripcion:'',
       _id:'',
-      tareas:[]
+      tareas:[],
+      showModal:false
     };
     this.handleChange=this.handleChange.bind(this);
     this.addTarea=this.addTarea.bind(this);
+    this.showModal=this.showModal.bind(this);
+    this.closeModal=this.closeModal.bind(this);
+  }
+  showModal(){
+    this.setState({showModal:true});
+  }
+  closeModal(){
+    this.setState({showModal:false});
   }
   handleChange(e) {
     const { name, value } = e.target;
@@ -119,6 +154,7 @@ class Productos extends Component{
   }
 
   render() {
+    let modal=this.state.showModal ? <Child onClick={this.closeModal}/>:null;
     return (
       <div>
         <div>
@@ -147,6 +183,10 @@ class Productos extends Component{
               }
             </tbody>
           </table>
+          <div>
+            <Boton_flotante onClick={this.showModal} titulo='Agregar Producto'></Boton_flotante>
+            {modal}
+          </div>
         </div>
       </div>
     )

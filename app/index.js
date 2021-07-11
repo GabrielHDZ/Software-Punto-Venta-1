@@ -9,34 +9,6 @@ import Clientes from './pages/clientes';
 import Ventas from './pages/ventas';
 
 const appRoot=document.getElementById('app');
-const modalRoot=document.getElementById('modal');
-
-class Modal extends React.Component {
-    constructor(props) {
-        super(props);
-        this.el = document.createElement('div');
-    }
-    componentDidMount() {
-        modalRoot.appendChild(this.el);
-    }
-    componentWillUnmount() {
-        modalRoot.removeChild(this.el);
-    }
-    render() {
-        return ReactDOM.createPortal(
-        this.props.children,
-        this.el,
-        );
-    }
-}
-
-function Child(){
-    return(
-        <div>
-            <button>Cerrar ventana modal</button>
-        </div>
-    );
-}
 class App extends React.Component {
     constructor(props){
         super(props);
@@ -54,9 +26,7 @@ class App extends React.Component {
         this.setState({showModal:false});
     }
     render() {
-        const modal=this.state.showModal ? (<Modal><Child/></Modal>) : null;
         return (
-            <>
             <Router>
                 <Navbar />
                 <Switch>
@@ -66,15 +36,6 @@ class App extends React.Component {
                     <Route path='/clientes' component={Clientes}/>
                 </Switch>
             </Router>
-            <div>
-                {
-                    this.state.showModal ? 
-                    <div onClick={this.handleClose}>
-                        {modal}
-                    </div> : <button onClick={this.handleClick}>Muestra modal y boton</button>
-                }
-            </div>
-            </>
         )
     }
 }
