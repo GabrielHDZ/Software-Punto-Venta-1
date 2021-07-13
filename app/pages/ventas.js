@@ -15,12 +15,14 @@ class Home extends Component {
             preciot:'',
             _id:'',
             modalCam:false,
+            codeBar:'',
             ventas:[]
         };
         this.handleChange=this.handleChange.bind(this);
         this.addTarea=this.addTarea.bind(this);
         this.showModalCam=this.showModalCam.bind(this);
         this.closeModalCam=this.closeModalCam.bind(this);
+        this.addCodeBar=this.addCodeBar.bind(this);
     }
     handleChange(e){
         const{name,value}=e.target;
@@ -77,6 +79,11 @@ class Home extends Component {
             alert('faltan campos por rellenar');
             }
         }
+    }
+
+    addCodeBar(code){
+        this.setState({codeBar:code});
+        console.log('codigo :' +this.state.codeBar);
     }
 
     showModalCam(){
@@ -136,7 +143,7 @@ class Home extends Component {
         });
     }
     render(){
-        let modal=this.state.modalCam? <ModalCamera onClick={this.closeModalCam}/>:null
+        let modal=this.state.modalCam? <ModalCamera onClick={this.closeModalCam} addCode={this.addCodeBar}/>:null
         let Botonmodal=this.state.modalCam? null:<Boton_flotante onClick={this.showModalCam}></Boton_flotante>
         return(
                 <Ul>

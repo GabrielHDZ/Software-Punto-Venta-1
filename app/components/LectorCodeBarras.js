@@ -12,16 +12,21 @@ export default class ModalCamera extends React.Component{
         sample:true,
         workers:'4',
         camera:'',
-        codigo_barra:''
         }
     this.handleInputChange=this.handleInputChange.bind(this);
     this.runCamera=this.runCamera.bind(this);
+    this.stateCode=this.stateCode.bind(this);
     }
 
     handleInputChange() {
         Quagga.stop();
         this.props.onClick();
-      }
+    }
+    stateCode(result){
+        this.props.addCode(result.codeResult.code);
+        Quagga.stop();
+        this.props.onClick();
+    }
     componentDidMount(){
         Quagga.CameraAccess.getActiveStreamLabel();
         Quagga.CameraAccess.enumerateVideoDevices()
@@ -60,10 +65,6 @@ export default class ModalCamera extends React.Component{
         });
         
     }
-    
-    stateCode(codex){
-        this.setState({codigo_barra:codex})
-    }
     runCamera(){
         Quagga.onProcessed(function(result) {
             var drawingCtx = Quagga.canvas.ctx.overlay,
@@ -85,11 +86,7 @@ export default class ModalCamera extends React.Component{
                 }
             }
         });
-        Quagga.onDetected(function(result) {
-            stateCode(result.codeResult.code);
-            console.log(result.codeResult.code);
-            Quagga.stop();
-        });        
+        Quagga.onDetected(this.stateCode);  
     }
     
     render(){
@@ -100,7 +97,6 @@ export default class ModalCamera extends React.Component{
                     <button onClick={this.handleInputChange}>Close Modal</button>
                     <button onClick={this.runCamera}>Start</button>
                     <div>
-                            <h4>Datos del producto{this.state.codigo_barra}</h4>
                         </div>
                     <div className='modal-content'>
                         <div id="interactive"></div>
