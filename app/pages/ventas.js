@@ -3,37 +3,7 @@ import {Ul,List,List2,Input,Form,P,DivButtons} from '../components/formularioCom
 import {IconContext} from 'react-icons';
 import { BiEdit,BiTrash} from "react-icons/bi";
 import Boton_flotante from '../components/Boton_flotante';
-import ModalCamera from '../components/LectorCodeBarras';
-import Modal from '../Modal';
 
-
-class ModalProductoInfo extends React.Component{
-    constructor(props){
-        super(props);
-
-    }
-    render(){
-        return(
-            <>
-            <Modal>
-                <div className='modal-background'>
-                        <ul>
-                            <li>
-                                <a onClick={this.closeModalOpenLectorBnt}>Escanear Código</a>
-                            <br/>
-                            <span>Agregar Venta</span>
-                            <br/>
-                            <a onClick={this.props.onClose}>Close</a>
-                            </li>
-                            
-                        </ul>
-                        <span>Info del producto {this.props.codeProd}</span>
-                </div>
-            </Modal>
-            </>
-        )
-    }
-}
 class Home extends Component {
     constructor(props){
         super(props);
@@ -43,17 +13,10 @@ class Home extends Component {
             preciou:'',
             preciot:'',
             _id:'',
-            modalCam:false,
-            modalProducto:false,
-            codeBar:'',
             ventas:[]
         };
         this.handleChange=this.handleChange.bind(this);
         this.addTarea=this.addTarea.bind(this);
-        this.showModalCam=this.showModalCam.bind(this);
-        this.closeModalCam=this.closeModalCam.bind(this);
-        this.addCodeBar=this.addCodeBar.bind(this);
-        this.closeModalProd=this.closeModalCam.bind(this);
     }
     handleChange(e){
         const{name,value}=e.target;
@@ -112,21 +75,6 @@ class Home extends Component {
         }
     }
 
-    addCodeBar(code){
-        this.setState({codeBar:code,modalProducto:true});
-        console.log('codigo :' +this.state.codeBar);
-    }
-
-    showModalCam(){
-        this.setState({modalCam:true});
-    }
-    closeModalCam(){
-        this.setState({modalCam:false});
-    }
-    closeModalProd(){
-        this.setState({modalProducto:false});
-    }
-
     deleteTask(id){
         if(confirm('Desea eliminar esta venta?')){
             fetch(`/api/ventas/${id}`,{
@@ -177,12 +125,8 @@ class Home extends Component {
         });
     }
     render(){
-        let modal=this.state.modalCam? <ModalCamera onClick={this.closeModalCam} addCode={this.addCodeBar}/>:null
-        let Botonmodal=this.state.modalCam? null:<Boton_flotante onClick={this.showModalCam}></Boton_flotante>
-        let ProductoInfor=this.state.modalProducto? <ModalProductoInfo onClick={this.closeModalProd} codeProd={this.state.codeBar}/> : null
         return(
                 <Ul>
-                    <div id="scanner-container"></div>
                     <List>
                         <Form onSubmit={this.addTarea}>
                             <P>Producto</P>
@@ -244,9 +188,7 @@ class Home extends Component {
                         </table>
                     </List2>
                     <div>
-                        {Botonmodal}
-                        {modal}
-                        {ProductoInfor}
+                        <Boton_flotante/>
                     </div>
                 </Ul>
             

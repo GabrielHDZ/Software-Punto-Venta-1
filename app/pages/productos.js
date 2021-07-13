@@ -184,8 +184,7 @@ class Productos extends Component{
             </tbody>
           </table>
           <div>
-            <Boton_flotante onClick={this.showModal} titulo='Agregar Producto'></Boton_flotante>
-            {modal}
+          <Boton_flotante/>
           </div>
         </div>
       </div>

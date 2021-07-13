@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {TiPlusOutline} from "react-icons/ti";
 import { IconContext } from "react-icons";
 import Modal from '../Modal';
+import ModalCamera from './LectorCodeBarras';
+import ModaldeProducto from './ModalInfoProducto';
 
 const Btn_flotante=styled.button`
     font-size: 14px; /* Cambiar el tamaño de la tipografia */
@@ -65,11 +67,6 @@ const Btn_flotante=styled.button`
     class ModalOpciones extends React.Component{
         constructor(props){
             super(props);
-            this.closeModalOpenLectorBnt=this.closeModalOpenLectorBnt.bind(this);
-        }
-        closeModalOpenLectorBnt(){
-            this.props.onClose();
-            this.props.onClick();
         }
         render(){
             return(
@@ -78,7 +75,7 @@ const Btn_flotante=styled.button`
                     <div className='modal-background'>
                         <Menu>
                             <ul>
-                                <Li><a onClick={this.closeModalOpenLectorBnt}>Escanear Código</a></Li>
+                                <Li><a onClick={this.props.openCamera}>Escanear Código</a></Li>
                                 <br/>
                                 <Li><span>Agregar Venta</span></Li>
                                 <br/>
@@ -95,38 +92,50 @@ const Btn_flotante=styled.button`
         constructor(props){
             super(props)
             this.state={showOptions:false,
-                        showBtnModalOptions:true
+                        showBtnModalOptions:true,
+                        showModalEscaner:false,
+                        showProd:false,
+                        codigo_barra:''
             }
             this.openModalOptions=this.openModalOptions.bind(this);
-            this.closeModalOptions=this.closeModalOptions.bind(this);
-            this.closeModalOpenLector=this.closeModalOpenLector.bind(this);
-        }
-        closeModalOpenLector(){
-            this.props.onClick();
-            this.setState({showOptions:false,showBtnModalOptions:true})
-            
+            this.closeModals=this.closeModals.bind(this);
+            this.openCamera=this.openCamera.bind(this);
+            this.asignar_codigo=this.asignar_codigo.bind(this);
         }
         openModalOptions(){
-            this.setState({showOptions:true,showBtnModalOptions:false})
+            this.setState({showOptions:true,
+                showBtnModalOptions:false,
+                showModalEscaner:false})
         }
-
-        closeModalOptions(){
-            this.setState({showOptions:false,showBtnModalOptions:true})
+        openCamera(){
+            this.setState({showOptions:false,showModalEscaner:true,showBtnModalOptions:false})
+        }
+        closeModals(){
+            this.setState({showOptions:false,
+                showBtnModalOptions:true,
+                showModalEscaner:false})
+        }
+        asignar_codigo(codigo){
+            this.setState({codigo_barra:codigo,showProd:true,showModalEscaner:false})
         }
         render(){
-            let modal=this.state.showOptions? <ModalOpciones onClose={this.closeModalOptions} onClick={this.props.onClick}/>:null
-            let btn_modal=this.state.showBtnModalOptions? (<Btn_flotante onClick={this.openModalOptions}>
+            let boton=this.state.showBtnModalOptions? (<Btn_flotante onClick={this.openModalOptions}>
                 <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
                     <div>
                         <TiPlusOutline />
                     </div>
                 </IconContext.Provider>
-            </Btn_flotante>):null
+            </Btn_flotante>):null;
+            let modalOpciones=this.state.showOptions? <ModalOpciones openCamera={this.openCamera} onClose={this.closeModals} />:null
+            let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.openModalOptions} escribirCodigo={this.asignar_codigo}/>:null
+            let ModalProducto=this.state.showProd? <ModaldeProducto codeProd={this.state.codigo_barra}/>:null 
             return(
                 <>
                     <div>
-                        {btn_modal}
-                        {modal}
+                        {boton}
+                        {modalOpciones}
+                        {modalEscaner}
+                        {ModalProducto}
                     </div>
                 </>
             )
