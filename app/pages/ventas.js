@@ -13,6 +13,7 @@ class Home extends Component {
             preciou:'',
             preciot:'',
             _id:'',
+            formResponsivo:true,
             ventas:[]
         };
         this.handleChange=this.handleChange.bind(this);
@@ -107,9 +108,14 @@ class Home extends Component {
     }
 
     componentDidMount(){
+        this.checkPixel();
         this.fetchTask();
     }
 
+    checkPixel(){
+        if (window.screen.width < 1024) 
+            this.setState({formResponsivo:false})
+    }
     fetchTask(){
         /* axios.get('/api/ventas')
         .then(res =>res.json())
@@ -138,7 +144,7 @@ class Home extends Component {
                             <P>Precio total</P>
                             <Input name='preciot' onChange={this.handleChange} value={this.state.preciot} min="1" placeholder='$$' disabled></Input>
                             <Input type='submit' value='Guardar'></Input>
-                        </Form>  
+                        </Form>
                     </List>
                     <List2>
                         <table >

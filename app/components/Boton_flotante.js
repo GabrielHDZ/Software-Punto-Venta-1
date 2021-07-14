@@ -5,6 +5,7 @@ import { IconContext } from "react-icons";
 import Modal from '../Modal';
 import ModalCamera from './LectorCodeBarras';
 import ModaldeProducto from './ModalInfoProducto';
+import ModalNuevoProducto from './ModalNuevoProducto';
 
 const Btn_flotante=styled.button`
     font-size: 14px; /* Cambiar el tamaño de la tipografia */
@@ -14,7 +15,7 @@ const Btn_flotante=styled.button`
     border-radius: 5px; /* Borde del boton */
     letter-spacing: 2px; /* Espacio entre letras */
     background-color: #442C2E; /* Color de fondo */
-    padding: 18px 30px; /* Relleno del boton */
+    padding: 5px 8px; /* Relleno del boton */
     border-radius: 50%;
     position: fixed;
     bottom: 70px;
@@ -30,7 +31,8 @@ const Btn_flotante=styled.button`
     }
     @media only screen and (max-width: 600px) {
         font-size: 14px;
-        padding: 12px 20px;
+        padding: 5px 8px; /* Relleno del boton */
+        border-radius: 50%;
         bottom: 20px;
         right: 20px;
     }
@@ -79,6 +81,8 @@ const Btn_flotante=styled.button`
                                 <br/>
                                 <Li><span>Agregar Venta</span></Li>
                                 <br/>
+                                <Li><a onClick={this.props.addNewProducto}>Agregar nuevo producto</a></Li>
+                                <br/>
                                 <Li><a onClick={this.props.onClose}>Close</a></Li>
                             </ul>
                         </Menu>
@@ -94,29 +98,44 @@ const Btn_flotante=styled.button`
             this.state={showOptions:false,
                         showBtnModalOptions:true,
                         showModalEscaner:false,
-                        showProd:false,
+                        showNuevoProducto:false,
                         codigo_barra:''
             }
             this.openModalOptions=this.openModalOptions.bind(this);
             this.closeModals=this.closeModals.bind(this);
             this.openCamera=this.openCamera.bind(this);
             this.asignar_codigo=this.asignar_codigo.bind(this);
+            this.openNewProducto=this.openNewProducto.bind(this);
         }
         openModalOptions(){
             this.setState({showOptions:true,
                 showBtnModalOptions:false,
-                showModalEscaner:false})
+                showModalEscaner:false,
+                showNuevoProducto:false})
         }
         openCamera(){
-            this.setState({showOptions:false,showModalEscaner:true,showBtnModalOptions:false})
+            this.setState({showOptions:false,
+                showModalEscaner:true,
+                showBtnModalOptions:false,
+                showNuevoProducto:false})
         }
         closeModals(){
             this.setState({showOptions:false,
                 showBtnModalOptions:true,
-                showModalEscaner:false})
+                showModalEscaner:false,
+                showNuevoProducto:false})
         }
         asignar_codigo(codigo){
-            this.setState({codigo_barra:codigo,showProd:true,showModalEscaner:false})
+            this.setState({codigo_barra:codigo,
+                showProd:true,
+                showModalEscaner:false,
+                showNuevoProducto:false})
+        }
+        openNewProducto(){
+            this.setState({showOptions:false,
+                showModalEscaner:false,
+                showBtnModalOptions:false,
+                showNuevoProducto:true})
         }
         render(){
             let boton=this.state.showBtnModalOptions? (<Btn_flotante onClick={this.openModalOptions}>
@@ -126,9 +145,10 @@ const Btn_flotante=styled.button`
                     </div>
                 </IconContext.Provider>
             </Btn_flotante>):null;
-            let modalOpciones=this.state.showOptions? <ModalOpciones openCamera={this.openCamera} onClose={this.closeModals} />:null
+            let modalOpciones=this.state.showOptions? <ModalOpciones openCamera={this.openCamera} onClose={this.closeModals} addNewProducto={this.openNewProducto} />:null
             let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.openModalOptions} escribirCodigo={this.asignar_codigo}/>:null
             let ModalProducto=this.state.showProd? <ModaldeProducto codeProd={this.state.codigo_barra}/>:null 
+            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals}/>:null
             return(
                 <>
                     <div>
@@ -136,6 +156,7 @@ const Btn_flotante=styled.button`
                         {modalOpciones}
                         {modalEscaner}
                         {ModalProducto}
+                        {ModalNewProducto}
                     </div>
                 </>
             )

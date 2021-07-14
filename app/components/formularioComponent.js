@@ -34,12 +34,13 @@ export const List=styled.li`
     padding: 1em;
     @media all and (max-width: 600px) {
         border-bottom: none;
+        display: none;
+        visibility: hidden;
     }`;
 
 export const List2=styled.li`
     grid-column: 2 / 4;
     grid-row: 1 / 3;
-    background: #ecf0f1;
     padding: 1em;
     @media all and (max-width: 600px) {
         border-bottom: none;
