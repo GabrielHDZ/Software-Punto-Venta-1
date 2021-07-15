@@ -1,7 +1,12 @@
 import React,{Component} from 'react';
 import Modal from '../Modal';
-import { Form,P,Input } from './formularioComponent';
+import { Form,P,Input,Button } from './formularioComponent';
 import styled from 'styled-components';
+import { IconContext } from "react-icons";
+import {ImQrcode} from 'react-icons/im';
+import {TiDelete} from 'react-icons/ti';
+import ModalCamera from './LectorCodeBarras';
+
 
 const Contenedor=styled.div`
     background-color:rgba(0, 0, 0, 0.5);
@@ -24,21 +29,24 @@ const Contenedor2=styled.div`
     flex-direction:column;
     justify-content:center;
     }
-    transition: all 300ms ease 0ms;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    &:hover {
-        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-        transform: translateY(-7px);
-        color:#000;
-    }
 `;
 const Contenedor3=styled.div`
     background-color:#442c2e;
     border-radius:5%;
     grid-column: 2;
     grid-row: 4;
+    transition: all 300ms ease 0ms;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    &:hover {
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-7px);
+    }
+`;
 
+const Contenedor4=styled.div`
+    display:flex;
+    flex-direction:row;
 `;
 
 export default class ModalNuevoProducto extends Component{
@@ -46,10 +54,27 @@ export default class ModalNuevoProducto extends Component{
         super(props);
         this.state={
             nombre:'',
-            cantidad:'',
-            precio:'',
-            preciou:''
+            presentacion:'',
+            codigo:'',
+            descripcion:'',
+            openLector:false,
+            _id:''
         }
+
+        this.modalLector=this.modalLector.bind(this);
+        this.closeModalLector=this.closeModalLector.bind(this);
+        this.retornoExitosoLector=this.retornoExitosoLector.bind(this);
+        this.handleChange=this.handleChange.bind(this);
+        this.addNewProduct=this.addNewProduct.bind(this);
+    }
+    modalLector(){
+        this.setState({openLector:true});
+    }
+    closeModalLector(){
+        this.setState({openLector:false});
+    }
+    retornoExitosoLector(code){
+        this.setState({openLector:false,codigo:code});
     }
     handleChange(e){
         const{name,value}=e.target;
@@ -104,27 +129,44 @@ export default class ModalNuevoProducto extends Component{
     }
 
     render(){
+        let lectorModal=this.state.openLector? <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         return(
+            <>
             <Modal>
                 <Contenedor>
                     <Contenedor2>
                         <Contenedor3>
-                            <button onClick={this.props.onClose}>Close</button>
-                            <Form onSubmit={this.addNewProduct}>
+                            <button onClick={this.props.onClose}>
+                                <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                                    <div>
+                                        <TiDelete/>
+                                    </div>
+                                </IconContext.Provider>
+                            </button>
+                            <Form>
                                 <P>Nombre del Producto</P>
                                 <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
                                 <P>Presentacion</P>
-                                <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.cantidad} min="1" max="50" placeholder='Cantidad en numero'></Input>
+                                <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
                                 <P>Codigo de barras</P>
-                                <Input name='codigo' type='text' onChange={this.handleChange} value={this.state.preciou} min="1" placeholder='$$'></Input>
+                                <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
+                                <Button onClick={this.modalLector}>
+                                    <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
+                                        <div>
+                                            <ImQrcode />
+                                        </div>
+                                    </IconContext.Provider>
+                                </Button></Contenedor4>
                                 <P>Descripcion</P>
-                                <Input name='preciot' onChange={this.handleChange} value={this.state.preciot} min="1" placeholder='$$' disabled></Input>
-                                <Input type='submit' value='Guardar'></Input>
+                                <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
+                                <Button onClick={this.addNewProduct}>Guardar</Button>
                             </Form>  
                         </Contenedor3>
                     </Contenedor2>
                 </Contenedor>
             </Modal>
+            {lectorModal}
+            </>
         );
     }
 }

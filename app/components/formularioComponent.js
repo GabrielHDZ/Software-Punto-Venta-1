@@ -46,12 +46,13 @@ export const List2=styled.li`
         border-bottom: none;
     }`;
 
-export const Form=styled.form`
+export const Form=styled.div`
     display:flex;
     flex-direction:column;
     align-content:space-around;
     margin:15px;
-    padding:10px;`;
+    padding:10px;
+    `;
 
 export const P=styled.p`
     margin:0;
@@ -61,6 +62,17 @@ export const P=styled.p`
     color:#a6af13;`;
 
 export const Input = styled.input`
+padding: 10px;
+margin: .2em;
+color: ${props => props.inputColor || "black"};
+background: white;
+border: none;
+border-radius: 10px;
+border-bottom:2px solid #a6af13;
+outline:none;
+height:40px;`;
+
+export const Button = styled.button`
 padding: 10px;
 margin: .2em;
 color: ${props => props.inputColor || "black"};

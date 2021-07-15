@@ -4,6 +4,7 @@ import Modal from '../Modal';
 import styled from 'styled-components';
 import {IconContext} from 'react-icons';
 import { TiDelete, TiZoom} from "react-icons/ti";
+import { Button } from './formularioComponent';
 
 const Contenedor=styled.div`
     background-color:rgba(0, 0, 0, 0.5);
@@ -34,6 +35,13 @@ const Btn1=styled.button`
     background-color: #FEDBD0;
     border-radius: 5px; /* Borde del boton */
     border: none;
+    padding: 10px;
+    margin: .2em;
+    color: ${props => props.inputColor || "black"};
+    border-radius: 10px;
+    border-bottom:2px solid #a6af13;
+    outline:none;
+    height:40px;
     transition: all 300ms ease 0ms;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     z-index: 99;
@@ -49,7 +57,14 @@ const Btn2=styled.button`
     flex-grow:1;
     background-color:#fa3e3e;
     border: none;
-    border-radius: 5px; /* Borde del boton */
+    padding: 10px;
+    margin: .2em;
+    color: ${props => props.inputColor || "black"};
+    border-radius: 10px;
+    border-bottom:2px solid #a6af13;
+    outline:none;
+    height:40px;
+    border-radius: 10px; /* Borde del boton */
     transition: all 300ms ease 0ms;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     z-index: 99;
@@ -59,7 +74,6 @@ const Btn2=styled.button`
         transform: translateY(-7px);
         color:#000;
     }
-
 `;
 
 const Capturadora=styled.div`
@@ -163,15 +177,15 @@ export default class ModalCamera extends React.Component{
                         <Capturadora id="interactive" className="viewport"/>
                         <br></br>
                         <Contenedor3>
-                            <Btn1 onClick={this.runCamera}>Escanear
+                            <Btn1 onClick={this.runCamera}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Ventas"}}>
                                     <div>
                                         <TiZoom/>
                                     </div>
                                 </IconContext.Provider>
                             </Btn1>
-                            <Btn2 onClick={this.handleInputChange}>Cancelar
-                                <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
+                            <Btn2 onClick={this.handleInputChange}>
+                                <IconContext.Provider value={{ color: "black", size:"2em", title:"Ventas"}}>
                                     <div>
                                         <TiDelete/>
                                     </div>
