@@ -48,7 +48,6 @@ const Contenedor4=styled.div`
     display:flex;
     flex-direction:row;
 `;
-
 export default class ModalNuevoProducto extends Component{
     constructor(props){
         super(props);
@@ -106,8 +105,8 @@ export default class ModalNuevoProducto extends Component{
             });
         }else{
             //condicion para evaluar si todos los campos del formulario han sido rellenados
-            if(this.state.nombre && this.state.cantidad && this.state.preciou && this.state.preciot){
-                fetch('/api/ventas',{
+            if(this.state.nombre && this.state.presentacion){
+                fetch('/api/productos',{
                     method:'POST',
                     body:JSON.stringify(this.state),
                     headers:{
@@ -117,19 +116,21 @@ export default class ModalNuevoProducto extends Component{
                 })
                 .then(res=>res.json())
                 .then(data=>{
-                    console.log('data',data);
-                    this.setState({nombre:'',cantidad:'',preciou:'',preciot:''});
-                    this.fetchTask();
+                    console.log('Respuesta del servidor: ',data);
+                    this.setState({nombre:'',presentacion:'',codigo:'',descripcion:''});
+                    this.props.recargaData;
                 })
                 .catch(err=>console.error(err));
+                
             }else{
-            alert('faltan campos por rellenar');
+            alert('Los campos de nombre y presentacion no pueden quedar vacios, por favor rellene estos campos');
             }
         }
     }
 
     render(){
-        let lectorModal=this.state.openLector? <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
+        let lectorModal=this.state.openLector? 
+        <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         return(
             <>
             <Modal>

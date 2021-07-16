@@ -16,10 +16,10 @@ router.get('/:id', async(req, res) => {
 });
 
 router.post('/', async(req, res) => {
-    const { titulo, descripcion } = req.body;
-    const newProducto = new Producto({ titulo, descripcion });
+    const { nombre,presentacion,codigo,descripcion } = req.body;
+    const newProducto = new Producto({ nombre,presentacion,codigo,descripcion });
     await newProducto.save();
-    res.json({ status: 'Tarea añadida' });
+    res.json({ status: 'Producto agregado correctamente' });
 });
 
 // UPDATE a new task

@@ -5,6 +5,7 @@ import { RiEditLine } from "react-icons/ri";
 import Modal from '../Modal'
 import Boton_flotante from '../components/Boton_flotante';
 import {Form} from '../components/formularioComponent';
+import CardProducto from '../components/CardProducto';
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -16,6 +17,20 @@ const Button = styled.button`
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
+`;
+const ContentGlobal=styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+`;
+const Contenedor=styled.div`
+display:flex;
+padding:0;
+  @media all and (max-width: 600px) {
+    grid-column: 1 / 4;
+    grid-row: 1;
+}
 `;
 class Child extends React.Component{
   constructor(props){
@@ -55,6 +70,9 @@ class Productos extends Component{
     this.addTarea=this.addTarea.bind(this);
     this.showModal=this.showModal.bind(this);
     this.closeModal=this.closeModal.bind(this);
+    this.deleteTask=this.deleteTask.bind(this);
+    this.editTask=this.editTask.bind(this);
+    this.fetchTasks=this.fetchTasks.bind(this);
   }
   showModal(){
     this.setState({showModal:true});
@@ -156,38 +174,21 @@ class Productos extends Component{
   render() {
     let modal=this.state.showModal ? <Child onClick={this.closeModal}/>:null;
     return (
-      <div>
-        <div>
-          <table className="table table-dark table-striped">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>opciones</th>
-              </tr>
-            </thead>
-            <tbody>
+      <ContentGlobal>
+        <Contenedor>
               { 
                 this.state.tareas.map(tarea => {
                   return (
-                    <tr key={tarea._id}>
-                      <td>{tarea.titulo}</td>
-                      <td>{tarea.descripcion}</td>
-                      <td>
-                        <Button onClick={() => this.deleteTask(tarea._id)}><FcFullTrash/></Button>
-                        <Button primary onClick={() => this.editTask(tarea._id)}style={{margin: '4px'}}><i><RiEditLine/></i></Button>
-                      </td>
-                    </tr>
+                    <CardProducto key={tarea._id} data={tarea} onDelete={this.deleteTask} onEdit={this.editTask} />
                   )
                 })
               }
-            </tbody>
-          </table>
-          <div>
-          <Boton_flotante/>
-          </div>
-        </div>
-      </div>
+            <div>
+            <Boton_flotante recargaData={this.fetchTasks}/>
+            </div>
+        </Contenedor>
+      </ContentGlobal>
+      
     )
   }
 }
