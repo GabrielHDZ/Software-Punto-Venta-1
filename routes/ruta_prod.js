@@ -14,6 +14,11 @@ router.get('/:id', async(req, res) => {
     const tarea = await Producto.findById(req.params.id);
     res.json(tarea);
 });
+//BUSQUEDA POR MEDIO DE CODIGO DE BARRAS
+router.get('/:code', async(req, res) => {
+    const tarea = await Producto.find({codigo:req.params.codigo});
+    res.json(tarea);
+});
 
 router.post('/', async(req, res) => {
     const { nombre,presentacion,codigo,descripcion } = req.body;

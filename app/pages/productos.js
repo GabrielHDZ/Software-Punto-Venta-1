@@ -20,17 +20,16 @@ const Button = styled.button`
 `;
 const ContentGlobal=styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-`;
-const Contenedor=styled.div`
-display:flex;
-padding:0;
+  grid-template-columns: auto auto auto auto;
+  padding:5%;
+  @media all and (max-width: 800px) {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
   @media all and (max-width: 600px) {
-    grid-column: 1 / 4;
-    grid-row: 1;
-}
+    display: grid;
+    grid-template-columns:auto;
+  }
 `;
 class Child extends React.Component{
   constructor(props){
@@ -175,18 +174,16 @@ class Productos extends Component{
     let modal=this.state.showModal ? <Child onClick={this.closeModal}/>:null;
     return (
       <ContentGlobal>
-        <Contenedor>
-              { 
-                this.state.tareas.map(tarea => {
-                  return (
-                    <CardProducto key={tarea._id} data={tarea} onDelete={this.deleteTask} onEdit={this.editTask} />
-                  )
-                })
-              }
-            <div>
-            <Boton_flotante recargaData={this.fetchTasks}/>
-            </div>
-        </Contenedor>
+        { 
+          this.state.tareas.map(tarea => {
+            return (
+              <CardProducto key={tarea._id} data={tarea} onDelete={this.deleteTask} onEdit={this.editTask} />
+            )
+          })
+        }
+      <div>
+      <Boton_flotante recargaData={this.fetchTasks}/>
+      </div>
       </ContentGlobal>
       
     )

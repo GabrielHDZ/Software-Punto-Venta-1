@@ -16,6 +16,8 @@ export default class ModaldeProducto extends React.Component{
                             <br/>
                             <span>Agregar Venta</span>
                             <br/>
+                            <a onClick={this.props.onClose}>Agregar como nuevo producto</a>
+                            <br/>
                             <a onClick={this.props.onClose}>Close</a>
                             </li>
                             

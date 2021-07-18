@@ -54,7 +54,7 @@ export default class ModalNuevoProducto extends Component{
         this.state={
             nombre:'',
             presentacion:'',
-            codigo:'',
+            codigo:this.props.codigo,
             descripcion:'',
             openLector:false,
             _id:''
@@ -65,6 +65,16 @@ export default class ModalNuevoProducto extends Component{
         this.retornoExitosoLector=this.retornoExitosoLector.bind(this);
         this.handleChange=this.handleChange.bind(this);
         this.addNewProduct=this.addNewProduct.bind(this);
+    }
+    componentDidMount(){
+        if(this.state.codigo){
+            //consulta a la bd los datos del producto basado en el codigo de barras obtenido
+            fetch(`/api/productos/${this.state.codigo}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            });
+        }
     }
     modalLector(){
         this.setState({openLector:true});
@@ -118,7 +128,6 @@ export default class ModalNuevoProducto extends Component{
                 .then(data=>{
                     console.log('Respuesta del servidor: ',data);
                     this.setState({nombre:'',presentacion:'',codigo:'',descripcion:''});
-                    this.props.recargaData;
                 })
                 .catch(err=>console.error(err));
                 

@@ -148,7 +148,7 @@ const Btn_flotante=styled.button`
             let modalOpciones=this.state.showOptions? <ModalOpciones openCamera={this.openCamera} onClose={this.closeModals} addNewProducto={this.openNewProducto} />:null
             let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.openModalOptions} escribirCodigo={this.asignar_codigo}/>:null
             let ModalProducto=this.state.showProd? <ModaldeProducto codeProd={this.state.codigo_barra}/>:null 
-            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals}/>:null
+            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra}/>:null
             return(
                 <>
                     <div>

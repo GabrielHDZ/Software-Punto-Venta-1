@@ -5,7 +5,6 @@ const Div1=styled.div`
     background-color:#FEDBD0;
     border:1px solid #442c2e;
     border-radius:5%;
-    width:180px;
     padding:0;
     margin:15px;
     transition: all 300ms ease 0ms;
