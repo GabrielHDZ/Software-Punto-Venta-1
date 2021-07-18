@@ -127,7 +127,7 @@ const Btn_flotante=styled.button`
         }
         asignar_codigo(codigo){
             this.setState({codigo_barra:codigo,
-                showProd:true,
+                showNuevoProducto:true,
                 showModalEscaner:false,
                 showNuevoProducto:false})
         }
@@ -155,7 +155,6 @@ const Btn_flotante=styled.button`
                         {boton}
                         {modalOpciones}
                         {modalEscaner}
-                        {ModalProducto}
                         {ModalNewProducto}
                     </div>
                 </>
