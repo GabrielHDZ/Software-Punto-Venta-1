@@ -128,7 +128,8 @@ const Btn_flotante=styled.button`
             this.setState({codigo_barra:codigo,
                 showNuevoProducto:true,
                 showModalEscaner:false,
-                showNuevoProducto:false})
+                showBtnModalOptions:false,
+                showOptions:false})
         }
         openNewProducto(){
             this.setState({showOptions:false,
@@ -146,7 +147,6 @@ const Btn_flotante=styled.button`
             </Btn_flotante>):null;
             let modalOpciones=this.state.showOptions? <ModalOpciones openCamera={this.openCamera} onClose={this.closeModals} addNewProducto={this.openNewProducto} />:null
             let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.openModalOptions} escribirCodigo={this.asignar_codigo}/>:null
-            let ModalProducto=this.state.showProd? <ModaldeProducto codeProd={this.state.codigo_barra}/>:null 
             let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra}/>:null
             return(
                 <>
