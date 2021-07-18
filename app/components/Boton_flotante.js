@@ -4,7 +4,6 @@ import {TiPlusOutline} from "react-icons/ti";
 import { IconContext } from "react-icons";
 import Modal from '../Modal';
 import ModalCamera from './LectorCodeBarras';
-import ModaldeProducto from './ModalInfoProducto';
 import ModalNuevoProducto from './ModalNuevoProducto';
 
 const Btn_flotante=styled.button`

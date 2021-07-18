@@ -167,6 +167,9 @@ export default class ModalCamera extends React.Component{
         });
         Quagga.onDetected(this.stateCode);  
     }
+    componentWillUnmount() {
+        Quagga.offDetected(this.stateCode);
+    }
     
     render(){
         return(
