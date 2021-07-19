@@ -67,15 +67,20 @@ export default class ModalNuevoProducto extends Component{
         this.addNewProduct=this.addNewProduct.bind(this);
     }
     componentDidMount(){
-        console.log('esto se ejecuto');
+        
         if(this.state.codigo){
+            console.log('esto se ejecuto');
             //consulta a la bd los datos del producto basado en el codigo de barras obtenido
-            fetch(`/api/productos/${this.state.codigo}`)
+            this.consultaObjeto(this.state.codigo)
+        }
+    }
+
+    consultaObjeto(codi){
+        fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
-                console.log('data response' +data);
+                console.log('data response',data);
             });
-        }
     }
     modalLector(){
         this.setState({openLector:true});
