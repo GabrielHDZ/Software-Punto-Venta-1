@@ -81,6 +81,7 @@ export default class ModalNuevoProducto extends Component{
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
+                console.log("datos",data._id,data)
                 if(data._id){
                     this.setState({
                         nombre:data.nombre,
@@ -91,7 +92,7 @@ export default class ModalNuevoProducto extends Component{
                     })
                 }else{
                     //no esta registrado el producto escaneado
-                    this.setState({enExistencia:false})
+                    this.setState({existe:false})
                 }
             });
     }
