@@ -59,7 +59,7 @@ export default class ModalNuevoProducto extends Component{
             openLector:false,
             existeDatos:false,
             inexistenciaDatos:false,
-            form:true,
+            form:false,
             _id:''
         }
 
@@ -74,34 +74,36 @@ export default class ModalNuevoProducto extends Component{
         if(this.state.codigo){
             //consulta a la bd los datos del producto basado en el codigo de barras obtenido
             this.consultaObjeto(this.state.codigo)
+        }else{
+            this.setState({form:true});
         }
     }
 
     consultaObjeto(codi){
         fetch(`/api/productos/code/${codi}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if(data.length===0){
-                    console.log('no se recuperaron datos del codigo de barras ingresado')
-                        this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
-                }else{
-                    data.map(datos=>{
-                    console.log("datos",datos)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.length===0){
+                console.log('no se recuperaron datos del codigo de barras ingresado')
+                    this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
+            }else{
+                data.map(datos=>{
+                console.log("datos",datos)
                     if(datos._id){
-                    this.setState({
-                        nombre:datos.nombre,
-                        presentacion:datos.presentacion,
-                        codigo:datos.codigo,
-                        descripcion:datos.descripcion,
-                        form:false,
-                        existeDatos:true,
-                        inexistenciaDatos:false
-                    })
+                        this.setState({
+                            nombre:datos.nombre,
+                            presentacion:datos.presentacion,
+                            codigo:datos.codigo,
+                            descripcion:datos.descripcion,
+                            form:false,
+                            existeDatos:true,
+                            inexistenciaDatos:false
+                        })
                     }
-                    })
-                }
-            });
+                })
+            }
+        });
     }
     modalLector(){
         this.setState({openLector:true});
