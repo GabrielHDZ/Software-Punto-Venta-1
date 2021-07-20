@@ -57,7 +57,8 @@ export default class ModalNuevoProducto extends Component{
             codigo:this.props.codigo,
             descripcion:'',
             openLector:false,
-            existe:false,
+            existeDatos:false,
+            inexistenciaDatos:false,
             form:true,
             _id:''
         }
@@ -67,6 +68,7 @@ export default class ModalNuevoProducto extends Component{
         this.retornoExitosoLector=this.retornoExitosoLector.bind(this);
         this.handleChange=this.handleChange.bind(this);
         this.addNewProduct=this.addNewProduct.bind(this);
+        this.mostrarForm=this.mostrarForm.bind(this);
     }
     componentDidMount(){
         if(this.state.codigo){
@@ -89,11 +91,12 @@ export default class ModalNuevoProducto extends Component{
                         presentacion:datos.presentacion,
                         codigo:datos.codigo,
                         descripcion:datos.descripcion,
-                        existe:true
+                        existeDatos:true,
+                        inexistenciaDatos:false
                     })
                 }else{
                     //no esta registrado el producto escaneado
-                    this.setState({existe:false})
+                    this.setState({existeDatos:false,inexistenciaDatos:true})
                 }
                 })
             });
@@ -106,6 +109,9 @@ export default class ModalNuevoProducto extends Component{
     }
     retornoExitosoLector(code){
         this.setState({openLector:false,codigo:code});
+    }
+    mostrarForm(){
+        this.setState({form:true,existeDatos:false,inexistenciaDatos:false})
     }
     handleChange(e){
         const{name,value}=e.target;
@@ -180,7 +186,7 @@ export default class ModalNuevoProducto extends Component{
         </Form> ):null;
         let lectorModal=this.state.openLector? <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         
-        let presentacion=this.state.existe?(<ul>
+        let mensajeExistencia=this.state.existeDatos?(<ul>
                                                 <li>
                                                     <p>{this.state.nombre}</p>
                                                     <br/>
@@ -190,9 +196,15 @@ export default class ModalNuevoProducto extends Component{
                                                     <br/>
                                                     <p>{this.state.descripcion}</p>
                                                     <br/>
+                                                    <Button>Agregar a venta</Button>
                                                 </li>
                                             </ul>
-                                    ):(<p>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</p>);
+                                    ):null
+        let mensajeInexistencia=this.state.inexistenciaDatos?(<div>
+            <p>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</p>
+            <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
+            <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
+        </div>):null
         return(  
             <>
             <Modal>
@@ -207,7 +219,8 @@ export default class ModalNuevoProducto extends Component{
                                 </IconContext.Provider>
                             </button>
                             {form}
-                            {presentacion}
+                            {mensajeExistencia}
+                            {mensajeInexistencia}
                         </Contenedor3>
                     </Contenedor2>
                 </Contenedor>
