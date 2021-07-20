@@ -81,9 +81,10 @@ export default class ModalNuevoProducto extends Component{
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 if(!data){
                     console.log('no se recuperaron datos del codigo de barras ingresado')
-                        this.setState({existeDatos:false,inexistenciaDatos:true})
+                        this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
                 }else{
                     data.map(datos=>{
                     console.log("datos",datos)
@@ -93,9 +94,9 @@ export default class ModalNuevoProducto extends Component{
                         presentacion:datos.presentacion,
                         codigo:datos.codigo,
                         descripcion:datos.descripcion,
+                        form:false,
                         existeDatos:true,
-                        inexistenciaDatos:false,
-                        form:false
+                        inexistenciaDatos:false
                     })
                     }
                     })
