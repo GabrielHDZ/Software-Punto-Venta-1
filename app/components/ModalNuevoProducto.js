@@ -84,7 +84,7 @@ export default class ModalNuevoProducto extends Component{
             .then(res => res.json())
             .then(data => {
                 data.map(datos=>{
-                    console.log("datos",datos._id,datos)
+                    console.log("datos",datos)
                     if(datos._id){
                     this.setState({
                         nombre:datos.nombre,
@@ -96,6 +96,7 @@ export default class ModalNuevoProducto extends Component{
                     })
                 }else{
                     //no esta registrado el producto escaneado
+                    console.log('no se recuperaron datos del codigo de barras ingresado')
                     this.setState({existeDatos:false,inexistenciaDatos:true})
                 }
                 })
