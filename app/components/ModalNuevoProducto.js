@@ -82,7 +82,7 @@ export default class ModalNuevoProducto extends Component{
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if(!data){
+                if(data.length===0){
                     console.log('no se recuperaron datos del codigo de barras ingresado')
                         this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
                 }else{
