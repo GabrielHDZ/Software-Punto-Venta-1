@@ -199,6 +199,7 @@ export default class ModalNuevoProducto extends Component{
                                                     <p>{this.state.descripcion}</p>
                                                     <br/>
                                                     <Button>Agregar a venta</Button>
+                                                    <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
                                                 </li>
                                             </ul>
                                     ):null
