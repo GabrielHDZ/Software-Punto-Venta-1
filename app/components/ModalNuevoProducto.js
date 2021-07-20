@@ -72,9 +72,7 @@ export default class ModalNuevoProducto extends Component{
     }
     componentDidMount(){
         if(this.state.codigo){
-            console.log('esto se ejecuto');
             //consulta a la bd los datos del producto basado en el codigo de barras obtenido
-            this.setState({form:false})
             this.consultaObjeto(this.state.codigo)
         }
     }
@@ -83,7 +81,11 @@ export default class ModalNuevoProducto extends Component{
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
-                data.map(datos=>{
+                if(!data){
+                    console.log('no se recuperaron datos del codigo de barras ingresado')
+                        this.setState({existeDatos:false,inexistenciaDatos:true})
+                }else{
+                    data.map(datos=>{
                     console.log("datos",datos)
                     if(datos._id){
                     this.setState({
@@ -92,14 +94,12 @@ export default class ModalNuevoProducto extends Component{
                         codigo:datos.codigo,
                         descripcion:datos.descripcion,
                         existeDatos:true,
-                        inexistenciaDatos:false
+                        inexistenciaDatos:false,
+                        form:false
                     })
-                }else{
-                    //no esta registrado el producto escaneado
-                    console.log('no se recuperaron datos del codigo de barras ingresado')
-                    this.setState({existeDatos:false,inexistenciaDatos:true})
+                    }
+                    })
                 }
-                })
             });
     }
     modalLector(){
