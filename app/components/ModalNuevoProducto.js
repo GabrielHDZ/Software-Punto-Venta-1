@@ -57,6 +57,8 @@ export default class ModalNuevoProducto extends Component{
             codigo:this.props.codigo,
             descripcion:'',
             openLector:false,
+            existe:false,
+            form:true,
             _id:''
         }
 
@@ -67,10 +69,10 @@ export default class ModalNuevoProducto extends Component{
         this.addNewProduct=this.addNewProduct.bind(this);
     }
     componentDidMount(){
-        
         if(this.state.codigo){
             console.log('esto se ejecuto');
             //consulta a la bd los datos del producto basado en el codigo de barras obtenido
+            this.setState({form:false})
             this.consultaObjeto(this.state.codigo)
         }
     }
@@ -79,7 +81,18 @@ export default class ModalNuevoProducto extends Component{
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
-                console.log('data response',data);
+                if(data._id){
+                    this.setState({
+                        nombre:data.nombre,
+                        presentacion:data.presentacion,
+                        codigo:data.codigo,
+                        descripcion:data.descripcion,
+                        existe:true
+                    })
+                }else{
+                    //no esta registrado el producto escaneado
+                    this.setState({enExistencia:false})
+                }
             });
     }
     modalLector(){
@@ -144,9 +157,40 @@ export default class ModalNuevoProducto extends Component{
     }
 
     render(){
-        let lectorModal=this.state.openLector? 
-        <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
-        return(
+        let form=this.state.form? (<Form>
+            <P>Nombre del Producto</P>
+            <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
+            <P>Presentacion</P>
+            <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
+            <P>Codigo de barras</P>
+            <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
+            <Button onClick={this.modalLector}>
+                <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
+                    <div>
+                        <ImQrcode />
+                    </div>
+                </IconContext.Provider>
+            </Button></Contenedor4>
+            <P>Descripcion</P>
+            <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
+            <Button onClick={this.addNewProduct}>Guardar</Button>
+        </Form> ):null;
+        let lectorModal=this.state.openLector? <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
+        
+        let presentacion=this.state.existe?(<ul>
+                                                <li>
+                                                    <p>{this.state.nombre}</p>
+                                                    <br/>
+                                                    <p>{this.state.presentacion}</p>
+                                                    <br/>
+                                                    <p>{this.state.codigo}</p>
+                                                    <br/>
+                                                    <p>{this.state.descripcion}</p>
+                                                    <br/>
+                                                </li>
+                                            </ul>
+                                    ):(<p>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</p>);
+        return(  
             <>
             <Modal>
                 <Contenedor>
@@ -159,24 +203,8 @@ export default class ModalNuevoProducto extends Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
-                            <Form>
-                                <P>Nombre del Producto</P>
-                                <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
-                                <P>Presentacion</P>
-                                <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
-                                <P>Codigo de barras</P>
-                                <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
-                                <Button onClick={this.modalLector}>
-                                    <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
-                                        <div>
-                                            <ImQrcode />
-                                        </div>
-                                    </IconContext.Provider>
-                                </Button></Contenedor4>
-                                <P>Descripcion</P>
-                                <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
-                                <Button onClick={this.addNewProduct}>Guardar</Button>
-                            </Form>  
+                            {form}
+                            {presentacion}
                         </Contenedor3>
                     </Contenedor2>
                 </Contenedor>
