@@ -78,11 +78,11 @@ export default class ModalNuevoProducto extends Component{
     }
 
     consultaObjeto(codi){
-        let datos;
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data._id)
+                console.log(data);
                 
             });
     }
