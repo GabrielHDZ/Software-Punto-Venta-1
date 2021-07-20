@@ -78,22 +78,27 @@ export default class ModalNuevoProducto extends Component{
     }
 
     consultaObjeto(codi){
+        let datos;
         fetch(`/api/productos/code/${codi}`)
             .then(res => res.json())
             .then(data => {
-                console.log("datos",data._id,data)
-                if(data._id){
+                data.map((datos)=>{
+                    console.log("datos",datos._id,datos)
+                    if(datos._id){
                     this.setState({
-                        nombre:data.nombre,
-                        presentacion:data.presentacion,
-                        codigo:data.codigo,
-                        descripcion:data.descripcion,
+                        nombre:datos.nombre,
+                        presentacion:datos.presentacion,
+                        codigo:datos.codigo,
+                        descripcion:datos.descripcion,
                         existe:true
                     })
                 }else{
                     //no esta registrado el producto escaneado
                     this.setState({existe:false})
                 }
+                })
+                
+                
             });
     }
     modalLector(){
