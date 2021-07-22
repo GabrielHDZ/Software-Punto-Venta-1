@@ -3,25 +3,16 @@ import styled from 'styled-components';
 import {FcFullTrash} from 'react-icons/fc';
 import { RiEditLine } from "react-icons/ri";
 import Modal from '../Modal'
+
+import { IconContext } from "react-icons";
+import {ImQrcode} from 'react-icons/im';
 import Boton_flotante from '../components/Boton_flotante';
-import {Form} from '../components/formularioComponent';
-import CardProducto from '../components/CardProducto';
+import {Ul,List,List2,Input,Form,P,DivButtons,Button} from '../components/formularioComponent';
 
-const Button = styled.button`
-  /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
 
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-`;
 const ContentGlobal=styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
-  padding:5%;
   @media all and (max-width: 800px) {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -31,54 +22,71 @@ const ContentGlobal=styled.div`
     grid-template-columns:auto;
   }
 `;
-class Child extends React.Component{
-  constructor(props){
-    super(props)
-  }
-  render(){
-    return(
-      <>
-        <Modal>
-          <div className='modal-background'>
-            <div className='modal-content'>
-              <Form>
-                <h2>Agregar nuevo producto</h2>
-                <input name='nombre'></input>
-                <input name='descripcion' type='text'></input>
-              </Form>
-              <button onClick={this.props.onClick}>Close Modal</button>
-            </div> 
-          </div>
-        </Modal>
-      </>
-    )
-  }
-}
 
+const Div1=styled.div`
+    background-color:#FEDBD0;
+    border:1px solid #442c2e;
+    padding:0;
+    margin:0px;
+    transition: all 300ms ease 0ms;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    &:hover {
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-7px);
+    }
+`;
+
+const Div2=styled.div`
+    margin:15px;
+`;
+const Contenedor3=styled.div`
+    background-color:#442c2e;
+    border-radius:5%;
+    grid-column: 2;
+    grid-row: 4;
+    transition: all 300ms ease 0ms;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    &:hover {
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-7px);
+    }
+`;
+const Contenedor4=styled.div`
+    display:flex;
+    flex-direction:row;
+`;
+
+class CardProducto extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            <Div1>
+                <Div2>
+                    <h3>{this.props.data.nombre}</h3>
+                    <span>{this.props.data.presentacion}</span>
+                    <span>{this.props.data.descripcion}</span>
+                    <span>{this.props.data.codigo}</span>
+                </Div2>
+            </Div1>
+        )
+    }
+}
 class Productos extends Component{
   constructor(){
     super();
     this.state={
-      titulo:'',
-      descripcion:'',
-      _id:'',
-      tareas:[],
-      showModal:false
+      tareas:[]
     };
-    this.handleChange=this.handleChange.bind(this);
     this.addTarea=this.addTarea.bind(this);
-    this.showModal=this.showModal.bind(this);
-    this.closeModal=this.closeModal.bind(this);
     this.deleteTask=this.deleteTask.bind(this);
     this.editTask=this.editTask.bind(this);
     this.fetchTasks=this.fetchTasks.bind(this);
   }
-  showModal(){
-    this.setState({showModal:true});
-  }
-  closeModal(){
-    this.setState({showModal:false});
-  }
+
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({
@@ -171,7 +179,6 @@ class Productos extends Component{
   }
 
   render() {
-    let modal=this.state.showModal ? <Child onClick={this.closeModal}/>:null;
     return (
       <ContentGlobal>
         { 
@@ -185,7 +192,6 @@ class Productos extends Component{
       <Boton_flotante recargaData={this.fetchTasks}/>
       </div>
       </ContentGlobal>
-      
     )
   }
 }

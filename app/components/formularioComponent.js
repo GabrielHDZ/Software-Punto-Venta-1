@@ -82,3 +82,16 @@ border-radius: 10px;
 border-bottom:2px solid #a6af13;
 outline:none;
 height:40px;`;
+
+export const Contenedor3=styled.div`
+    background-color:#442c2e;
+    border-radius:5%;
+    grid-column: 2;
+    grid-row: 4;
+    position: fixed;
+    @media all and (max-width: 850px) {
+        display:flex;
+        flex-flow: column wrap;
+        padding:0;
+    }
+`;

@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import {Ul,List,List2,Input,Form,P,DivButtons} from '../components/formularioComponent';
+import {Ul,List,List2,Input,Form,P,DivButtons,Contenedor3} from '../components/formularioComponent';
 import {IconContext} from 'react-icons';
 import { BiEdit,BiTrash} from "react-icons/bi";
 import Boton_flotante from '../components/Boton_flotante';
 import styled from 'styled-components';
 
-const Contenedor3=styled.div`
-    background-color:#442c2e;
-    border-radius:5%;
-    grid-column: 2;
-    grid-row: 4;
-    position: fixed;
-    @media all and (max-width: 850px) {
-        display:flex;
-        flex-flow: column wrap;
-        padding:0;
-    }
-`;
+
 class Home extends Component {
     constructor(props){
         super(props);
