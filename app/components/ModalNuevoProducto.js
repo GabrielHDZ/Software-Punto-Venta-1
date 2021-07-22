@@ -207,7 +207,7 @@ export default class ModalNuevoProducto extends Component{
             </Form>):null
         let mensajeInexistencia=this.state.inexistenciaDatos?
             (<Form>
-                <P>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
+                <P>El codigo {this.state.codigo} no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
                 <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
                 <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
             </Form>):null
