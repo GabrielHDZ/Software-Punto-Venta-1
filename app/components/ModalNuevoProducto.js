@@ -170,51 +170,46 @@ export default class ModalNuevoProducto extends Component{
     }
 
     render(){
-        let form=this.state.form? (<Form>
-            <P>Nombre del Producto</P>
-            <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
-            <P>Presentacion</P>
-            <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
-            <P>Codigo de barras</P>
-            <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
-            <Button onClick={this.modalLector}>
-                <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
-                    <div>
-                        <ImQrcode />
-                    </div>
-                </IconContext.Provider>
-            </Button></Contenedor4>
-            <P>Descripcion</P>
-            <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
-            <Button onClick={this.addNewProduct}>Guardar</Button>
-        </Form> ):null;
+        let form=this.state.form? 
+            (<Form>
+                <P>Nombre del Producto</P>
+                <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
+                <P>Presentacion</P>
+                <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
+                <P>Codigo de barras</P>
+                <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
+                <Button onClick={this.modalLector}>
+                    <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
+                        <div>
+                            <ImQrcode />
+                        </div>
+                    </IconContext.Provider>
+                </Button></Contenedor4>
+                <P>Descripcion</P>
+                <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
+                <Button onClick={this.addNewProduct}>Guardar</Button>
+            </Form> ):null;
         let lectorModal=this.state.openLector? 
         <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         
         let mensajeExistencia=this.state.existeDatos?
             (<Form>
-                <ul>
-                    <li>
-                        <P>{this.state.nombre}</P>
-                        <br/>
-                        <P>{this.state.presentacion}</P>
-                        <br/>
-                        <P>{this.state.codigo}</P>
-                        <br/>
-                        <P>{this.state.descripcion}</P>
-                        <br/>
-                        <Button>Agregar a venta</Button>
-                        <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-                    </li>
-                </ul>
+                <P>{this.state.nombre}</P>
+                <br/>
+                <P>{this.state.presentacion}</P>
+                <br/>
+                <P>{this.state.codigo}</P>
+                <br/>
+                <P>{this.state.descripcion}</P>
+                <br/>
+                <Button>Agregar a venta</Button>
+                <Button onClick={this.props.openCam}>Escanear de nuevo</Button>       
             </Form>):null
         let mensajeInexistencia=this.state.inexistenciaDatos?
             (<Form>
-                <div>
-                    <P>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
-                    <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-                    <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
-                </div>
+                <P>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
+                <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
+                <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
             </Form>):null
         return(  
             <>
