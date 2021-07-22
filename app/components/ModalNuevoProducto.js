@@ -188,28 +188,34 @@ export default class ModalNuevoProducto extends Component{
             <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
             <Button onClick={this.addNewProduct}>Guardar</Button>
         </Form> ):null;
-        let lectorModal=this.state.openLector? <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
+        let lectorModal=this.state.openLector? 
+        <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         
-        let mensajeExistencia=this.state.existeDatos?(<ul>
-                                                <li>
-                                                    <p>{this.state.nombre}</p>
-                                                    <br/>
-                                                    <p>{this.state.presentacion}</p>
-                                                    <br/>
-                                                    <p>{this.state.codigo}</p>
-                                                    <br/>
-                                                    <p>{this.state.descripcion}</p>
-                                                    <br/>
-                                                    <Button>Agregar a venta</Button>
-                                                    <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-                                                </li>
-                                            </ul>
-                                    ):null
-        let mensajeInexistencia=this.state.inexistenciaDatos?(<div>
-            <p>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</p>
-            <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-            <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
-        </div>):null
+        let mensajeExistencia=this.state.existeDatos?
+            (<Form>
+                <ul>
+                    <li>
+                        <P>{this.state.nombre}</P>
+                        <br/>
+                        <P>{this.state.presentacion}</P>
+                        <br/>
+                        <P>{this.state.codigo}</P>
+                        <br/>
+                        <P>{this.state.descripcion}</P>
+                        <br/>
+                        <Button>Agregar a venta</Button>
+                        <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
+                    </li>
+                </ul>
+            </Form>):null
+        let mensajeInexistencia=this.state.inexistenciaDatos?
+            (<Form>
+                <div>
+                    <P>El codigo no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
+                    <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
+                    <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
+                </div>
+            </Form>):null
         return(  
             <>
             <Modal>
