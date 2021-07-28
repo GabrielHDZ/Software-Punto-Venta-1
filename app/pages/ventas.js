@@ -3,8 +3,6 @@ import {Ul,List,List2,Input,Form,P,DivButtons,Contenedor3} from '../components/f
 import {IconContext} from 'react-icons';
 import { BiEdit,BiTrash} from "react-icons/bi";
 import Boton_flotante from '../components/Boton_flotante';
-import styled from 'styled-components';
-
 
 class Home extends Component {
     constructor(props){

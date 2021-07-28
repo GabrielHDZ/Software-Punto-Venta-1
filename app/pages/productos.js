@@ -40,27 +40,14 @@ const Div1=styled.div`
 const Div2=styled.div`
     margin:15px;
 `;
-const Contenedor3=styled.div`
-    background-color:#442c2e;
-    border-radius:5%;
-    grid-column: 2;
-    grid-row: 4;
-    transition: all 300ms ease 0ms;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    &:hover {
-        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-        transform: translateY(-7px);
-    }
-`;
-const Contenedor4=styled.div`
-    display:flex;
-    flex-direction:row;
-`;
 
 class CardProducto extends React.Component{
     constructor(props){
         super(props);
+        this.delete=this.delete.bind(this);
+    }
+    delete(id){
+      this.props.onDelete(id);
     }
     render(){
         return(
@@ -70,6 +57,8 @@ class CardProducto extends React.Component{
                     <span>{this.props.data.presentacion}</span>
                     <span>{this.props.data.descripcion}</span>
                     <span>{this.props.data.codigo}</span>
+                    <Button onClick={this.delete}>Borrar</Button>
+                    <Button>Editar</Button>
                 </Div2>
             </Div1>
         )

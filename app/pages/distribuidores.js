@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import Boton_flotante from '../components/Boton_flotante';
-class distribuidor extends Component{
+class Distribuidor extends Component{
     render(){
         return(
             <>
@@ -10,4 +10,4 @@ class distribuidor extends Component{
         )
     }
 }
-export default distribuidor;
+export default Distribuidor;
