@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import {TiPlusOutline} from "react-icons/ti";
 import {ImQrcode} from 'react-icons/im'
+import {MdAddShoppingCart} from 'react-icons/md'
 import { IconContext } from "react-icons";
 import Modal from '../Modal';
 import ModalCamera from './LectorCodeBarras';
 import ModalNuevoProducto from './ModalNuevoProducto';
 
 const Btn_flotante=styled.button`
-    font-size:20px; /* Cambiar el tamaño de la tipografia */
+    font-size:18px; /* Cambiar el tamaño de la tipografia */
     text-transform: uppercase; /* Texto en mayusculas */
     font-weight: bold; /* Fuente en negrita o bold */
     color: #ffffff; /* Color del texto */
@@ -18,14 +19,11 @@ const Btn_flotante=styled.button`
     padding: 5px 8px; /* Relleno del boton */
     border-radius: 50%;
     position: fixed;
-    bottom: 70px;
-    right: 1px;
+    bottom: 20px;
+    right: 20px;
     transition: all 300ms ease 0ms;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     z-index: 99;
-    border-bottom: none;
-    display: none;
-    visibility: hidden;
     &:hover {
         background-color: #FEDBD0; /* Color de fondo al pasar el cursor */
         box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
@@ -38,15 +36,12 @@ const Btn_flotante=styled.button`
         border-radius: 50%;
         bottom: 20px;
         right: 20px;
-        border-bottom: none;
-        display: block;
-        visibility: visible;
         
     }
     `;
 
     const Btn_flotante2=styled.button`
-    font-size:18px; /* Cambiar el tamaño de la tipografia */
+    font-size:16px; /* Cambiar el tamaño de la tipografia */
     text-transform: uppercase; /* Texto en mayusculas */
     font-weight: bold; /* Fuente en negrita o bold */
     color: #ffffff; /* Color del texto */
@@ -56,8 +51,8 @@ const Btn_flotante=styled.button`
     padding: 5px 8px; /* Relleno del boton */
     border-radius: 50%;
     position: fixed;
-    bottom: 20px;
-    right: 10px;
+    bottom: 80px;
+    right: 25px;
     transition: all 300ms ease 0ms;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     z-index: 99;
@@ -104,101 +99,108 @@ const Btn_flotante=styled.button`
         }
     `;
 
-    class ModalOpciones extends React.Component{
-        constructor(props){
-            super(props);
-        }
-        render(){
-            return(
-                <>
-                <Modal>
-                    <div className='modal-background'>
-                        <Menu>
-                            <ul>
-                                <Li><span>Agregar Venta</span></Li>
-                                <br/>
-                                <Li><a onClick={this.props.addNewProducto}>Agregar nuevo producto</a></Li>
-                                <br/>
-                                <Li><a onClick={this.props.onClose}>Close</a></Li>
-                            </ul>
-                        </Menu>
-                    </div>
-                </Modal>
-                </>
-            )
-        }
-    }
     export default class Boton_flotante extends React.Component{
         constructor(props){
             super(props)
-            this.state={showOptions:false,
-                        showBtnModalOptions:true,
+            this.state={showBtnEscaner:true,
+                        showBtnNewProducto:false,
+                        showBtnNewVenta:false,
                         showModalEscaner:false,
                         showNuevoProducto:false,
                         codigo_barra:''
             }
-            this.openModalOptions=this.openModalOptions.bind(this);
             this.closeModals=this.closeModals.bind(this);
             this.openCamera=this.openCamera.bind(this);
             this.asignar_codigo=this.asignar_codigo.bind(this);
             this.openNewProducto=this.openNewProducto.bind(this);
+            this.openNewCompra=this.openNewCompra.bind(this);
         }
-        openModalOptions(){
-            this.setState({showOptions:true,
-                showBtnModalOptions:false,
-                showModalEscaner:false,
-                showNuevoProducto:false})
+
+        componentDidMount(){
+            if(this.props.Clase==='venta'){
+                this.setState({showBtnNewVenta:true})
+            }else if(this.props.Clase==='producto'){
+                this.setState({showBtnNewProducto:true})
+            }
         }
         openCamera(){
-            this.setState({showOptions:false,
+            this.setState({
                 showModalEscaner:true,
-                showBtnModalOptions:false,
+                showBtnEscaner:false,
+                showBtnNewProducto:false,
+                showBtnNewVenta:false,
                 showNuevoProducto:false})
         }
         closeModals(){
-            this.setState({showOptions:false,
-                showBtnModalOptions:true,
+            this.setState({showBtnEscaner:true,
+                showBtnNewProducto:false,
+                showBtnNewVenta:false,
                 showModalEscaner:false,
                 showNuevoProducto:false})
+            if(this.props.Clase==='venta'){
+                this.setState({showBtnNewVenta:true})
+            }else if(this.props.Clase==='producto'){
+                this.setState({showBtnNewProducto:true})
+            }
         }
         asignar_codigo(codigo){
             this.setState({codigo_barra:codigo,
                 showNuevoProducto:true,
-                showModalEscaner:false,
-                showBtnModalOptions:false,
-                showOptions:false})
+                showBtnEscaner:false,
+                showBtnNewProducto:false,
+                showBtnNewVenta:false,
+                showModalEscaner:false})
         }
         openNewProducto(){
-            this.setState({showOptions:false,
+            this.setState({showBtnEscaner:false,
+                showBtnNewProducto:false,
+                showBtnNewVenta:false,
                 showModalEscaner:false,
-                showBtnModalOptions:false,
                 showNuevoProducto:true})
         }
+        openNewCompra(){
+            this.setState({
+                showBtnEscaner:false,
+                showBtnNewProducto:false,
+                showNtbNewVenta:false,
+                showModalEscaner:false,
+                showNuevoProducto:false
+            })
+        }
         render(){
-            let boton=this.state.showBtnModalOptions? (<Btn_flotante onClick={this.openModalOptions}>
+            //Btn Add new Producto
+            let btnNewProducto=this.state.showBtnNewProducto? (<Btn_flotante onClick={this.openNewProducto}>
                 <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
                     <div>
                         <TiPlusOutline />
                     </div>
                 </IconContext.Provider>
             </Btn_flotante>):null;
-
-            let boton2=this.state.showBtnModalOptions?(<Btn_flotante2 onClick={this.openCamera}>
+            //Btn Add new Producto
+            let btnNewCompra=this.state.showBtnNewVenta? (<Btn_flotante onClick={this.openNewProducto}>
+                <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
+                    <div>
+                        <MdAddShoppingCart />
+                    </div>
+                </IconContext.Provider>
+            </Btn_flotante>):null;
+            
+            let boton2=this.state.showBtnEscaner?(<Btn_flotante2 onClick={this.openCamera}>
                 <IconContext.Provider value={{ color: "white", size:"1.5em", title:"Ventas"}}>
                     <div>
                         <ImQrcode />
                     </div>
                 </IconContext.Provider>
             </Btn_flotante2>):null;
-            let modalOpciones=this.state.showOptions? <ModalOpciones onClose={this.closeModals} addNewProducto={this.openNewProducto} />:null
+
             let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.closeModals} escribirCodigo={this.asignar_codigo}/>:null
             let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra} openCam={this.openCamera}/>:null
             return(
                 <>
                     <div>
-                        {boton}
+                        {btnNewProducto}
+                        {btnNewCompra}
                         {boton2}
-                        {modalOpciones}
                         {modalEscaner}
                         {ModalNewProducto}
                     </div>

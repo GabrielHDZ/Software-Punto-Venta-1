@@ -8,6 +8,7 @@ class Home extends Component {
     constructor(props){
         super(props);
         this.state={
+            propiedad_btn:'venta',
             nombre:'',
             cantidad:'',
             preciou:'',
@@ -196,7 +197,7 @@ class Home extends Component {
                         </table>
                     </List2>
                     <div>
-                        <Boton_flotante/>
+                        <Boton_flotante Clase={this.state.propiedad_btn}/>
                     </div>
                 </Ul>
             

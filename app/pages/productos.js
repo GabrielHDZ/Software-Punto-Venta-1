@@ -68,6 +68,7 @@ class Productos extends Component{
   constructor(){
     super();
     this.state={
+      propiedad_btn:'producto',
       tareas:[]
     };
     this.addTarea=this.addTarea.bind(this);
@@ -178,7 +179,7 @@ class Productos extends Component{
           })
         }
       <div>
-      <Boton_flotante recargaData={this.fetchTasks}/>
+      <Boton_flotante Clase={this.state.propiedad_btn}/>
       </div>
       </ContentGlobal>
     )
