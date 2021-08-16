@@ -31,9 +31,9 @@ router.post('/', async(req, res) => {
 
 // UPDATE a new task
 router.put('/:id', async(req, res) => {
-    const { titulo, descripcion } = req.body;
-    const newTask = { titulo, descripcion };
-    await Producto.findByIdAndUpdate(req.params.id, newTask);
+    const { nombre,presentacion,codigo,descripcion } = req.body;
+    const newProduct = { nombre,presentacion,codigo,descripcion };
+    await Producto.findByIdAndUpdate(req.params.id, newProduct);
     res.json({ status: 'Producto actualizado' });
 });
 

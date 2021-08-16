@@ -114,6 +114,7 @@ const Btn_flotante=styled.button`
             this.asignar_codigo=this.asignar_codigo.bind(this);
             this.openNewProducto=this.openNewProducto.bind(this);
             this.openNewCompra=this.openNewCompra.bind(this);
+            this.onConsult=this.onConsult.bind(this);
         }
 
         componentDidMount(){
@@ -167,6 +168,10 @@ const Btn_flotante=styled.button`
                 showNuevoProducto:false
             })
         }
+
+        onConsult(){
+            this.props.onConsult();
+        }
         render(){
             //Btn Add new Producto
             let btnNewProducto=this.state.showBtnNewProducto? (<Btn_flotante onClick={this.openNewProducto}>
@@ -194,7 +199,7 @@ const Btn_flotante=styled.button`
             </Btn_flotante2>):null;
 
             let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.closeModals} escribirCodigo={this.asignar_codigo}/>:null
-            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra} openCam={this.openCamera}/>:null
+            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra} openCam={this.openCamera} onConsult={this.onConsult}/>:null
             return(
                 <>
                     <div>

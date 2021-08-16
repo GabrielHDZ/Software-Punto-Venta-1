@@ -60,7 +60,7 @@ export default class ModalNuevoProducto extends Component{
             existeDatos:false,
             inexistenciaDatos:false,
             form:false,
-            _id:''
+            _id:this.props.identificador
         }
 
         this.modalLector=this.modalLector.bind(this);
@@ -69,11 +69,14 @@ export default class ModalNuevoProducto extends Component{
         this.handleChange=this.handleChange.bind(this);
         this.addNewProduct=this.addNewProduct.bind(this);
         this.mostrarForm=this.mostrarForm.bind(this);
+        this.CloseAndConsult=this.CloseAndConsult.bind(this);
     }
     componentDidMount(){
         if(this.state.codigo){
             //consulta a la bd los datos del producto basado en el codigo de barras obtenido
             this.consultaObjeto(this.state.codigo)
+        }else if(this.state._id){
+            this.consultaObjetoId(this.state._id)
         }else{
             this.setState({form:true});
         }
@@ -105,6 +108,25 @@ export default class ModalNuevoProducto extends Component{
             }
         });
     }
+
+    consultaObjetoId(id){
+        fetch(`/api/productos/${id}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.length===0){
+                console.log('no se recuperaron datos del codigo de barras ingresado')
+                    this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
+            }else{
+                this.setState({
+                    nombre:data.nombre,
+                    presentacion:data.presentacion,
+                    codigo:data.codigo,
+                    descripcion:data.descripcion,
+                    form:true
+                })
+            }
+        });
+    }
     modalLector(){
         this.setState({openLector:true});
     }
@@ -127,13 +149,13 @@ export default class ModalNuevoProducto extends Component{
         //e Es un evento sintetico
         e.preventDefault(); 
         if(this.state._id){
-            fetch(`/api/ventas/${this.state._id}`,{
+            fetch(`/api/productos/${this.state._id}`,{
                 method:'PUT',
                 body:JSON.stringify({
                     nombre:this.state.nombre,
-                    cantidad:this.state.cantidad,
-                    preciou:this.state.preciou,
-                    preciot:this.state.preciot
+                    presentacion:this.state.presentacion,
+                    codigo:this.state.codigo,
+                    descripcion:this.state.descripcion
                 }),
                 headers:{
                     'Accept': 'application/json',
@@ -142,8 +164,8 @@ export default class ModalNuevoProducto extends Component{
             })
             .then(res=>res.json())
             .then(data=>{
-                this.setState({_id:'',nombre:'',cantidad:'',preciou:'',preciot:''});
-                this.fetchTask();
+                this.setState({_id:'',nombre:'',presentacion:'',codigo:'',descripcion:''});
+                this.CloseAndConsult();
             });
         }else{
             //condicion para evaluar si todos los campos del formulario han sido rellenados
@@ -162,11 +184,16 @@ export default class ModalNuevoProducto extends Component{
                     this.setState({nombre:'',presentacion:'',codigo:'',descripcion:''});
                 })
                 .catch(err=>console.error(err));
-                
+                this.CloseAndConsult();
             }else{
             alert('Los campos de nombre y presentacion no pueden quedar vacios, por favor rellene estos campos');
             }
         }
+    }
+
+    CloseAndConsult(){
+        this.props.onConsult();
+        this.props.onClose();
     }
 
     render(){
@@ -190,7 +217,7 @@ export default class ModalNuevoProducto extends Component{
                 <Button onClick={this.addNewProduct}>Guardar</Button>
             </Form> ):null;
         let lectorModal=this.state.openLector? 
-        <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
+            <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         
         let mensajeExistencia=this.state.existeDatos?
             (<Form>

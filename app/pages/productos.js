@@ -8,6 +8,7 @@ import { IconContext } from "react-icons";
 import {ImQrcode} from 'react-icons/im';
 import Boton_flotante from '../components/Boton_flotante';
 import {Ul,List,List2,Input,Form,P,DivButtons,Button} from '../components/formularioComponent';
+import ModalNuevoProducto from '../components/ModalNuevoProducto';
 
 
 const ContentGlobal=styled.div`
@@ -44,23 +45,44 @@ const Div2=styled.div`
 class CardProducto extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+          modalEdicion:false
+        }
         this.delete=this.delete.bind(this);
+        this.mostrarModal=this.mostrarModal.bind(this);
+        this.seeCard=this.seeCard.bind(this);
+        this.consult=this.consult.bind(this);
     }
-    delete(id){
-      this.props.onDelete(id);
+    delete(){
+      this.props.onDelete(this.props.data._id);
     }
+    mostrarModal(){
+      this.setState({modalEdicion:true})
+    }
+    seeCard(){
+      this.setState({modalEdicion:false})
+    }
+    consult(){
+      this.props.onConsult();
+    }
+
     render(){
+        let generarModal=this.state.modalEdicion? 
+        <ModalNuevoProducto onClose={this.seeCard} identificador={this.props.data._id} onConsult={this.consult}/>:null;
         return(
+          <>
             <Div1>
-                <Div2>
-                    <h3>{this.props.data.nombre}</h3>
-                    <span>{this.props.data.presentacion}</span>
-                    <span>{this.props.data.descripcion}</span>
-                    <span>{this.props.data.codigo}</span>
-                    <Button onClick={this.delete}>Borrar</Button>
-                    <Button>Editar</Button>
-                </Div2>
+              <Div2>
+                  <h3>{this.props.data.nombre}</h3>
+                  <span>{this.props.data.presentacion}</span>
+                  <span>{this.props.data.descripcion}</span>
+                  <span>{this.props.data.codigo}</span>
+                  <Button onClick={this.delete}>Borrar</Button>
+                  <Button onClick={this.mostrarModal}>Editar</Button>
+              </Div2>
             </Div1>
+            {generarModal}
+            </>
         )
     }
 }
@@ -69,12 +91,12 @@ class Productos extends Component{
     super();
     this.state={
       propiedad_btn:'producto',
-      tareas:[]
+      tareas:[],
+      addTarea:''
     };
-    this.addTarea=this.addTarea.bind(this);
     this.deleteTask=this.deleteTask.bind(this);
-    this.editTask=this.editTask.bind(this);
     this.fetchTasks=this.fetchTasks.bind(this);
+    this.handleChange=this.handleChange.bind(this);
   }
 
   handleChange(e) {
@@ -83,47 +105,6 @@ class Productos extends Component{
       [name]: value
     });
   }
-
-  addTarea(e) {
-    e.preventDefault();
-    if(this.state._id) {
-      fetch(`/api/productos/${this.state._id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          titulo: this.state.titulo,
-          descripcion: this.state.descripcion
-        }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          /* MANDAR ALERTA DE QUE EL PRODUCTO HA SIDO ACTUALIZADO A LA BASE DE DATOS */
-          this.setState({_id: '', titulo: '', descripcion: ''});
-          this.fetchTasks();
-        });
-    } else {
-      fetch('/api/productos', {
-        method: 'POST',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          /* MANDAR ALERTA DE QUE EL PRODUCTO HA SIDO INGRESADO A LA BASE DE DATOS */
-          this.setState({titulo: '', descripcion: ''});
-          this.fetchTasks();
-        })
-        .catch(err => console.error(err));
-    }
-  }
-
   deleteTask(id) {
     if(confirm('Are you sure you want to delete it?')) {
       fetch(`/api/productos/${id}`, {
@@ -140,19 +121,6 @@ class Productos extends Component{
           this.fetchTasks();
         });
     }
-  }
-
-  editTask(id) {
-    fetch(`/api/productos/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          titulo: data.titulo,
-          descripcion: data.descripcion,
-          _id: data._id
-        });
-      });
   }
 
   componentDidMount() {
@@ -174,12 +142,12 @@ class Productos extends Component{
         { 
           this.state.tareas.map(tarea => {
             return (
-              <CardProducto key={tarea._id} data={tarea} onDelete={this.deleteTask} onEdit={this.editTask} />
+              <CardProducto key={tarea._id} data={tarea} onDelete={this.deleteTask} onConsult={this.fetchTasks}/>
             )
           })
         }
       <div>
-      <Boton_flotante Clase={this.state.propiedad_btn}/>
+      <Boton_flotante Clase={this.state.propiedad_btn} onConsult={this.fetchTasks}/>
       </div>
       </ContentGlobal>
     )
