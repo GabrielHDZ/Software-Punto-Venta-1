@@ -4,7 +4,6 @@ import {TiPlusOutline} from "react-icons/ti";
 import {ImQrcode} from 'react-icons/im'
 import {MdAddShoppingCart} from 'react-icons/md'
 import { IconContext } from "react-icons";
-import Modal from '../Modal';
 import ModalCamera from './LectorCodeBarras';
 import ModalNuevoProducto from './ModalNuevoProducto';
 
@@ -113,8 +112,9 @@ const Btn_flotante=styled.button`
             this.openCamera=this.openCamera.bind(this);
             this.asignar_codigo=this.asignar_codigo.bind(this);
             this.openNewProducto=this.openNewProducto.bind(this);
-            this.openNewCompra=this.openNewCompra.bind(this);
+            this.openNewVenta=this.openNewVenta.bind(this);
             this.onConsult=this.onConsult.bind(this);
+            this.openModal=this.openModal.bind(this);
         }
 
         componentDidMount(){
@@ -159,18 +159,20 @@ const Btn_flotante=styled.button`
                 showModalEscaner:false,
                 showNuevoProducto:true})
         }
-        openNewCompra(){
+        openNewVenta(){
             this.setState({
                 showBtnEscaner:false,
                 showBtnNewProducto:false,
-                showNtbNewVenta:false,
+                showBtnNewVenta:true,
                 showModalEscaner:false,
                 showNuevoProducto:false
             })
         }
-
         onConsult(){
             this.props.onConsult();
+        }
+        openModal(){
+            this.props.openVenta();
         }
         render(){
             //Btn Add new Producto
@@ -182,7 +184,7 @@ const Btn_flotante=styled.button`
                 </IconContext.Provider>
             </Btn_flotante>):null;
             //Btn Add new Producto
-            let btnNewCompra=this.state.showBtnNewVenta? (<Btn_flotante onClick={this.openNewProducto}>
+            let btnNewVenta=this.state.showBtnNewVenta? (<Btn_flotante onClick={this.openModal}>
                 <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
                     <div>
                         <MdAddShoppingCart />
@@ -204,7 +206,7 @@ const Btn_flotante=styled.button`
                 <>
                     <div>
                         {btnNewProducto}
-                        {btnNewCompra}
+                        {btnNewVenta}
                         {boton2}
                         {modalEscaner}
                         {ModalNewProducto}

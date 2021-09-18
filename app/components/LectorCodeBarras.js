@@ -4,7 +4,6 @@ import Modal from '../Modal';
 import styled from 'styled-components';
 import {IconContext} from 'react-icons';
 import { TiDelete, TiZoom} from "react-icons/ti";
-import { Button } from './formularioComponent';
 
 const Contenedor=styled.div`
     background-color:rgba(0, 0, 0, 0.5);
