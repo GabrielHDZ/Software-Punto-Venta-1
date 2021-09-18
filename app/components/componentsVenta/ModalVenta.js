@@ -57,6 +57,9 @@ export default class ModalVenta extends React.Component{
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
     }
+    ckerdjn(){
+        
+    }
 
     setScanner(){
         this.setState({scanner:true})
