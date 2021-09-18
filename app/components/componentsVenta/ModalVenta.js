@@ -50,7 +50,7 @@ export default class ModalVenta extends React.Component{
         super(props);
         this.state={
             scanner:false,
-            code_bar:"",
+            codigoBarras:"",
             listaProductos:[]
         }
         this.setScanner=this.setScanner.bind(this);
@@ -65,8 +65,9 @@ export default class ModalVenta extends React.Component{
         this.setState({scanner:false})
     }
     asignCodeBar(codex){
-        this.setState({code_bar:codex})
-        this.consultaCodeBar(this.state.code_bar)
+        this.setState({codigoBarras:codex})
+        console.log(codex)
+        this.consultaCodeBar(this.state.codigoBarras)
     }
     consultaCodeBar(codigo){
         fetch(`/api/productos/code/${codigo}`)
