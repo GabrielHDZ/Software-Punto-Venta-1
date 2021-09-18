@@ -66,7 +66,7 @@ export default class ModalVenta extends React.Component{
     }
     asignCodeBar(codex){
         this.setState({code_bar:codex})
-        this.consultaCodeBar(code_bar)
+        this.consultaCodeBar(this.state.code_bar)
     }
     consultaCodeBar(codigo){
         fetch(`/api/productos/code/${codigo}`)
