@@ -57,9 +57,6 @@ export default class ModalVenta extends React.Component{
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
     }
-    ckerdjn(){
-        
-    }
 
     setScanner(){
         this.setState({scanner:true})
@@ -69,8 +66,9 @@ export default class ModalVenta extends React.Component{
     }
     asignCodeBar(codex){
         this.setState({codigoBarras:codex})
-        console.log(codex)
-        this.consultaCodeBar(this.state.codigoBarras)
+        console.log("data recived",codex)
+        console.log("State: ", codigoBarras);
+        //this.consultaCodeBar(this.state.codigoBarras)
     }
     consultaCodeBar(codigo){
         fetch(`/api/productos/code/${codigo}`)
