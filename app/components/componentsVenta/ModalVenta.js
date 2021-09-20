@@ -65,9 +65,8 @@ export default class ModalVenta extends React.Component{
         this.setState({scanner:false})
     }
     asignCodeBar(codex){
-        this.setState({codigoBarras:codex})
-        console.log("data recived",codex)
-        console.log("State: ", codigoBarras);
+        this.setState({codigoBarras:codex});
+
         //this.consultaCodeBar(this.state.codigoBarras)
     }
     consultaCodeBar(codigo){
@@ -99,7 +98,7 @@ export default class ModalVenta extends React.Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
-                            <P>Venta</P>
+                            <P>{this.state.codigoBarras}</P>
                         </ModalTitle>
                         <ModalBody>
                             <table>
