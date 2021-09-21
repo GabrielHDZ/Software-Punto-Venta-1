@@ -68,19 +68,7 @@ export default class ModalVenta extends React.Component{
         this.setState({codigoBarras:codigo})
         console.log(codigoBarras)
     }
-    consultaCodeBar(codigo){
-        fetch(`/api/productos/code/${codigo}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if(data.length===0){
-                console.log('no existe el producto')
-            }else{
-                this.setState({listaProductos:this.state.listaProductos+data})
-                console.log(listaProductos)
-            }
-        });
-    }
+
     render(){
         let ModalEsc=this.state.scanner?<ModalCamera openMenu={this.closeScanner} escribirCodigo={this.asignCodeBar}/>:null;
         return(
@@ -126,11 +114,10 @@ export default class ModalVenta extends React.Component{
                             </table>
                             <BodyOptions>
                                 <button onClick={this.setScanner}>opcion1</button>
-                                <button>opcion2</button>
                             </BodyOptions>
                         </ModalBody>
                             <Form>
-                                <P>Ventas</P>
+                               
                             </Form>
                     </VentanaModal>
                 </FondoModal>
