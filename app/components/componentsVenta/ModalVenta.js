@@ -64,9 +64,9 @@ export default class ModalVenta extends React.Component{
     closeScanner(){
         this.setState({scanner:false})
     }
-    asignCodeBar(codex){
-        this.setState({codigoBarras:codex});
-        console.log("data recived", codigoBarras)
+    asignCodeBar(codigo){
+        this.setState({codigoBarras:codigo})
+        console.log(codigoBarras)
     }
     consultaCodeBar(codigo){
         fetch(`/api/productos/code/${codigo}`)
