@@ -22,6 +22,14 @@ router.get('/code/:codeId', async(req, res) => {
     
 });
 
+//BUSQUEDA POR MEDIO DE NOMBRE
+router.get('/name/:nombre', async(req, res) => {
+    const nombre=req.params.nombre
+    const tarea = await Producto.find({nombre:{$eq:nombre}});
+    res.json(tarea);
+    
+});
+
 router.post('/', async(req, res) => {
     const { nombre,presentacion,codigo,descripcion } = req.body;
     const newProducto = new Producto({ nombre,presentacion,codigo,descripcion });

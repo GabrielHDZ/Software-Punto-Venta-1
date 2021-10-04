@@ -141,17 +141,7 @@ class Home extends React.Component {
             <Ul>
                 <List>     
                     <Contenedor3>
-                        <Form onSubmit={this.addTarea}>
-                            <P>Producto</P>
-                            <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
-                            <P>Cantidad</P>
-                            <Input name='cantidad' type='number' onChange={this.handleChange} value={this.state.cantidad} min="1" max="50" placeholder='Cantidad en numero'></Input>
-                            <P>Precio unitario</P>
-                            <Input name='preciou' type='number' onChange={this.handleChange} value={this.state.preciou} min="1" placeholder='$$'></Input>
-                            <P>Precio total</P>
-                            <Input name='preciot' onChange={this.handleChange} value={this.state.preciot} min="1" placeholder='$$' disabled></Input>
-                            <Input type='submit' value='Guardar'></Input>
-                        </Form>
+                        
                     </Contenedor3>
                 </List>
                 <List2>

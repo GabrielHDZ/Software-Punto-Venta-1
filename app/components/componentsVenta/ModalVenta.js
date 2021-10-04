@@ -51,11 +51,13 @@ export default class ModalVenta extends React.Component{
         this.state={
             scanner:false,
             codigoBarras:'',
+            nombre:'',
             listaProductos:[]
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
+        this.handleChange=this.handleChange.bind(this);
     }
 
     setScanner(){
@@ -66,7 +68,25 @@ export default class ModalVenta extends React.Component{
     }
     asignCodeBar(codigo){
         this.setState({codigoBarras:codigo})
-        console.log(codigoBarras)
+    }
+
+    handleChange(e){
+        const{name,value}=e.target;
+        this.setState({[name]:value},()=>{
+            fetch(`/api/productos/name/${this.state.nombre}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if(data.length===0){
+                    console.log('no existe lo que busca')
+                }else{
+                    data.map(datos=>{
+                    console.log("datos",datos)
+                    })
+                }
+            });
+        });
+        //recogemos lo que hay en el input y buscamos en la bd
     }
 
     render(){
@@ -117,7 +137,8 @@ export default class ModalVenta extends React.Component{
                             </BodyOptions>
                         </ModalBody>
                             <Form>
-                               
+                                <P>Nombre del producto</P>
+                                <Input name='nombre' type='text' onChange={this.handleChange}/>
                             </Form>
                     </VentanaModal>
                 </FondoModal>
