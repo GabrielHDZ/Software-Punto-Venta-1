@@ -24,9 +24,8 @@ router.get('/code/:codeId', async(req, res) => {
 
 //BUSQUEDA POR MEDIO DE NOMBRE
 router.get('/name/:nombre', async(req, res) => {
-    const nombre=req.params.nombre;
-    const ruflo="^"+nombre+"";
-    const tarea = await Producto.find({nombre:{$regex:ruflo}});
+    const nombre="^"+req.params.nombre+"";
+    const tarea = await Producto.find({nombre:{$regex:nombre}});
     res.json(tarea);
     
 });

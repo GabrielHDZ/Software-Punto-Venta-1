@@ -52,12 +52,14 @@ export default class ModalVenta extends React.Component{
             scanner:false,
             codigoBarras:'',
             nombre:'',
-            listaProductos:[]
+            listaProductos:[],
+            prod_busqueda:[]
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
         this.handleChange=this.handleChange.bind(this);
+        this.seleccion=this.seleccion.bind(this);
     }
 
     setScanner(){
@@ -76,17 +78,22 @@ export default class ModalVenta extends React.Component{
             fetch(`/api/productos/name/${this.state.nombre}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if(data.length===0){
                     console.log('no existe lo que busca')
+                    this.setState({prod_busqueda:[]})
                 }else{
-                    data.map(datos=>{
-                    console.log("datos",datos)
-                    })
+                    /* data.map(datos=>{
+                    this.setState((state)=>({prod_busqueda:[state.prod_busqueda,datos.nombre]}))
+                    }) */
+                    this.setState({prod_busqueda:data})
                 }
+                
             });
         });
         //recogemos lo que hay en el input y buscamos en la bd
+    }
+    seleccion(nombre){
+        console.log(nombre)
     }
 
     render(){
@@ -139,7 +146,12 @@ export default class ModalVenta extends React.Component{
                             <Form>
                                 <P>Nombre del producto</P>
                                 <Input name='nombre' type='text' onChange={this.handleChange}/>
-                            </Form>
+                                {this.state.prod_busqueda.map(busqueda=>{
+                                return(
+                                    <button key={busqueda._id} onClick={this.seleccion(busqueda.nombre)}><P>{busqueda.nombre}</P></button>
+                                )
+                                })}
+                            </Form> 
                     </VentanaModal>
                 </FondoModal>
             </Modal>
