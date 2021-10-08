@@ -44,7 +44,21 @@ const BodyOptions=styled.div`
     display:flex;
     flex-direction:row;
 `;
-
+class ProdEncontrados extends Component{
+    constructor(props){
+        super(props)
+        this.click=this.click.bind(this);
+    }
+    click(){
+        this.props.click(this.props.iden)
+    }
+    render(){
+        return(
+        <button id={this.props.iden} onClick={this.click}>{this.props.name}</button>
+    )
+    }
+    
+}
 export default class ModalVenta extends React.Component{
     constructor(props){
         super(props)
@@ -74,26 +88,31 @@ export default class ModalVenta extends React.Component{
 
     handleChange(e){
         const{name,value}=e.target;
-        this.setState({[name]:value},()=>{
-            fetch(`/api/productos/name/${this.state.nombre}`)
-            .then(res => res.json())
-            .then(data => {
-                if(data.length===0){
-                    console.log('no existe lo que busca')
-                    this.setState({prod_busqueda:[]})
-                }else{
-                    /* data.map(datos=>{
-                    this.setState((state)=>({prod_busqueda:[state.prod_busqueda,datos.nombre]}))
-                    }) */
-                    this.setState({prod_busqueda:data})
-                }
-                
+        if(value!=null){
+            this.setState({[name]:value},()=>{
+                fetch(`/api/productos/name/${this.state.nombre}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.length===0){
+                        console.log('no existe lo que busca')
+                        this.setState({prod_busqueda:[]})
+                    }else{
+                        /* data.map(datos=>{
+                        this.setState((state)=>({prod_busqueda:[state.prod_busqueda,datos.nombre]}))
+                        }) */
+                        this.setState({prod_busqueda:data})
+                    }
+                    
+                });
             });
-        });
+        }
+        
         //recogemos lo que hay en el input y buscamos en la bd
     }
     seleccion(nombre){
-        console.log(nombre)
+        this.setState((state)=>{
+            state.listaProductos=state.listaProductos+nombre
+        })
     }
 
     render(){
@@ -129,13 +148,11 @@ export default class ModalVenta extends React.Component{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        {this.state.listaProductos.map(pro=>{
+                                        return(
+                                            <td>{pro}</td>
+                                        )
+                                        })}
                                     </tr>
                                 </tbody>
                             </table>
@@ -143,12 +160,12 @@ export default class ModalVenta extends React.Component{
                                 <button onClick={this.setScanner}>opcion1</button>
                             </BodyOptions>
                         </ModalBody>
-                            <Form>
+                            <Form> 
                                 <P>Nombre del producto</P>
                                 <Input name='nombre' type='text' onChange={this.handleChange}/>
                                 {this.state.prod_busqueda.map(busqueda=>{
                                 return(
-                                    <button key={busqueda._id} onClick={this.seleccion(busqueda.nombre)}><P>{busqueda.nombre}</P></button>
+                                    <ProdEncontrados key={busqueda._id} iden={busqueda._id} name={busqueda.nombre} click={this.seleccion}/>
                                 )
                                 })}
                             </Form> 
