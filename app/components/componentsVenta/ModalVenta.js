@@ -50,7 +50,7 @@ class ProdEncontrados extends Component{
         this.click=this.click.bind(this);
     }
     click(){
-        this.props.click(this.props.iden)
+        this.props.click(this.props.iden,this.props.name)
     }
     render(){
         return(
@@ -97,21 +97,21 @@ export default class ModalVenta extends React.Component{
                         console.log('no existe lo que busca')
                         this.setState({prod_busqueda:[]})
                     }else{
-                        /* data.map(datos=>{
-                        this.setState((state)=>({prod_busqueda:[state.prod_busqueda,datos.nombre]}))
-                        }) */
                         this.setState({prod_busqueda:data})
                     }
                     
                 });
             });
         }
-        
         //recogemos lo que hay en el input y buscamos en la bd
     }
-    seleccion(nombre){
-        this.setState((state)=>{
-            state.listaProductos=state.listaProductos+nombre
+    seleccion(clave,name){
+        let listaPro=this.state.listaProductos;
+        console.log(listaPro,'Datos')
+        let asig=listaPro.length
+        listaPro[asig]=name;
+        this.setState({
+            listaProductos:listaPro
         })
     }
 
@@ -146,15 +146,7 @@ export default class ModalVenta extends React.Component{
                                         <th><P>SubTotal</P></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        {this.state.listaProductos.map(pro=>{
-                                        return(
-                                            <td>{pro}</td>
-                                        )
-                                        })}
-                                    </tr>
-                                </tbody>
+                                
                             </table>
                             <BodyOptions>
                                 <button onClick={this.setScanner}>opcion1</button>
@@ -169,6 +161,11 @@ export default class ModalVenta extends React.Component{
                                 )
                                 })}
                             </Form> 
+                            <P>{this.state.listaProductos.map((producto,index)=>{
+                                return(
+                                    <li key={index}>{producto}</li>
+                                )
+                            })}</P>
                     </VentanaModal>
                 </FondoModal>
             </Modal>
