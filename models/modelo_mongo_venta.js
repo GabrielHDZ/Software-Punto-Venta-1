@@ -3,8 +3,9 @@ const { Schema } = mongoose;
 
 const esquema_venta= new Schema({
     comprador:{type:Number,require:false},
-    total:{type:Number,require:true},
-    fecha:{type:Date,requere:true}
+    total:{type:Number,require:false},
+    fecha:{type:Date,requere:true},
+    estado:{type:Boolean,requere:true}
 });
 
 module.exports = mongoose.model('Venta', esquema_venta);

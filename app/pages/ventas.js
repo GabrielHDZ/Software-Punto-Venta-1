@@ -16,16 +16,46 @@ class Home extends React.Component {
             preciot:'',
             _id:'',
             ventas:[],
-            modalVenta:false
+            modalVenta:false,
+            ventaActiva:''
         };
         this.handleChange=this.handleChange.bind(this);
         this.addTarea=this.addTarea.bind(this);
         this.activarModalVenta=this.activarModalVenta.bind(this);
         this.desactivarModalVenta=this.desactivarModalVenta.bind(this);
     }
-    activarModalVenta(){
-        this.setState({modalVenta:true})
+    activarModalVenta(){ 
+        fetch('/api/ventas/state/63437')
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data.length)
+            if(data.length === 0){
+                console.log('Crear nueva venta, No hay activos');
+                fetch('/api/ventas',{
+                    method:'POST',
+                    body:JSON.stringify(this.state),
+                    headers:{
+                        'Accept':'Application/json',
+                        'Content-Type':'application/json'
+                    }
+                })
+                .then(res=>res.json())
+                .then(data=>{
+                    this.setState({modalVenta:true});
+                })
+            }
+            if(data.length === 1){
+                //Venta activa
+                data.map(dato=>{
+                    this.setState({ventaActiva:dato._id})
+                });
+                this.setState({modalVenta:true});
+            }else{
+                console.log('ERROR, existencia simultanea de 2 o mas ventas activas')
+            }
+        });
     }
+
     desactivarModalVenta(){
         this.setState({modalVenta:false})
     }
@@ -122,12 +152,6 @@ class Home extends React.Component {
     }
 
     fetchTask(){
-        /* axios.get('/api/ventas')
-        .then(res =>res.json())
-        .then(data =>{
-            this.setState({ventas:data});
-            console.log(this.state.ventas);
-        }); */
         fetch('/api/ventas')
         .then(res =>res.json())
         .then(data =>{
@@ -136,7 +160,7 @@ class Home extends React.Component {
         });
     }
     render(){
-        let ModaldeVentas= this.state.modalVenta? <ModalVenta onClose={this.desactivarModalVenta}/>:null;
+        let ModaldeVentas= this.state.modalVenta? <ModalVenta onClose={this.desactivarModalVenta} id_Venta={this.state.ventaActiva}/>:null;
         return(
             <Ul>
                 <List>     

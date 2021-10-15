@@ -67,7 +67,8 @@ export default class ModalVenta extends React.Component{
             codigoBarras:'',
             nombre:'',
             listaProductos:[],
-            prod_busqueda:[]
+            prod_busqueda:[],
+            id_venta_activa:props.id_Venta
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
@@ -83,7 +84,7 @@ export default class ModalVenta extends React.Component{
         this.setState({scanner:false})
     }
     asignCodeBar(codigo){
-        this.setState({codigoBarras:codigo})
+        this.setState({codigoBarras:codigo})    
     }
 
     handleChange(e){
@@ -109,10 +110,14 @@ export default class ModalVenta extends React.Component{
         let listaPro=this.state.listaProductos;
         console.log(listaPro,'Datos')
         let asig=listaPro.length
-        listaPro[asig]=name;
+        listaPro[asig]=clave;
         this.setState({
             listaProductos:listaPro
         })
+    }
+
+    componentDidMount(){
+        console.log(this.state.id_venta_activa)
     }
 
     render(){
@@ -131,19 +136,18 @@ export default class ModalVenta extends React.Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
+                            <P>{this.state.id_venta_activa}</P>
                             <P>{this.state.codigoBarras}</P>
                         </ModalTitle>
                         <ModalBody>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th><P>Clave</P></th>
-                                        <th><P>Codigo</P></th>
                                         <th><P>Nombre</P></th>
-                                        <th><P>Peso</P></th>
-                                        <th><P>Cantidad</P></th>
-                                        <th><P>Unidad</P></th>
-                                        <th><P>SubTotal</P></th>
+                                        <th><P>Presentacion</P></th>
+                                        <th><P>Unidades</P></th>
+                                        <th><P>Precio U</P></th>
+                                        <th><P>Precio</P></th> 
                                     </tr>
                                 </thead>
                                 

@@ -20,12 +20,18 @@ router.get('/:id', async(req, res) => {
     const tarea = await Venta.findById(req.params.id);
     res.json(tarea);
 });
+router.get('/state/:id', async(req,res) => {
+    const ta = await Venta.find({estado:{$eq:true}});
+    res.json(ta); 
+});
 
 router.post('/', async(req, res) => {
-    const { nombre, cantidad,preciou,preciot } = req.body;
-    const newVenta = new Venta({ nombre, cantidad,preciou,preciot,fecha });
+    const comprador='';
+    const total='';
+    const estado=true;
+    const newVenta = new Venta({ comprador,total,fecha,estado});
     await newVenta.save();
-    res.json({ status: 'Venta agregada' });
+    res.json({ status: 'Venta creada' });
 });
 
 // UPDATE a new task
