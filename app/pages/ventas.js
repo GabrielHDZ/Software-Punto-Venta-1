@@ -41,10 +41,10 @@ class Home extends React.Component {
                 })
                 .then(res=>res.json())
                 .then(data=>{
-                    this.setState({modalVenta:true});
+                    this.activarModalVenta();
                 })
             }
-            if(data.length === 1){
+            else if(data.length === 1){
                 //Venta activa
                 data.map(dato=>{
                     this.setState({ventaActiva:dato._id})
