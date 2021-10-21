@@ -27,20 +27,19 @@ router.get('/name/:nombre', async(req, res) => {
     const nombre="^"+req.params.nombre+"";
     const tarea = await Producto.find({nombre:{$regex:nombre}});
     res.json(tarea);
-    
 });
 
 router.post('/', async(req, res) => {
-    const { nombre,presentacion,codigo,descripcion } = req.body;
-    const newProducto = new Producto({ nombre,presentacion,codigo,descripcion });
+    const { nombre,presentacion,codigo,descripcion,precioVenta,precioCompra } = req.body;
+    const newProducto = new Producto({ nombre,presentacion,codigo,descripcion,precioVenta,precioCompra});
     await newProducto.save();
     res.json({ status: 'Producto agregado correctamente' });
 });
 
 // UPDATE a new task
 router.put('/:id', async(req, res) => {
-    const { nombre,presentacion,codigo,descripcion } = req.body;
-    const newProduct = { nombre,presentacion,codigo,descripcion };
+    const { nombre,presentacion,codigo,descripcion,precioVenta,precioCompra} = req.body;
+    const newProduct = { nombre,presentacion,codigo,descripcion,precioVenta,precioCompra };
     await Producto.findByIdAndUpdate(req.params.id, newProduct);
     res.json({ status: 'Producto actualizado' });
 });

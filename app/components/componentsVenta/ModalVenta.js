@@ -50,12 +50,11 @@ class ProdEncontrados extends Component{
         this.click=this.click.bind(this);
     }
     click(){
-        this.props.click(this.props.iden,this.props.name.nombre)
-        console.log(this.props.name)
+        this.props.click(this.props.iden,this.props.produc)
     }
     render(){
         return(
-        <button id={this.props.iden} onClick={this.click}>{this.props.name.nombre}</button>
+        <button id={this.props.iden} onClick={this.click}>{this.props.produc.nombre}</button>
     )
     }
     
@@ -107,11 +106,11 @@ export default class ModalVenta extends React.Component{
         }
         //recogemos lo que hay en el input y buscamos en la bd
     }
-    seleccion(clave,name){
+    seleccion(clave,dataProducto){
         let listaPro=this.state.listaProductos;
-        console.log(listaPro,'Datos')
         let asig=listaPro.length
         listaPro[asig]=clave;
+        console.log('datos del producto',dataProducto)
         this.setState({
             listaProductos:listaPro
         })
@@ -162,7 +161,7 @@ export default class ModalVenta extends React.Component{
                                 <Input name='nombre' type='text' onChange={this.handleChange}/>
                                 {this.state.prod_busqueda.map(busqueda=>{
                                 return(
-                                    <ProdEncontrados key={busqueda._id} iden={busqueda._id} name={busqueda} click={this.seleccion}/>
+                                    <ProdEncontrados key={busqueda._id} iden={busqueda._id} produc={busqueda} click={this.seleccion}/>
                                 )
                                 })}
                             </Form> 

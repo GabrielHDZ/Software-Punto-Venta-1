@@ -5,7 +5,9 @@ const Schema_prod = new Schema({
     nombre: { type: String, require: true },
     presentacion:{type:String,require:true},
     codigo:{type:String,require:false},
-    descripcion: { type: String, require: false }
+    descripcion: { type: String, require: false },
+    precioVenta:{type:Number,require:true},
+    precioCompra:{type:Number,require:false}
 });
 
 module.exports = mongoose.model('Producto', Schema_prod);

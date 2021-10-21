@@ -1,13 +1,7 @@
 import React,{Component}from 'react';
 import styled from 'styled-components';
-import {FcFullTrash} from 'react-icons/fc';
-import { RiEditLine } from "react-icons/ri";
-import Modal from '../Modal'
-
-import { IconContext } from "react-icons";
-import {ImQrcode} from 'react-icons/im';
 import Boton_flotante from '../components/Boton_flotante';
-import {Ul,List,List2,Input,Form,P,DivButtons,Button} from '../components/formularioComponent';
+import {Button} from '../components/formularioComponent';
 import ModalNuevoProducto from '../components/ModalNuevoProducto';
 
 
@@ -77,6 +71,8 @@ class CardProducto extends React.Component{
                   <span>{this.props.data.presentacion}</span>
                   <span>{this.props.data.descripcion}</span>
                   <span>{this.props.data.codigo}</span>
+                  <span>{this.props.data.precioVenta}</span>
+                  <span>{this.props.data.precioCompra}</span>
                   <Button onClick={this.delete}>Borrar</Button>
                   <Button onClick={this.mostrarModal}>Editar</Button>
               </Div2>

@@ -56,6 +56,8 @@ export default class ModalNuevoProducto extends Component{
             presentacion:'',
             codigo:this.props.codigo,
             descripcion:'',
+            precioVenta:'',
+            precioCompra:'',
             openLector:false,
             existeDatos:false,
             inexistenciaDatos:false,
@@ -99,6 +101,8 @@ export default class ModalNuevoProducto extends Component{
                             presentacion:datos.presentacion,
                             codigo:datos.codigo,
                             descripcion:datos.descripcion,
+                            precioVenta:datos.precioVenta,
+                            precioCompra:datos.precioCompra,
                             form:false,
                             existeDatos:true,
                             inexistenciaDatos:false
@@ -122,6 +126,8 @@ export default class ModalNuevoProducto extends Component{
                     presentacion:data.presentacion,
                     codigo:data.codigo,
                     descripcion:data.descripcion,
+                    precioCompra:data.precioCompra,
+                    precioVenta:data.precioVenta,
                     form:true
                 })
             }
@@ -140,10 +146,21 @@ export default class ModalNuevoProducto extends Component{
         this.setState({form:true,existeDatos:false,inexistenciaDatos:false})
     }
     handleChange(e){
+        e.value = e.value.replace(/[^0-9]/g,"");
         const{name,value}=e.target;
-        this.setState({
-            [name]:value
-        });
+            console.log(name,':::',value);
+            if(name==='precioVenta' || name==='precioCompra'){
+                if(value.charCode >= 48 && value.charCode <= 57){
+                    this.setState({
+                        [name]:value
+                    });
+                }
+            }else{
+                this.setState({
+                [name]:value
+            });
+            }
+            
     }
     addNewProduct(e){
         //e Es un evento sintetico
@@ -155,7 +172,9 @@ export default class ModalNuevoProducto extends Component{
                     nombre:this.state.nombre,
                     presentacion:this.state.presentacion,
                     codigo:this.state.codigo,
-                    descripcion:this.state.descripcion
+                    descripcion:this.state.descripcion,
+                    precioCompra:this.state.precioCompra,
+                    precioVenta:this.state.precioVenta
                 }),
                 headers:{
                     'Accept': 'application/json',
@@ -164,7 +183,7 @@ export default class ModalNuevoProducto extends Component{
             })
             .then(res=>res.json())
             .then(data=>{
-                this.setState({_id:'',nombre:'',presentacion:'',codigo:'',descripcion:''});
+                this.setState({_id:'',nombre:'',presentacion:'',codigo:'',descripcion:'',precioCompra:'',precioVenta:''});
                 this.CloseAndConsult();
             });
         }else{
@@ -181,7 +200,7 @@ export default class ModalNuevoProducto extends Component{
                 .then(res=>res.json())
                 .then(data=>{
                     console.log('Respuesta del servidor: ',data);
-                    this.setState({nombre:'',presentacion:'',codigo:'',descripcion:''});
+                    this.setState({nombre:'',presentacion:'',codigo:'',descripcion:'',precioVenta:'',precioCompra:''});
                 })
                 .catch(err=>console.error(err));
                 this.CloseAndConsult();
@@ -200,7 +219,7 @@ export default class ModalNuevoProducto extends Component{
         let form=this.state.form? 
             (<Form>
                 <P>Nombre del Producto</P>
-                <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder='Galletas Marias'></Input>
+                <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder=''></Input>
                 <P>Presentacion</P>
                 <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
                 <P>Codigo de barras</P>
@@ -214,6 +233,10 @@ export default class ModalNuevoProducto extends Component{
                 </Button></Contenedor4>
                 <P>Descripcion</P>
                 <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
+                <P>Precio de compra</P>
+                <Input name='precioCompra' onChange={this.handleChange} value={this.state.precioCompra}></Input>
+                <P>Precio en venta</P>
+                <Input name='precioVenta' onChange={this.handleChange} value={this.state.precioVenta}></Input>
                 <Button onClick={this.addNewProduct}>Guardar</Button>
             </Form> ):null;
         let lectorModal=this.state.openLector? 
@@ -228,6 +251,8 @@ export default class ModalNuevoProducto extends Component{
                 <P>{this.state.codigo}</P>
                 <br/>
                 <P>{this.state.descripcion}</P>
+                <br/>
+                <P>{this.state.precioVenta}</P>
                 <br/>
                 <Button>Agregar a venta</Button>
                 <Button onClick={this.props.openCam}>Escanear de nuevo</Button>       
