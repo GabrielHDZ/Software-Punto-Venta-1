@@ -6,6 +6,7 @@ import { IconContext } from "react-icons";
 import {ImQrcode} from 'react-icons/im';
 import {TiDelete} from 'react-icons/ti';
 import ModalCamera from './LectorCodeBarras';
+import { useForm } from 'react-hook-form';
 
 
 const Contenedor=styled.div`
@@ -48,6 +49,65 @@ const Contenedor4=styled.div`
     display:flex;
     flex-direction:row;
 `;
+
+function Formulario(props) {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState:{errors}
+    }=useForm();
+    const onSubmit=(data)=>{
+        alert(JSON.stringify(data));
+        console.log(data)
+    };
+
+    console.log(watch("producto"));
+    console.log(watch("precio"));
+    return(
+        <form>
+            <Form>
+                <P>Producto</P>
+                <Input {...register("producto",{required:true,maxLength:10,pattern:/^[A-Za-z]+$/i})}/>
+                {errors?.producto?.type === "required" && (<p>Se requiere de un nombre</p>)}
+                {errors?.producto?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
+                {errors?.producto?.type === "pattern" && <p>No se aceptan numeros</p>}
+
+                <P>Presentacion</P>
+                <Input {...register("presentacion",{required:true,maxLength:10})}/>
+                {errors?.presentacion?.type === "required" && (<p>Se requiere de un nombre</p>)}
+                {errors?.presentacion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
+
+                <P>Codigo de barras</P>
+                <Contenedor4><Input {...register("barras",{required:false})} value={props.codigo} disabled></Input>
+                    <Button onClick={props.modalLector}>
+                        <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
+                            <div>
+                                <ImQrcode />
+                            </div>
+                        </IconContext.Provider>
+                    </Button>
+                </Contenedor4>
+
+                <P>Descripcion</P>
+                <Input {...register("descripcion",{required:true,maxLength:10})}/>
+                {errors?.descripcion?.type === "required" && (<p>Se requiere de un nombre</p>)}
+                {errors?.descripcion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
+
+                <P>Precio de compra</P>
+                <Input {...register("precioCompra",{min:1,max:200,pattern: /[^A-Za-z]+$/i})}/>
+                {errors.precioCompra && (<p>no esta dentro de rango</p>)}
+
+                <P>Precio de venta</P>
+                <Input {...register("precioVenta",{min:1,max:200,pattern: /[^A-Za-z]+$/i})}/>
+                {errors.precioVenta && (<p>no esta dentro de rango</p>)}
+
+                
+                <Button onClick={handleSubmit(onSubmit)}>SUb</Button>
+            </Form>
+        </form>
+    )
+}
 export default class ModalNuevoProducto extends Component{
     constructor(props){
         super(props);
@@ -217,28 +277,7 @@ export default class ModalNuevoProducto extends Component{
 
     render(){
         let form=this.state.form? 
-            (<Form>
-                <P>Nombre del Producto</P>
-                <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder=''></Input>
-                <P>Presentacion</P>
-                <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
-                <P>Codigo de barras</P>
-                <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
-                <Button onClick={this.modalLector}>
-                    <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
-                        <div>
-                            <ImQrcode />
-                        </div>
-                    </IconContext.Provider>
-                </Button></Contenedor4>
-                <P>Descripcion</P>
-                <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
-                <P>Precio de compra</P>
-                <Input name='precioCompra' onChange={this.handleChange} value={this.state.precioCompra}></Input>
-                <P>Precio en venta</P>
-                <Input name='precioVenta' onChange={this.handleChange} value={this.state.precioVenta}></Input>
-                <Button onClick={this.addNewProduct}>Guardar</Button>
-            </Form> ):null;
+            (<Formulario modalLector={this.modalLector} codigo={this.state.codigo}/> ):null;
         let lectorModal=this.state.openLector? 
             <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         

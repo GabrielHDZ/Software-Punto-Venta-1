@@ -94,5 +94,14 @@
       box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
    }
 
+   p {
+      color: #bf1650;
+    }
+    
+    p::before {
+      display: inline;
+      content: "⚠ ";
+    }
+
 
 
