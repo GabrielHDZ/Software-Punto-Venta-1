@@ -57,15 +57,13 @@ function Formulario(props) {
         watch,
         formState:{errors}
     }=useForm();
+
     const onSubmit=(data)=>{
         alert(JSON.stringify(data));
-        console.log(data)
     };
 
-    console.log(watch("producto"));
-    console.log(watch("precio"));
+
     return(
-        <form>
             <Form>
                 <P>Producto</P>
                 <Input {...register("producto",{required:true,maxLength:10,pattern:/^[A-Za-z]+$/i})}/>
@@ -79,7 +77,7 @@ function Formulario(props) {
                 {errors?.presentacion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
 
                 <P>Codigo de barras</P>
-                <Contenedor4><Input {...register("barras",{required:false})} value={props.codigo} disabled></Input>
+                <Contenedor4><Input {...register("barras",{required:false})} value={props.codigo}/>
                     <Button onClick={props.modalLector}>
                         <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
                             <div>
@@ -102,10 +100,10 @@ function Formulario(props) {
                 <Input {...register("precioVenta",{min:1,max:200,pattern: /[^A-Za-z]+$/i})}/>
                 {errors.precioVenta && (<p>no esta dentro de rango</p>)}
 
-                
-                <Button onClick={handleSubmit(onSubmit)}>SUb</Button>
+                <Button onClick={handleSubmit(onSubmit)}>Crear</Button>
+
+                <Button onClick={props.simulacion}>Insert Barra</Button>
             </Form>
-        </form>
     )
 }
 export default class ModalNuevoProducto extends Component{
@@ -132,6 +130,7 @@ export default class ModalNuevoProducto extends Component{
         this.addNewProduct=this.addNewProduct.bind(this);
         this.mostrarForm=this.mostrarForm.bind(this);
         this.CloseAndConsult=this.CloseAndConsult.bind(this);
+        this.simulate_barra=this.simulate_barra.bind(this);
     }
     componentDidMount(){
         if(this.state.codigo){
@@ -274,10 +273,13 @@ export default class ModalNuevoProducto extends Component{
         this.props.onConsult();
         this.props.onClose();
     }
+    simulate_barra(){
+        this.setState({codigo:'7501011104099'})
+    }
 
     render(){
         let form=this.state.form? 
-            (<Formulario modalLector={this.modalLector} codigo={this.state.codigo}/> ):null;
+            (<Formulario modalLector={this.modalLector} codigo={this.state.codigo} simulacion={this.simulate_barra}/> ):null;
         let lectorModal=this.state.openLector? 
             <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
         
