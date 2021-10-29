@@ -50,11 +50,12 @@ class ProdEncontrados extends Component{
         this.click=this.click.bind(this);
     }
     click(){
-        this.props.click(this.props.iden,this.props.produc)
+        this.props.click(this.props.produc)
     }
     render(){
+        const {iden,produc}=this.props;
         return(
-        <button id={this.props.iden} onClick={this.click}>{this.props.produc.nombre}</button>
+        <button id={iden} onClick={this.click}>{produc.nombre}</button>
     )
     }
     
@@ -68,13 +69,18 @@ export default class ModalVenta extends React.Component{
             nombre:'',
             listaProductos:[],
             prod_busqueda:[],
-            id_venta_activa:props.id_Venta
+            id_venta_activa:props.id_Venta,
+            opciones:true,
+            clave:'',
+            nombre_seleccionado:''
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
         this.handleChange=this.handleChange.bind(this);
         this.seleccion=this.seleccion.bind(this);
+        this.ocultarOpciones=this.ocultarOpciones.bind(this);
+        this.mostrarOpciones=this.mostrarOpciones.bind(this);
     }
 
     setScanner(){
@@ -106,22 +112,46 @@ export default class ModalVenta extends React.Component{
         }
         //recogemos lo que hay en el input y buscamos en la bd
     }
-    seleccion(clave,dataProducto){
-        let listaPro=this.state.listaProductos;
-        let asig=listaPro.length
-        listaPro[asig]=clave;
-        console.log('datos del producto',dataProducto)
+    seleccion(dataProducto){
         this.setState({
-            listaProductos:listaPro
-        })
+            opciones:false,
+            clave:dataProducto._id,
+            nombre_seleccionado:dataProducto.nombre
+        });
     }
 
     componentDidMount(){
         console.log(this.state.id_venta_activa)
     }
+    mostrarOpciones(){
+        this.setState({opciones:true});
+    }
+    ocultarOpciones(){
+        this.setState({opciones:false});
+    }
 
     render(){
-        let ModalEsc=this.state.scanner?<ModalCamera openMenu={this.closeScanner} escribirCodigo={this.asignCodeBar}/>:null;
+        const{onClose,id_Venta} = this.props;
+        let ModalEsc=this.state.scanner?
+        <ModalCamera 
+        openMenu={this.closeScanner} 
+        escribirCodigo={this.asignCodeBar}
+        />:null;
+        let Opciones=this.state.opciones? (<>
+            <button onClick={this.setScanner}>opcion1</button>
+            <Form> 
+            <P>Nombre del producto</P>
+            <Input name='nombre' type='text' onChange={this.handleChange}/>
+            {this.state.prod_busqueda.map(busqueda=>{
+            return(
+                <ProdEncontrados 
+                key={busqueda._id} 
+                iden={busqueda._id} 
+                produc={busqueda} 
+                click={this.seleccion}/>
+            )
+            })}
+            </Form></> ):<div>{this.state.clave},{this.state.nombre_seleccionado}</div>;
         return(
             <>
             {ModalEsc}
@@ -129,7 +159,7 @@ export default class ModalVenta extends React.Component{
                 <FondoModal>
                     <VentanaModal>
                         <ModalTitle>
-                            <button onClick={this.props.onClose}>
+                            <button onClick={onClose}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                                     <div>
                                         <TiDelete/>
@@ -153,23 +183,9 @@ export default class ModalVenta extends React.Component{
                                 
                             </table>
                             <BodyOptions>
-                                <button onClick={this.setScanner}>opcion1</button>
+                                {Opciones}
                             </BodyOptions>
                         </ModalBody>
-                            <Form> 
-                                <P>Nombre del producto</P>
-                                <Input name='nombre' type='text' onChange={this.handleChange}/>
-                                {this.state.prod_busqueda.map(busqueda=>{
-                                return(
-                                    <ProdEncontrados key={busqueda._id} iden={busqueda._id} produc={busqueda} click={this.seleccion}/>
-                                )
-                                })}
-                            </Form> 
-                            <P>{this.state.listaProductos.map((producto,index)=>{
-                                return(
-                                    <li key={index}>{producto}</li>
-                                )
-                            })}</P>
                     </VentanaModal>
                 </FondoModal>
             </Modal>

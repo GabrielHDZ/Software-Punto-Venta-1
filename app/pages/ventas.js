@@ -160,7 +160,11 @@ class Home extends React.Component {
         });
     }
     render(){
-        let ModaldeVentas= this.state.modalVenta? <ModalVenta onClose={this.desactivarModalVenta} id_Venta={this.state.ventaActiva}/>:null;
+        let ModaldeVentas= this.state.modalVenta? 
+        <ModalVenta 
+        onClose={this.desactivarModalVenta} 
+        id_Venta={this.state.ventaActiva}
+        />:null;
         return(
             <Ul>
                 <List>     

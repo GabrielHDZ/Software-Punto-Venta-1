@@ -50,7 +50,7 @@ const Contenedor4=styled.div`
     flex-direction:row;
 `;
 
-function Formulario(props) {
+/* function Formulario(props) {
     const {
         register,
         handleSubmit,
@@ -59,25 +59,26 @@ function Formulario(props) {
     }=useForm();
 
     const onSubmit=(data)=>{
-        alert(JSON.stringify(data));
+        console.log(JSON.stringify(data));
+        props.agregarNew(data);
     };
 
 
     return(
             <Form>
                 <P>Producto</P>
-                <Input {...register("producto",{required:true,maxLength:10,pattern:/^[A-Za-z]+$/i})}/>
-                {errors?.producto?.type === "required" && (<p>Se requiere de un nombre</p>)}
-                {errors?.producto?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
-                {errors?.producto?.type === "pattern" && <p>No se aceptan numeros</p>}
+                <Input {...register("nombre",{required:true,maxLength:10,pattern:/^[A-Za-z]+$/i})} value={props.nombre}/>
+                {errors?.nombre?.type === "required" && (<p>Se requiere de un nombre</p>)}
+                {errors?.nombre?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
+                {errors?.nombre?.type === "pattern" && <p>No se aceptan numeros</p>}
 
                 <P>Presentacion</P>
-                <Input {...register("presentacion",{required:true,maxLength:10})}/>
+                <Input {...register("presentacion",{required:true,maxLength:10})} value={props.presentacion}/>
                 {errors?.presentacion?.type === "required" && (<p>Se requiere de un nombre</p>)}
                 {errors?.presentacion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
 
                 <P>Codigo de barras</P>
-                <Contenedor4><Input {...register("barras",{required:false})} value={props.codigo}/>
+                <Contenedor4><Input {...register("codigo",{required:false})} value={props.codigo}/>
                     <Button onClick={props.modalLector}>
                         <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
                             <div>
@@ -88,24 +89,24 @@ function Formulario(props) {
                 </Contenedor4>
 
                 <P>Descripcion</P>
-                <Input {...register("descripcion",{required:true,maxLength:10})}/>
+                <Input {...register("descripcion",{required:true,maxLength:10})} value={props.descripcion}/>
                 {errors?.descripcion?.type === "required" && (<p>Se requiere de un nombre</p>)}
                 {errors?.descripcion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
 
                 <P>Precio de compra</P>
-                <Input {...register("precioCompra",{min:1,max:200,pattern: /[^A-Za-z]+$/i})}/>
+                <Input {...register("precioCompra",{min:1,max:200,pattern: /[^A-Za-z]+$/i})} value={props.precioCompra}/>
                 {errors.precioCompra && (<p>no esta dentro de rango</p>)}
 
                 <P>Precio de venta</P>
-                <Input {...register("precioVenta",{min:1,max:200,pattern: /[^A-Za-z]+$/i})}/>
+                <Input {...register("precioVenta",{min:1,max:200,pattern: /[^A-Za-z]+$/i})} value={props.precioVenta}/>
                 {errors.precioVenta && (<p>no esta dentro de rango</p>)}
 
-                <Button onClick={handleSubmit(onSubmit)}>Crear</Button>
+
 
                 <Button onClick={props.simulacion}>Insert Barra</Button>
             </Form>
     )
-}
+} */
 export default class ModalNuevoProducto extends Component{
     constructor(props){
         super(props);
@@ -120,7 +121,9 @@ export default class ModalNuevoProducto extends Component{
             existeDatos:false,
             inexistenciaDatos:false,
             form:false,
-            _id:this.props.identificador
+            _id:this.props.identificador,
+            precioCompraError:false,
+            precioVentaError:false
         }
 
         this.modalLector=this.modalLector.bind(this);
@@ -205,20 +208,29 @@ export default class ModalNuevoProducto extends Component{
         this.setState({form:true,existeDatos:false,inexistenciaDatos:false})
     }
     handleChange(e){
-        e.value = e.value.replace(/[^0-9]/g,"");
-        const{name,value}=e.target;
-            console.log(name,':::',value);
-            if(name==='precioVenta' || name==='precioCompra'){
-                if(value.charCode >= 48 && value.charCode <= 57){
-                    this.setState({
-                        [name]:value
-                    });
-                }
+        const {name,value}=e.target;
+        console.log(name,' :: ',value)
+        this.setState({
+            [name]:value
+        });
+        
+        if(name==='precioVenta'){
+            if(value === ""){
+                this.setState({precioVentaError:true});
             }else{
-                this.setState({
-                [name]:value
-            });
+                this.setState({precioVentaError:false});
             }
+        }else if(name==='precioCompra'){
+            if(value === ""){
+                this.setState({precioCompraError:true});
+            }else{
+                this.setState({precioCompraError:false});
+            }
+        }else{
+            this.setState({
+            [name]:value
+        });
+        }
             
     }
     addNewProduct(e){
@@ -246,26 +258,21 @@ export default class ModalNuevoProducto extends Component{
                 this.CloseAndConsult();
             });
         }else{
-            //condicion para evaluar si todos los campos del formulario han sido rellenados
-            if(this.state.nombre && this.state.presentacion){
-                fetch('/api/productos',{
-                    method:'POST',
-                    body:JSON.stringify(this.state),
-                    headers:{
-                        'Accept':'application/json',
-                        'Content-Type':'application/json'
-                    }
-                })
-                .then(res=>res.json())
-                .then(data=>{
-                    console.log('Respuesta del servidor: ',data);
-                    this.setState({nombre:'',presentacion:'',codigo:'',descripcion:'',precioVenta:'',precioCompra:''});
-                })
-                .catch(err=>console.error(err));
+            fetch('/api/productos',{
+                method:'POST',
+                body:JSON.stringify(this.state),
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log('Respuesta del servidor: ',data);
+                this.setState({nombre:'',presentacion:'',codigo:'',descripcion:'',precioVenta:'',precioCompra:''});
                 this.CloseAndConsult();
-            }else{
-            alert('Los campos de nombre y presentacion no pueden quedar vacios, por favor rellene estos campos');
-            }
+            })
+            .catch(err=>console.error(err));
         }
     }
 
@@ -278,10 +285,40 @@ export default class ModalNuevoProducto extends Component{
     }
 
     render(){
+        let alertaEscrituraPrecioVenta=this.state.precioVentaError? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>:null
+        let alertaEscrituraPrecioCompra=this.state.precioCompraError? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>:null
         let form=this.state.form? 
-            (<Formulario modalLector={this.modalLector} codigo={this.state.codigo} simulacion={this.simulate_barra}/> ):null;
+        (<Form>
+            <P>Nombre del Producto</P>
+            <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder=''></Input>
+            <P>Presentacion</P>
+            <Input name='presentacion' type='text' onChange={this.handleChange} value={this.state.presentacion} min="1" max="50" placeholder=''></Input>
+            <P>Codigo de barras</P>
+            <Contenedor4><Input name='codigo' value={this.state.codigo} disabled></Input>
+            <Button onClick={this.modalLector}>
+                <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
+                    <div>
+                        <ImQrcode />
+                    </div>
+                </IconContext.Provider>
+            </Button></Contenedor4>
+            <P>Descripcion</P>
+            <Input name='descripcion' onChange={this.handleChange} value={this.state.descripcion}></Input>
+            <P>Precio de compra</P>
+            <Input name='precioCompra' onChange={this.handleChange} value={this.state.precioCompra} type="number"></Input>
+            {alertaEscrituraPrecioCompra}
+            <P>Precio en venta</P>
+            <Input name='precioVenta' onChange={this.handleChange} value={this.state.precioVenta} type="number"></Input>
+            {alertaEscrituraPrecioVenta}
+
+            <Button onClick={this.simulate_barra}>Simular Code</Button>
+            <Button onClick={this.addNewProduct}>Guardar</Button>
+        </Form> ):null;
         let lectorModal=this.state.openLector? 
-            <ModalCamera escribirCodigo={this.retornoExitosoLector} openMenu={this.closeModalLector}/>:null;
+            <ModalCamera 
+            escribirCodigo={this.retornoExitosoLector} 
+            openMenu={this.closeModalLector}
+            />:null;
         
         let mensajeExistencia=this.state.existeDatos?
             (<Form>
