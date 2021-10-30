@@ -6,8 +6,9 @@ const esquema_prodVenta=new Schema({
     idVenta:{type:String,require:true},
     cantidad:{type:Int,require:true},
     precioUnitario:{type:double,require:true},
-    total:{type:double,require:true}
+    importe:{type:double,require:true}
     
 });
+
 
 module.exports=mongoose.model('prodVenta',esquema_prodVenta);

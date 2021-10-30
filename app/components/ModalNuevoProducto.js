@@ -316,7 +316,7 @@ export default class ModalNuevoProducto extends Component{
         </Form> ):null;
         let lectorModal=this.state.openLector? 
             <ModalCamera 
-            escribirCodigo={this.retornoExitosoLector} 
+            escribir    Codigo={this.retornoExitosoLector} 
             openMenu={this.closeModalLector}
             />:null;
         

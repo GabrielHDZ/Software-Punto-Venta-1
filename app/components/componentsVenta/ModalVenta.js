@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Modal from '../../Modal';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
-import { TiDelete } from 'react-icons/ti';
+import { TiDelete,TiMinus,TiPlus } from 'react-icons/ti';
 import { Form,P,Input,Button } from '../formularioComponent';
 import ModalCamera from '../LectorCodeBarras';
 
@@ -67,7 +67,7 @@ export default class ModalVenta extends React.Component{
             scanner:false,
             codigoBarras:'',
             nombre:'',
-            listaProductos:[],
+            precioU:0,
             prod_busqueda:[],
             id_venta_activa:props.id_Venta,
             opciones:true,
@@ -90,7 +90,28 @@ export default class ModalVenta extends React.Component{
         this.setState({scanner:false})
     }
     asignCodeBar(codigo){
-        this.setState({codigoBarras:codigo})    
+        fetch(`/api/productos/code/${codigo}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.length===0){
+                console.log('no se recuperaron datos del codigo de barras ingresado')
+                    this.setState({form:false,existeDatos:false,inexistenciaDatos:true})
+            }else{
+                data.map(datos=>{
+                console.log("datos",datos)
+                    if(datos._id){
+                        this.setState({
+                            nombre:datos.nombre,
+                            clave:datos._id,
+                            codigoBarras:datos.codigo,
+                            precioU:datos.precioVenta,
+                            opciones:false
+                        })
+                    }
+                })
+            }
+        });
     }
 
     handleChange(e){
@@ -116,7 +137,8 @@ export default class ModalVenta extends React.Component{
         this.setState({
             opciones:false,
             clave:dataProducto._id,
-            nombre_seleccionado:dataProducto.nombre
+            nombre:dataProducto.nombre,
+            precioU:dataProducto.precioVenta
         });
     }
 
@@ -138,7 +160,7 @@ export default class ModalVenta extends React.Component{
         escribirCodigo={this.asignCodeBar}
         />:null;
         let Opciones=this.state.opciones? (<>
-            <button onClick={this.setScanner}>opcion1</button>
+            <button onClick={this.setScanner}>Escanear</button>
             <Form> 
             <P>Nombre del producto</P>
             <Input name='nombre' type='text' onChange={this.handleChange}/>
@@ -151,7 +173,29 @@ export default class ModalVenta extends React.Component{
                 click={this.seleccion}/>
             )
             })}
-            </Form></> ):<div>{this.state.clave},{this.state.nombre_seleccionado}</div>;
+            </Form></> ):
+            <Form>
+                <P>{this.state.nombre}</P>
+                <P>{this.state.precioU}</P>
+
+                <Button>
+                    <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                        <div>
+                            <TiMinus/>
+                        </div>
+                    </IconContext.Provider></Button>
+                <Button>
+                    <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                        <div>
+                            <TiPlus/>
+                        </div>
+                    </IconContext.Provider></Button>
+                <Input type="number" defaultValue="1"/>
+                <Button onClick={this.mostrarOpciones}>Cancelar</Button>
+                <Button>Agregar</Button>
+                
+            </Form>
+            ;
         return(
             <>
             {ModalEsc}
