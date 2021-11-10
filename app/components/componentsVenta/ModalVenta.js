@@ -72,17 +72,23 @@ export default class ModalVenta extends React.Component{
             id_venta_activa:props.id_Venta,
             opciones:true,
             clave:'',
-            nombre_seleccionado:''
+            nombre_seleccionado:'',
+            cantidad:1,
+            alerta:false,
+            lista_produc_add:[]
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
         this.asignCodeBar=this.asignCodeBar.bind(this);
         this.handleChange=this.handleChange.bind(this);
         this.seleccion=this.seleccion.bind(this);
-        this.ocultarOpciones=this.ocultarOpciones.bind(this);
-        this.mostrarOpciones=this.mostrarOpciones.bind(this);
+        this.tipeoCantidad=this.tipeoCantidad.bind(this);
+        this.addProduct=this.addProduct.bind(this);
+        this.lista_productos=this.lista_productos.bind(this);
     }
-
+    componentDidMount(){
+        this.lista_productos;
+    }
     setScanner(){
         this.setState({scanner:true})
     }
@@ -141,25 +147,51 @@ export default class ModalVenta extends React.Component{
             precioU:dataProducto.precioVenta
         });
     }
-
-    componentDidMount(){
-        console.log(this.state.id_venta_activa)
+    tipeoCantidad(e){
+        const {value}=e.target;
+        if(value === ""){
+            this.setState({alerta:true});
+        }else{
+            this.setState({alerta:false});
+        }
+        this.setState({cantidad:value})
     }
-    mostrarOpciones(){
-        this.setState({opciones:true});
+    addProduct(){
+        fetch(`/api/ventas/addProducto/${"101010"}`,{
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            this.lista_productos;
+        })
     }
-    ocultarOpciones(){
-        this.setState({opciones:false});
+    lista_productos(){
+        fetch(`/api/vetnas/listaProducts/activa/${this.state.id_venta_activa}`,{
+            method:'GET',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>console.log('productos enlistados en la venta activa',data));
     }
 
     render(){
+        let alertaEscritura=this.state.alerta? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>:null
         const{onClose,id_Venta} = this.props;
         let ModalEsc=this.state.scanner?
         <ModalCamera 
         openMenu={this.closeScanner} 
         escribirCodigo={this.asignCodeBar}
         />:null;
-        let Opciones=this.state.opciones? (<>
+        let Opciones=this.state.opciones
+        ? (<>
             <button onClick={this.setScanner}>Escanear</button>
             <Form> 
             <P>Nombre del producto</P>
@@ -173,31 +205,33 @@ export default class ModalVenta extends React.Component{
                 click={this.seleccion}/>
             )
             })}
-            </Form></> ):
+            </Form>
+        </>)
+        :
             <Form>
                 <P>{this.state.nombre}</P>
                 <P>{this.state.precioU}</P>
-
-                <Button>
+                <Button onClick={()=>{this.setState((state)=>({cantidad:state.cantidad-1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiMinus/>
                         </div>
-                    </IconContext.Provider></Button>
-                <Button>
+                    </IconContext.Provider>
+                </Button>
+                <Button onClick={()=>{this.setState((state)=>({cantidad:state.cantidad+1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiPlus/>
                         </div>
-                    </IconContext.Provider></Button>
-                <Input type="number" defaultValue="1"/>
-                <Button onClick={this.mostrarOpciones}>Cancelar</Button>
-                <Button>Agregar</Button>
-                
-            </Form>
-            ;
+                    </IconContext.Provider>
+                </Button>
+                <Input name="cantidad" type="number" onChange={this.tipeoCantidad} value={this.state.cantidad} min="1"/>
+                {alertaEscritura}
+                <Button onClick={()=>{this.setState({opciones:true})}}>Cancelar</Button>
+                <Button onClick={this.addProduct}>Agregar</Button>
+            </Form>;
         return(
-            <>
+            <> 
             {ModalEsc}
             <Modal>
                 <FondoModal>
