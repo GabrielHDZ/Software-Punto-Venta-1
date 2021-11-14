@@ -38,14 +38,19 @@ router.post('/', async(req, res) => {
 
 //rutas de la lista de venta activa
 router.post('/addProducto/:id', async(req,res)=>{
-    const {idProd,idVenta,cantidad,precioUnitario,importe} = req.body;
+    let idProd=req.body.clave;
+    let idVenta = req.body.id_venta_activa;
+    let cantidad = req.body.cantidad;
+    let precioUnitario = req.body.precioU;
+    let importe = Number.parseFloat(cantidad) * Number.parseFloat(precioUnitario);
     const newProductVenta = new prodVenta({idProd,idVenta,cantidad,precioUnitario,importe});
-    await prodVenta.save();
+    await newProductVenta.save();
     res.json({status:'Producto agregado a la lista'})
 })
 
 router.get('/listaProducts/activa/:id', async(req, res) => {
-    const tarea = await prodVenta.find({idVenta:{$eq:req.body.activa}});
+    const venta="^"+req.params.id+"";
+    const tarea = await prodVenta.find({idVenta:{$regex:venta}});
     res.json(tarea);
 });
 

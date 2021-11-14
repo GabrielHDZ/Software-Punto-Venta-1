@@ -84,10 +84,17 @@ export default class ModalVenta extends React.Component{
         this.seleccion=this.seleccion.bind(this);
         this.tipeoCantidad=this.tipeoCantidad.bind(this);
         this.addProduct=this.addProduct.bind(this);
-        this.lista_productos=this.lista_productos.bind(this);
     }
     componentDidMount(){
-        this.lista_productos;
+        fetch(`/api/ventas/listaProducts/activa/${this.state.id_venta_activa}`,{
+            method:'GET',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>console.log(data));
     }
     setScanner(){
         this.setState({scanner:true})
@@ -157,7 +164,8 @@ export default class ModalVenta extends React.Component{
         this.setState({cantidad:value})
     }
     addProduct(){
-        fetch(`/api/ventas/addProducto/${"101010"}`,{
+        console.log(this.state)
+        fetch(`/api/ventas/addProducto/101010`,{
             method: 'POST',
             body: JSON.stringify(this.state),
             headers:{
@@ -167,19 +175,9 @@ export default class ModalVenta extends React.Component{
         })
         .then(res=>res.json())
         .then(data=>{
-            this.lista_productos;
+            this.setState({opciones:true,prod_busqueda:[]})
+            console.log(this.state);
         })
-    }
-    lista_productos(){
-        fetch(`/api/vetnas/listaProducts/activa/${this.state.id_venta_activa}`,{
-            method:'GET',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            }
-        })
-        .then(res=>res.json())
-        .then(data=>console.log('productos enlistados en la venta activa',data));
     }
 
     render(){
@@ -211,14 +209,14 @@ export default class ModalVenta extends React.Component{
             <Form>
                 <P>{this.state.nombre}</P>
                 <P>{this.state.precioU}</P>
-                <Button onClick={()=>{this.setState((state)=>({cantidad:state.cantidad-1}))}}>
+                <Button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiMinus/>
                         </div>
                     </IconContext.Provider>
                 </Button>
-                <Button onClick={()=>{this.setState((state)=>({cantidad:state.cantidad+1}))}}>
+                <Button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)+1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiPlus/>
