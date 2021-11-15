@@ -60,6 +60,27 @@ class ProdEncontrados extends Component{
     }
     
 }
+
+class ListaProductos extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            nombre:this.props.nombre,
+            cantidad:this.props.cantidad,
+            precioU:this.props.precioUnitario,
+            importe:this.props.importe
+        }
+    }
+
+    render(){
+        return(
+            <div>
+                <P>{this.state.nombre}</P>
+                <P>{this.state.cantidad}</P>
+            </div>
+        )
+    }
+}
 export default class ModalVenta extends React.Component{
     constructor(props){
         super(props)
@@ -75,7 +96,7 @@ export default class ModalVenta extends React.Component{
             nombre_seleccionado:'',
             cantidad:1,
             alerta:false,
-            lista_produc_add:[]
+            lista_product_add:[]
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
@@ -94,7 +115,10 @@ export default class ModalVenta extends React.Component{
             }
         })
         .then(res=>res.json())
-        .then(data=>console.log(data));
+        .then(data=>{
+        this.setState({lista_product_add:data});
+        console.log(this.state);
+        });
     }
     setScanner(){
         this.setState({scanner:true})
@@ -246,18 +270,11 @@ export default class ModalVenta extends React.Component{
                             <P>{this.state.codigoBarras}</P>
                         </ModalTitle>
                         <ModalBody>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th><P>Nombre</P></th>
-                                        <th><P>Presentacion</P></th>
-                                        <th><P>Unidades</P></th>
-                                        <th><P>Precio U</P></th>
-                                        <th><P>Precio</P></th> 
-                                    </tr>
-                                </thead>
-                                
-                            </table>
+                            {this.state.lista_product_add.map((producto)=>{
+                                return(
+                                    <ListaProductos key={producto._id} datos={producto}/>
+                                )
+                            })}
                             <BodyOptions>
                                 {Opciones}
                             </BodyOptions>

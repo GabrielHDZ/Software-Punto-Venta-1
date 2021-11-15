@@ -39,11 +39,12 @@ router.post('/', async(req, res) => {
 //rutas de la lista de venta activa
 router.post('/addProducto/:id', async(req,res)=>{
     let idProd=req.body.clave;
+    let nombre=req.body.nombre;
     let idVenta = req.body.id_venta_activa;
     let cantidad = req.body.cantidad;
     let precioUnitario = req.body.precioU;
     let importe = Number.parseFloat(cantidad) * Number.parseFloat(precioUnitario);
-    const newProductVenta = new prodVenta({idProd,idVenta,cantidad,precioUnitario,importe});
+    const newProductVenta = new prodVenta({idProd,nombre,idVenta,cantidad,precioUnitario,importe});
     await newProductVenta.save();
     res.json({status:'Producto agregado a la lista'})
 })
