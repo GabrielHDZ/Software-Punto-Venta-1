@@ -1,0 +1,55 @@
+
+.height-lore{
+    height: 480px;
+}
+.viewport {
+    composes: height-lore;
+    width: 640px;
+    border-radius: 10px;
+    
+}
+.viewport canvas, video {
+    float: left;
+    width: 640px;
+    height: 480px;
+}
+.viewport canvas.drawingBuffer, video.drawingBuffer {
+    margin-left: -640px;
+}
+.buttonSucess{
+    flex-grow:2;
+    background-color: #ebbbad;
+    border-color: #e6b4a5eb;
+    padding: 10px;
+    margin: .2em;
+    border-radius: 10px;
+    box-shadow: 0px 8px 15px rgba(245, 190, 158, 0.589);
+}
+
+.buttonCancel{
+    flex-grow:1;
+    background-color:#fa3e3e;
+    border-color: #ee6b6b;
+    padding: 10px;
+    margin: .2em;
+    border-radius: 10px;
+    box-shadow: 0px 8px 15px rgba(243, 69, 98, 0.459);
+}
+.buttonSucess:hover, .buttonCancel:hover{
+    box-shadow: 0px 8px 15px rgba(31, 4, 8, 0.144);
+}
+@media (max-width: 603px) {
+    .viewport {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .viewport canvas, video {
+        margin-top: -50px;
+        width: 300px;
+        height: 400px;
+    }   
+    .viewport canvas.drawingBuffer, video.drawingBuffer {
+        margin-left: -300px;
+    }
+} 

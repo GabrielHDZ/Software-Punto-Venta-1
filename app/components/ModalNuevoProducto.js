@@ -50,63 +50,6 @@ const Contenedor4=styled.div`
     flex-direction:row;
 `;
 
-/* function Formulario(props) {
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState:{errors}
-    }=useForm();
-
-    const onSubmit=(data)=>{
-        console.log(JSON.stringify(data));
-        props.agregarNew(data);
-    };
-
-
-    return(
-            <Form>
-                <P>Producto</P>
-                <Input {...register("nombre",{required:true,maxLength:10,pattern:/^[A-Za-z]+$/i})} value={props.nombre}/>
-                {errors?.nombre?.type === "required" && (<p>Se requiere de un nombre</p>)}
-                {errors?.nombre?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
-                {errors?.nombre?.type === "pattern" && <p>No se aceptan numeros</p>}
-
-                <P>Presentacion</P>
-                <Input {...register("presentacion",{required:true,maxLength:10})} value={props.presentacion}/>
-                {errors?.presentacion?.type === "required" && (<p>Se requiere de un nombre</p>)}
-                {errors?.presentacion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
-
-                <P>Codigo de barras</P>
-                <Contenedor4><Input {...register("codigo",{required:false})} value={props.codigo}/>
-                    <Button onClick={props.modalLector}>
-                        <IconContext.Provider value={{ color: "dark", size:"1.5em", title:"Ventas"}}>
-                            <div>
-                                <ImQrcode />
-                            </div>
-                        </IconContext.Provider>
-                    </Button>
-                </Contenedor4>
-
-                <P>Descripcion</P>
-                <Input {...register("descripcion",{required:true,maxLength:10})} value={props.descripcion}/>
-                {errors?.descripcion?.type === "required" && (<p>Se requiere de un nombre</p>)}
-                {errors?.descripcion?.type === "maxLength" && <p>Nombre extremadamente largo</p>}
-
-                <P>Precio de compra</P>
-                <Input {...register("precioCompra",{min:1,max:200,pattern: /[^A-Za-z]+$/i})} value={props.precioCompra}/>
-                {errors.precioCompra && (<p>no esta dentro de rango</p>)}
-
-                <P>Precio de venta</P>
-                <Input {...register("precioVenta",{min:1,max:200,pattern: /[^A-Za-z]+$/i})} value={props.precioVenta}/>
-                {errors.precioVenta && (<p>no esta dentro de rango</p>)}
-
-
-
-                <Button onClick={props.simulacion}>Insert Barra</Button>
-            </Form>
-    )
-} */
 export default class ModalNuevoProducto extends Component{
     constructor(props){
         super(props);
@@ -285,10 +228,14 @@ export default class ModalNuevoProducto extends Component{
     }
 
     render(){
-        let alertaEscrituraPrecioVenta=this.state.precioVentaError? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>:null
-        let alertaEscrituraPrecioCompra=this.state.precioCompraError? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>:null
-        let form=this.state.form? 
-        (<Form>
+        let alertaEscrituraPrecioVenta=this.state.precioVentaError
+        ? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>
+        :null
+        let alertaEscrituraPrecioCompra=this.state.precioCompraError
+        ? <span><P>Se esta ecribiendo caracteres no aceptados</P></span>
+        :null
+        let form=this.state.form
+        ? (<Form>
             <P>Nombre del Producto</P>
             <Input name='nombre' type='text' onChange={this.handleChange} value={this.state.nombre} placeholder=''></Input>
             <P>Presentacion</P>
@@ -313,15 +260,17 @@ export default class ModalNuevoProducto extends Component{
 
             <Button onClick={this.simulate_barra}>Simular Code</Button>
             <Button onClick={this.addNewProduct}>Guardar</Button>
-        </Form> ):null;
-        let lectorModal=this.state.openLector? 
-            <ModalCamera 
+        </Form> )
+        :null;
+        let lectorModal=this.state.openLector
+        ? <ModalCamera 
             escribir    Codigo={this.retornoExitosoLector} 
             openMenu={this.closeModalLector}
-            />:null;
+            />
+        :null;
         
-        let mensajeExistencia=this.state.existeDatos?
-            (<Form>
+        let mensajeExistencia=this.state.existeDatos
+        ? (<Form>
                 <P>{this.state.nombre}</P>
                 <br/>
                 <P>{this.state.presentacion}</P>
@@ -340,7 +289,8 @@ export default class ModalNuevoProducto extends Component{
                 <P>El codigo {this.state.codigo} no pertenece a ningun producto, ¿Desea añadir un nuevo producto?</P>
                 <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
                 <Button onClick={this.mostrarForm}>Agregar a lista productos de venta</Button>
-            </Form>):null
+            </Form>)
+        :null
         return(  
             <>
             <Modal>

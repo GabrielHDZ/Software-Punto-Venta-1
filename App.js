@@ -21,6 +21,8 @@ app.use('/api/productos', require('./routes/ruta_prod'));
 app.use('/api/clientes', require('./routes/ruta_clientes'));
 app.use('/api/ventas',require('./routes/ruta_ventas'));
 
+app.use('/Productos',express.static(path.join(__dirname, 'public')));
+
 //RUTA NO DEFINIDA ERROR 404
 app.use((req, res, next)=> {
     res.status(404).send('Direccion inexistente');

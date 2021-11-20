@@ -5,45 +5,7 @@ import { IconContext } from 'react-icons';
 import { TiDelete,TiMinus,TiPlus } from 'react-icons/ti';
 import { Form,P,Input,Button } from '../formularioComponent';
 import ModalCamera from '../LectorCodeBarras';
-
-
-const FondoModal=styled.div`
-    background-color:rgba(0, 0, 0, 0.5);
-    width:100%;
-    height: 100%;
-    top:0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-`;
-
-const VentanaModal=styled.div`
-    background-color:#442c2e;
-    display:flex;
-    flex-direction:column;
-    @media all and (max-width: 600px) {
-
-    }
-`;
-
-const ModalTitle=styled.div`
-    display:flex;
-    flex-direction:row;
-    font-size:22px;
-    letter-spacing: 2px; /* Espacio entre letras */
-    padding: 3px 0px; /* Relleno del boton */
-`;
-const ModalBody=styled.div`
-    display:flex;
-    flex-direction:column;
-    padding: 10px 5px; /* Relleno del boton */
-`;
-const BodyOptions=styled.div`
-    display:flex;
-    flex-direction:row;
-`;
+import styles from '../../css/ModalVenta.module.css';
 class ProdEncontrados extends Component{
     constructor(props){
         super(props)
@@ -58,26 +20,20 @@ class ProdEncontrados extends Component{
         <button id={iden} onClick={this.click}>{produc.nombre}</button>
     )
     }
-    
 }
 
 class ListaProductos extends Component{
     constructor(props){
         super(props)
-        this.state={
-            nombre:this.props.nombre,
-            cantidad:this.props.cantidad,
-            precioU:this.props.precioUnitario,
-            importe:this.props.importe
-        }
     }
-
     render(){
         return(
-            <div>
-                <P>{this.state.nombre}</P>
-                <P>{this.state.cantidad}</P>
-            </div>
+            <tr>
+                <td><P>{this.props.datos.nombre}</P></td>
+                <td><P>{this.props.datos.cantidad}</P></td>
+                <td><P>{this.props.datos.precioUnitario}</P></td>
+                <td><P>{this.props.datos.importe}</P></td>
+            </tr> 
         )
     }
 }
@@ -105,8 +61,12 @@ export default class ModalVenta extends React.Component{
         this.seleccion=this.seleccion.bind(this);
         this.tipeoCantidad=this.tipeoCantidad.bind(this);
         this.addProduct=this.addProduct.bind(this);
+        this.Consulta_productos_venta=this.Consulta_productos_venta.bind(this);
     }
     componentDidMount(){
+        this.Consulta_productos_venta();
+    }
+    Consulta_productos_venta(){
         fetch(`/api/ventas/listaProducts/activa/${this.state.id_venta_activa}`,{
             method:'GET',
             headers:{
@@ -200,7 +160,7 @@ export default class ModalVenta extends React.Component{
         .then(res=>res.json())
         .then(data=>{
             this.setState({opciones:true,prod_busqueda:[]})
-            console.log(this.state);
+            this.Consulta_productos_venta();
         })
     }
 
@@ -256,9 +216,9 @@ export default class ModalVenta extends React.Component{
             <> 
             {ModalEsc}
             <Modal>
-                <FondoModal>
-                    <VentanaModal>
-                        <ModalTitle>
+                <div className={styles.backgroundModal}>
+                    <div className={styles.modal}>
+                        <div className={styles.titulo}>
                             <button onClick={onClose}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                                     <div>
@@ -268,19 +228,32 @@ export default class ModalVenta extends React.Component{
                             </button>
                             <P>{this.state.id_venta_activa}</P>
                             <P>{this.state.codigoBarras}</P>
-                        </ModalTitle>
-                        <ModalBody>
-                            {this.state.lista_product_add.map((producto)=>{
-                                return(
-                                    <ListaProductos key={producto._id} datos={producto}/>
-                                )
-                            })}
-                            <BodyOptions>
+                        </div>
+                        <div className={styles.cuerpo}>
+                            <table className={styles.tabla}>
+                                <thead>
+                                    <tr>
+                                        <td>Nombre</td>
+                                        <td>Cant</td>
+                                        <td>Pcio U.</td>
+                                        <td>Importe</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.lista_product_add.map((producto)=>{
+                                        return(
+                                            <ListaProductos key={producto._id} datos={producto}/>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                            <div className={styles.opciones}>
                                 {Opciones}
-                            </BodyOptions>
-                        </ModalBody>
-                    </VentanaModal>
-                </FondoModal>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
             </Modal>
             </>
         )

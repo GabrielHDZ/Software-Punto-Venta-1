@@ -2,7 +2,7 @@ import React from 'react';
 //import React,{Component} from 'react';
 import ReactDOM,{ render } from 'react-dom';
 import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Productos from './pages/productos';
 import Distribuidor from './pages/distribuidores';
 import Clientes from './pages/clientes';
@@ -10,7 +10,6 @@ import Ventas from './pages/ventas';
 
 const appRoot=document.getElementById('app');
 class App extends React.Component {
-
     render() {
         return (
             <Router>
@@ -20,6 +19,7 @@ class App extends React.Component {
                     <Route path='/Productos' component={Productos} />
                     <Route path='/Distribuidores' component={Distribuidor}/>
                     <Route path='/Clientes' component={Clientes}/>
+                    <Redirect to="/" />
                 </Switch>
             </Router>
         )

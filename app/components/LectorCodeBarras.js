@@ -4,6 +4,7 @@ import Modal from '../Modal';
 import styled from 'styled-components';
 import {IconContext} from 'react-icons';
 import { TiDelete, TiZoom} from "react-icons/ti";
+import styles from '../css/lectorCodeBarras.module.css'
 
 const Contenedor=styled.div`
     background-color:rgba(0, 0, 0, 0.5);
@@ -29,55 +30,6 @@ const Contenedor3=styled.div`
     justify-content:space-between;
 `;
 
-const Btn1=styled.button`
-    flex-grow:2;
-    background-color: #FEDBD0;
-    border-radius: 5px; /* Borde del boton */
-    border: none;
-    padding: 10px;
-    margin: .2em;
-    color: ${props => props.inputColor || "black"};
-    border-radius: 10px;
-    border-bottom:2px solid #a6af13;
-    outline:none;
-    height:40px;
-    transition: all 300ms ease 0ms;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    &:hover {
-        background-color: #de947c; /* Color de fondo al pasar el cursor */
-        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-        transform: translateY(-7px);
-        color:#000;
-    }
-
-`;
-const Btn2=styled.button`
-    flex-grow:1;
-    background-color:#fa3e3e;
-    border: none;
-    padding: 10px;
-    margin: .2em;
-    color: ${props => props.inputColor || "black"};
-    border-radius: 10px;
-    border-bottom:2px solid #a6af13;
-    outline:none;
-    height:40px;
-    border-radius: 10px; /* Borde del boton */
-    transition: all 300ms ease 0ms;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    &:hover {
-        background-color: #f52727; /* Color de fondo al pasar el cursor */
-        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-        transform: translateY(-7px);
-        color:#000;
-    }
-`;
-
-const Capturadora=styled.div`
-    
-`;
 export default class ModalCamera extends React.Component{
     constructor(props){
     super(props);
@@ -172,32 +124,30 @@ export default class ModalCamera extends React.Component{
     
     render(){
         return(
-            <>
             <Modal>
                 <Contenedor>
                     <Contenedor2>       
-                        <Capturadora id="interactive" className="viewport"/>
+                        <div id="interactive" className={styles.viewport}/>
                         <br></br>
                         <Contenedor3>
-                            <Btn1 onClick={this.runCamera}>
+                            <button className={styles.buttonSucess} onClick={this.runCamera}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Ventas"}}>
                                     <div>
                                         <TiZoom/>
                                     </div>
                                 </IconContext.Provider>
-                            </Btn1>
-                            <Btn2 onClick={this.handleInputChange}>
+                            </button>
+                            <button className={styles.buttonCancel} onClick={this.handleInputChange}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Ventas"}}>
                                     <div>
                                         <TiDelete/>
                                     </div>
                                 </IconContext.Provider>
-                            </Btn2>
+                            </button>
                         </Contenedor3> 
                     </Contenedor2>
                 </Contenedor>
             </Modal>
-            </>
         )
     }
 }

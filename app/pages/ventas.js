@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {Ul,List,List2,Input,Form,P,DivButtons,Contenedor3} from '../components/formularioComponent';
-import {IconContext} from 'react-icons';
-import { BiEdit,BiTrash} from "react-icons/bi";
 import Boton_flotante from '../components/Boton_flotante';
 import ModalVenta from '../components/componentsVenta/ModalVenta';
 
@@ -159,6 +157,8 @@ class Home extends React.Component {
             console.log(this.state.ventas);
         });
     }
+
+    
     render(){
         let ModaldeVentas= this.state.modalVenta? 
         <ModalVenta 

@@ -176,32 +176,42 @@ const Btn_flotante=styled.button`
         }
         render(){
             //Btn Add new Producto
-            let btnNewProducto=this.state.showBtnNewProducto? (<Btn_flotante onClick={this.openNewProducto}>
+            let btnNewProducto=this.state.showBtnNewProducto
+            ? (<Btn_flotante onClick={this.openNewProducto}>
                 <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
                     <div>
                         <TiPlusOutline />
                     </div>
                 </IconContext.Provider>
-            </Btn_flotante>):null;
+            </Btn_flotante>)
+            :null;
             //Btn Add new Producto
-            let btnNewVenta=this.state.showBtnNewVenta? (<Btn_flotante onClick={this.openModal}>
+            let btnNewVenta=this.state.showBtnNewVenta
+            ? (<Btn_flotante onClick={this.openModal}>
                 <IconContext.Provider value={{ color: "white", size:"2em", title:"Ventas"}}>
                     <div>
                         <MdAddShoppingCart />
                     </div>
                 </IconContext.Provider>
-            </Btn_flotante>):null;
+            </Btn_flotante>)
+            :null;
             
-            let boton2=this.state.showBtnEscaner?(<Btn_flotante2 onClick={this.openCamera}>
+            let boton2=this.state.showBtnEscaner
+            ?(<Btn_flotante2 onClick={this.openCamera}>
                 <IconContext.Provider value={{ color: "white", size:"1.5em", title:"Ventas"}}>
                     <div>
                         <ImQrcode />
                     </div>
                 </IconContext.Provider>
-            </Btn_flotante2>):null;
+            </Btn_flotante2>)
+            :null;
 
-            let modalEscaner=this.state.showModalEscaner? <ModalCamera openMenu={this.closeModals} escribirCodigo={this.asignar_codigo}/>:null
-            let ModalNewProducto=this.state.showNuevoProducto? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra} openCam={this.openCamera} onConsult={this.onConsult}/>:null
+            let modalEscaner=this.state.showModalEscaner
+            ? <ModalCamera openMenu={this.closeModals} escribirCodigo={this.asignar_codigo}/>
+            :null
+            let ModalNewProducto=this.state.showNuevoProducto
+            ? <ModalNuevoProducto onClose={this.closeModals} codigo={this.state.codigo_barra} openCam={this.openCamera} onConsult={this.onConsult}/>
+            :null
             return(
                 <>
                     <div>
