@@ -33,6 +33,7 @@ class ListaProductos extends Component{
                 <td><P>{this.props.datos.cantidad}</P></td>
                 <td><P>{this.props.datos.precioUnitario}</P></td>
                 <td><P>{this.props.datos.importe}</P></td>
+                <td><button>Delete</button></td>
             </tr> 
         )
     }
@@ -159,7 +160,7 @@ export default class ModalVenta extends React.Component{
         })
         .then(res=>res.json())
         .then(data=>{
-            this.setState({opciones:true,prod_busqueda:[]})
+            this.setState({opciones:true,prod_busqueda:[],cantidad:1})
             this.Consulta_productos_venta();
         })
     }
@@ -175,9 +176,9 @@ export default class ModalVenta extends React.Component{
         let Opciones=this.state.opciones
         ? (<>
             <button onClick={this.setScanner}>Escanear</button>
-            <Form> 
+            <div>
             <P>Nombre del producto</P>
-            <Input name='nombre' type='text' onChange={this.handleChange}/>
+            <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences'/>
             {this.state.prod_busqueda.map(busqueda=>{
             return(
                 <ProdEncontrados 
@@ -187,31 +188,31 @@ export default class ModalVenta extends React.Component{
                 click={this.seleccion}/>
             )
             })}
-            </Form>
+            </div>
         </>)
         :
-            <Form>
+            <div>
                 <P>{this.state.nombre}</P>
                 <P>{this.state.precioU}</P>
-                <Button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
+                <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiMinus/>
                         </div>
                     </IconContext.Provider>
-                </Button>
-                <Button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)+1}))}}>
+                </button>
+                <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)+1}))}}>
                     <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                         <div>
                             <TiPlus/>
                         </div>
                     </IconContext.Provider>
-                </Button>
-                <Input name="cantidad" type="number" onChange={this.tipeoCantidad} value={this.state.cantidad} min="1"/>
+                </button>
+                <input name="cantidad" type="number" onChange={this.tipeoCantidad} value={this.state.cantidad} min="1"/>
                 {alertaEscritura}
-                <Button onClick={()=>{this.setState({opciones:true})}}>Cancelar</Button>
-                <Button onClick={this.addProduct}>Agregar</Button>
-            </Form>;
+                <button onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
+                <button onClick={this.addProduct}>Agregar</button>
+            </div>;
         return(
             <> 
             {ModalEsc}
@@ -230,23 +231,26 @@ export default class ModalVenta extends React.Component{
                             <P>{this.state.codigoBarras}</P>
                         </div>
                         <div className={styles.cuerpo}>
-                            <table className={styles.tabla}>
-                                <thead>
-                                    <tr>
-                                        <td>Nombre</td>
-                                        <td>Cant</td>
-                                        <td>Pcio U.</td>
-                                        <td>Importe</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.lista_product_add.map((producto)=>{
-                                        return(
-                                            <ListaProductos key={producto._id} datos={producto}/>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
+                            <div className={styles.tabla}>
+                                <table className={styles.tabla}>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Cant</th>
+                                            <th>Pcio U.</th>
+                                            <th>Importe</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.lista_product_add.map((producto)=>{
+                                            return(
+                                                <ListaProductos key={producto._id} datos={producto}/>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                             <div className={styles.opciones}>
                                 {Opciones}
                             </div>
