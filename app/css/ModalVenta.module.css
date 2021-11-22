@@ -30,17 +30,56 @@ div.cuerpo{
 }
 div.tabla{
     overflow:auto;
-    width: 80%;
+    width: 66%;
+    height: 94%;
+    margin: 2%;
+}
+table.tabla{
+    width: 100%;
 }
 
 div.opciones{
     display: flex;
     flex-direction: column;
-    background-color: snow;
+    width: 30%;
 }
-table.tabla{
-    width: 100%;
+div.escaneo{
+    display: grid;
+    width: 80%;
+    height: 20%;
+    margin: 10%;
+    justify-content: center;
+
 }
+div.form{
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    height: 76%;
+    margin: 2%;
+    align-items: center;
+
+}
+div.formulario{
+    display: flex;
+    justify-content: space-around;
+    width: 96;
+    height: 22%;
+    margin: 2%;
+}
+div.listados{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 96%;
+    height: 74%;
+    margin: 2%;
+    overflow: auto;
+}
+button.producto{
+    margin: 1px;
+}
+
 @media (max-width:800px){
     div.modal{
         background-color:#442c2e;
@@ -53,11 +92,48 @@ table.tabla{
         flex-direction: column;
     }
     div.tabla{
-        width: 100%;
+        width: 94%;
         height: 60%;
     }
     div.opciones{
         display: flex;
         flex-direction: column;
+        width: 30%;
+    }
+    div.escaneo{
+        display: grid;
+        width: 80%;
+        height: 20%;
+        margin: 10%;
+        justify-content: center;
+    
+    }
+    div.form{
+        display: flex;
+        flex-direction: column;
+        width: 96%;
+        height: 76%;
+        margin: 2%;
+        align-items: center;
+    
+    }
+    div.formulario{
+        display: flex;
+        justify-content: space-around;
+        width: 96;
+        height: 22%;
+        margin: 2%;
+    }
+    div.listados{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 96%;
+        height: 74%;
+        margin: 2%;
+        overflow: auto;
+    }
+    button.producto{
+        margin: 1px;
     }
 }

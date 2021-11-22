@@ -17,8 +17,8 @@ class ProdEncontrados extends Component{
     render(){
         const {iden,produc}=this.props;
         return(
-        <button id={iden} onClick={this.click}>{produc.nombre}</button>
-    )
+        <button id={iden} className={styles.producto} onClick={this.click}>{produc.nombre}</button>
+        )
     }
 }
 
@@ -175,19 +175,26 @@ export default class ModalVenta extends React.Component{
         />:null;
         let Opciones=this.state.opciones
         ? (<>
-            <button onClick={this.setScanner}>Escanear</button>
-            <div>
-            <P>Nombre del producto</P>
-            <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences'/>
-            {this.state.prod_busqueda.map(busqueda=>{
-            return(
-                <ProdEncontrados 
-                key={busqueda._id} 
-                iden={busqueda._id} 
-                produc={busqueda} 
-                click={this.seleccion}/>
-            )
-            })}
+            <div className={styles.escaneo}>
+                <button onClick={this.setScanner}>Escanear</button>
+            </div>
+            <div className={styles.form}>
+                <div className={styles.formulario}>
+                    <p>Nombre del producto</p>
+                    <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences' placeholder='Nombre de producto'/>
+                </div>
+                <div className={styles.listados}>
+                    {this.state.prod_busqueda.map(busqueda=>{
+                    return(
+                        <ProdEncontrados 
+                        key={busqueda._id} 
+                        iden={busqueda._id} 
+                        produc={busqueda} 
+                        click={this.seleccion}/>
+                    )
+                    })}
+                </div>
+                
             </div>
         </>)
         :
