@@ -17,7 +17,7 @@ class ProdEncontrados extends Component{
     render(){
         const {iden,produc}=this.props;
         return(
-        <button id={iden} className={styles.producto} onClick={this.click}>{produc.nombre}</button>
+        <button id={iden} onClick={this.click}>{produc.nombre}</button>
         )
     }
 }
@@ -175,15 +175,14 @@ export default class ModalVenta extends React.Component{
         />:null;
         let Opciones=this.state.opciones
         ? (<>
-            <div className={styles.escaneo}>
-                <button onClick={this.setScanner}>Escanear</button>
-            </div>
             <div className={styles.form}>
+                <button onClick={this.setScanner}>Escanear codigo</button>
                 <div className={styles.formulario}>
                     <p>Nombre del producto</p>
                     <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences' placeholder='Nombre de producto'/>
                 </div>
-                <div className={styles.listados}>
+            </div>
+            <div className={styles.listados}>
                     {this.state.prod_busqueda.map(busqueda=>{
                     return(
                         <ProdEncontrados 
@@ -194,31 +193,38 @@ export default class ModalVenta extends React.Component{
                     )
                     })}
                 </div>
-                
-            </div>
         </>)
         :
-            <div>
-                <P>{this.state.nombre}</P>
-                <P>{this.state.precioU}</P>
-                <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
-                    <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
-                        <div>
-                            <TiMinus/>
-                        </div>
-                    </IconContext.Provider>
-                </button>
-                <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)+1}))}}>
-                    <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
-                        <div>
-                            <TiPlus/>
-                        </div>
-                    </IconContext.Provider>
-                </button>
-                <input name="cantidad" type="number" onChange={this.tipeoCantidad} value={this.state.cantidad} min="1"/>
+            <div className={styles.formSeleccion}>
+                <div className={styles.formHeader}>
+                    <P>Nombre: {this.state.nombre}</P>
+                    <P>Precio de venta: {this.state.precioU} MXN</P>
+                </div>
+                <div className={styles.formBody}>
+                    <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
+                        <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                            <div>
+                                <TiMinus/>
+                            </div>
+                        </IconContext.Provider>
+                    </button>
+                    <input name="cantidad" type="number" onChange={this.tipeoCantidad} value={this.state.cantidad} min="1"/>
+                    <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)+1}))}}>
+                        <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                            <div>
+                                <TiPlus/>
+                            </div>
+                        </IconContext.Provider>
+                    </button>
+                    
+                </div>
                 {alertaEscritura}
-                <button onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
-                <button onClick={this.addProduct}>Agregar</button>
+                <div className={styles.formFooter}>
+                    <button onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
+                    <button onClick={this.addProduct}>Agregar</button>
+                </div>
+                
+                
             </div>;
         return(
             <> 
