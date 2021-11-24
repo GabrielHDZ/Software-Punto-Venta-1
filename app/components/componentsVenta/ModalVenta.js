@@ -1,11 +1,10 @@
 import React,{Component} from 'react';
 import Modal from '../../Modal';
-import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import { TiDelete,TiMinus,TiPlus } from 'react-icons/ti';
-import { Form,P,Input,Button } from '../formularioComponent';
 import ModalCamera from '../LectorCodeBarras';
 import styles from '../../css/ModalVenta.module.css';
+import { ImQrcode } from 'react-icons/im';
 class ProdEncontrados extends Component{
     constructor(props){
         super(props)
@@ -29,10 +28,10 @@ class ListaProductos extends Component{
     render(){
         return(
             <tr>
-                <td><P>{this.props.datos.nombre}</P></td>
-                <td><P>{this.props.datos.cantidad}</P></td>
-                <td><P>{this.props.datos.precioUnitario}</P></td>
-                <td><P>{this.props.datos.importe}</P></td>
+                <td><p>{this.props.datos.nombre}</p></td>
+                <td><p>{this.props.datos.cantidad}</p></td>
+                <td><p>{this.props.datos.precioUnitario}</p></td>
+                <td><p>{this.props.datos.importe}</p></td>
                 <td><button>Delete</button></td>
             </tr> 
         )
@@ -176,10 +175,16 @@ export default class ModalVenta extends React.Component{
         let Opciones=this.state.opciones
         ? (<>
             <div className={styles.form}>
-                <button onClick={this.setScanner}>Escanear codigo</button>
+                <p>Nombre del producto</p>
                 <div className={styles.formulario}>
-                    <p>Nombre del producto</p>
-                    <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences' placeholder='Nombre de producto'/>
+                    <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences' placeholder='Maseca'/>
+                    <button onClick={this.setScanner}>
+                        <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                            <div>
+                                <ImQrcode/>
+                            </div>
+                        </IconContext.Provider>
+                    </button>
                 </div>
             </div>
             <div className={styles.listados}>
@@ -197,8 +202,8 @@ export default class ModalVenta extends React.Component{
         :
             <div className={styles.formSeleccion}>
                 <div className={styles.formHeader}>
-                    <P>Nombre: {this.state.nombre}</P>
-                    <P>Precio de venta: {this.state.precioU} MXN</P>
+                    <p>Nombre: {this.state.nombre}</p>
+                    <p>Precio de venta: {this.state.precioU} MXN</p>
                 </div>
                 <div className={styles.formBody}>
                     <button onClick={()=>{this.setState((state)=>({cantidad:parseInt(state.cantidad)-1}))}}>
@@ -223,8 +228,7 @@ export default class ModalVenta extends React.Component{
                     <button onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
                     <button onClick={this.addProduct}>Agregar</button>
                 </div>
-                
-                
+
             </div>;
         return(
             <> 
@@ -240,19 +244,18 @@ export default class ModalVenta extends React.Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
-                            <P>{this.state.id_venta_activa}</P>
-                            <P>{this.state.codigoBarras}</P>
+                            <p>Venta activa</p>
                         </div>
                         <div className={styles.cuerpo}>
                             <div className={styles.tabla}>
                                 <table className={styles.tabla}>
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Cant</th>
-                                            <th>Pcio U.</th>
-                                            <th>Importe</th>
-                                            <th>Opciones</th>
+                                            <th><p>Nombre</p></th>
+                                            <th><p>Cant</p></th>
+                                            <th><p>Pcio U.</p></th>
+                                            <th><p>Importe</p></th>
+                                            <th><p>Opciones</p></th>
                                         </tr>
                                     </thead>
                                     <tbody>
