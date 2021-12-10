@@ -1,0 +1,66 @@
+div.contentCard{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+div.card{
+    width: 29%;
+    height: 270px;
+    background-color: #bd856f;
+    border-radius: 15px;
+    margin: 2%;
+    border:0;
+    padding: 0;
+    
+}
+div.cardContent{
+    width: 96%;
+    height: 93%;
+    margin: 3%;
+    border: 0;
+    padding: 0;
+}
+div.cardTitle{
+    width: 100%;
+    height: 25%;
+    margin: 0% 0% 2%;
+}
+div.cardBody{
+    width: 100%;
+    height: 40%;
+    margin: 2% 0%;
+}
+div.cardOptions{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: space-around;
+    margin: 2% 0% 0% 0%;
+}
+h3.title{
+    font-size: 20px;
+    text-transform: uppercase;
+    /*text-shadow: 2px 2px 2px #3d3e3f;*/
+}
+div.cardOptions button{
+    width: 40%;
+    height: 70%;
+    border-radius: 10px;
+
+}
+
+@media (max-width:850px) {
+    div.card{
+        width: 46%;
+    }
+}
+@media (max-width:600px){
+    div.card{
+        width: 94%;
+        margin: 2% 3%;
+    }
+}

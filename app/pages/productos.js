@@ -1,40 +1,9 @@
 import React,{Component}from 'react';
-import styled from 'styled-components';
 import Boton_flotante from '../components/Boton_flotante';
-import {Button} from '../components/formularioComponent';
 import ModalNuevoProducto from '../components/ModalNuevoProducto';
-
-
-const ContentGlobal=styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  @media all and (max-width: 800px) {
-    display: grid;
-    grid-template-columns: auto auto auto;
-  }
-  @media all and (max-width: 600px) {
-    display: grid;
-    grid-template-columns:auto;
-  }
-`;
-
-const Div1=styled.div`
-    background-color:#FEDBD0;
-    border:1px solid #442c2e;
-    padding:0;
-    margin:0px;
-    transition: all 300ms ease 0ms;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    z-index: 99;
-    &:hover {
-        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-        transform: translateY(-7px);
-    }
-`;
-
-const Div2=styled.div`
-    margin:15px;
-`;
+import styles from '../css/productos.module.css'
+import {RiMoneyDollarCircleFill, RiMoneyDollarCircleLine} from 'react-icons/ri';
+import { IconContext } from 'react-icons/lib';
 
 class CardProducto extends React.Component{
     constructor(props){
@@ -65,18 +34,27 @@ class CardProducto extends React.Component{
         <ModalNuevoProducto onClose={this.seeCard} identificador={this.props.data._id} onConsult={this.consult}/>:null;
         return(
           <>
-            <Div1>
-              <Div2>
-                  <h3>{this.props.data.nombre}</h3>
-                  <span>{this.props.data.presentacion}</span>
-                  <span>{this.props.data.descripcion}</span>
-                  <span>{this.props.data.codigo}</span>
-                  <span>{this.props.data.precioVenta}</span>
-                  <span>{this.props.data.precioCompra}</span>
-                  <Button onClick={this.delete}>Borrar</Button>
-                  <Button onClick={this.mostrarModal}>Editar</Button>
-              </Div2>
-            </Div1>
+            <div className={styles.card}>
+              <div className={styles.cardContent}>
+                <div className={styles.cardTitle}>
+                  <h3 className={styles.title}>{this.props.data.nombre}</h3>
+                  <h4>{this.props.data.descripcion}</h4>
+                </div>
+                <div className={styles.cardBody}>
+                  <p>Presentacion: {this.props.data.presentacion}</p>
+                  <p>Codigo: {this.props.data.codigo}</p>
+                  <p>Precio de compra: {this.props.data.precioCompra} MXN</p>
+                  <p>Precio de venta: {this.props.data.precioVenta} MXN</p>
+                  
+                </div>
+                <div className={styles.cardOptions}>
+                  <button onClick={this.delete}>Borrar producto</button>
+                  <button onClick={this.mostrarModal}>Editar informacion</button>
+                </div>
+                  
+                  
+              </div>
+            </div>
             {generarModal}
             </>
         )
@@ -134,7 +112,8 @@ class Productos extends Component{
 
   render() {
     return (
-      <ContentGlobal>
+      <>
+        <div className={styles.contentCard}>
         { 
           this.state.tareas.map(tarea => {
             return (
@@ -142,10 +121,9 @@ class Productos extends Component{
             )
           })
         }
-      <div>
-      <Boton_flotante Clase={this.state.propiedad_btn} onConsult={this.fetchTasks}/>
-      </div>
-      </ContentGlobal>
+        </div>
+        <Boton_flotante Clase={this.state.propiedad_btn} onConsult={this.fetchTasks}/>
+      </>
     )
   }
 }
