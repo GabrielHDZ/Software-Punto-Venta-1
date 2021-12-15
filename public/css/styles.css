@@ -11,6 +11,8 @@
 }
 /*Menu Navbar*/
 nav.menu-navbar-superior{
+   position: sticky;
+   top: 0;
    padding: 0 10px;
    min-height: 9vh;
    background: #4d302d;

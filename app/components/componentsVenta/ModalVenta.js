@@ -25,6 +25,9 @@ class ListaProductos extends Component{
     constructor(props){
         super(props)
     }
+    componentDidMount(){
+        this.props.totales(this.props.datos.importe);
+    }
     render(){
         return(
             <tr>
@@ -52,7 +55,9 @@ export default class ModalVenta extends React.Component{
             nombre_seleccionado:'',
             cantidad:1,
             alerta:false,
-            lista_product_add:[]
+            lista_product_add:[],
+            total:0,
+            comprador:''
         }
         this.setScanner=this.setScanner.bind(this);
         this.closeScanner=this.closeScanner.bind(this);
@@ -62,6 +67,8 @@ export default class ModalVenta extends React.Component{
         this.tipeoCantidad=this.tipeoCantidad.bind(this);
         this.addProduct=this.addProduct.bind(this);
         this.Consulta_productos_venta=this.Consulta_productos_venta.bind(this);
+        this.sumaTotales=this.sumaTotales.bind(this);
+
     }
     componentDidMount(){
         this.Consulta_productos_venta();
@@ -148,7 +155,6 @@ export default class ModalVenta extends React.Component{
         this.setState({cantidad:value})
     }
     addProduct(){
-        console.log(this.state)
         fetch(`/api/ventas/addProducto/101010`,{
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -162,6 +168,9 @@ export default class ModalVenta extends React.Component{
             this.setState({opciones:true,prod_busqueda:[],cantidad:1})
             this.Consulta_productos_venta();
         })
+    }
+    sumaTotales(importe){
+        this.setState((state)=>({total:state.total+importe}));
     }
 
     render(){
@@ -261,15 +270,22 @@ export default class ModalVenta extends React.Component{
                                     <tbody>
                                         {this.state.lista_product_add.map((producto)=>{
                                             return(
-                                                <ListaProductos key={producto._id} datos={producto}/>
+                                                <ListaProductos key={producto._id} datos={producto} totales={this.sumaTotales}/>
                                             )
                                         })}
                                     </tbody>
                                 </table>
                             </div>
-                            <div className={styles.opciones}>
-                                {Opciones}
+                            <div className={styles.bodyopciones}>
+                                    <div className={styles.opciones}>
+                                    {Opciones}
+                                </div>
+                                <div className={styles.terminacion}>
+                                    <div>Total: <br/>{this.state.total}</div>
+                                    <button className={styles.btnTerminacion}>Terminar venta</button>
+                                </div>
                             </div>
+                            
                             
                         </div>
                     </div>
