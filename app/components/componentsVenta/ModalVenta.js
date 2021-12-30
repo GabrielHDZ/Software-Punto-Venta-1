@@ -246,6 +246,7 @@ export default class ModalVenta extends React.Component{
                 <div className={styles.backgroundModal}>
                     <div className={styles.modal}>
                         <div className={styles.titulo}>
+                            <h3>Venta activa</h3>
                             <button onClick={onClose}>
                                 <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
                                     <div>
@@ -253,7 +254,6 @@ export default class ModalVenta extends React.Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
-                            <h3>Venta activa</h3>
                         </div>
                         <div className={styles.cuerpo}>
                             <div className={styles.tabla}>
