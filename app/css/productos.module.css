@@ -4,8 +4,6 @@ div.contentCard{
     margin: 0;
     border: 0;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
 }
 div.card{
     width: 29%;
@@ -15,6 +13,7 @@ div.card{
     margin: 2%;
     border:0;
     padding: 0;
+    float: left;
     
 }
 div.cardContent{
@@ -64,3 +63,7 @@ div.cardOptions button{
         margin: 2% 3%;
     }
 }
+
+
+
+

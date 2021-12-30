@@ -188,7 +188,7 @@ export default class ModalVenta extends React.Component{
                 <div className={styles.formulario}>
                     <input name='nombre' type='text' onChange={this.handleChange} autoCapitalize='sentences' placeholder='Maseca'/>
                     <button onClick={this.setScanner}>
-                        <IconContext.Provider value={{ color: "black", size:"2em", title:"Close Modal"}}>
+                        <IconContext.Provider value={{ color: "white", size:"2em", title:"Close Modal"}}>
                             <div>
                                 <ImQrcode/>
                             </div>
@@ -234,8 +234,8 @@ export default class ModalVenta extends React.Component{
                 </div>
                 {alertaEscritura}
                 <div className={styles.formFooter}>
-                    <button onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
-                    <button onClick={this.addProduct}>Agregar</button>
+                    <button className={styles.btnCancelProducto} onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
+                    <button className={styles.btnAddProducto} onClick={this.addProduct}>Agregar</button>
                 </div>
 
             </div>;
@@ -253,7 +253,7 @@ export default class ModalVenta extends React.Component{
                                     </div>
                                 </IconContext.Provider>
                             </button>
-                            <p>Venta activa</p>
+                            <h3>Venta activa</h3>
                         </div>
                         <div className={styles.cuerpo}>
                             <div className={styles.tabla}>
@@ -277,16 +277,14 @@ export default class ModalVenta extends React.Component{
                                 </table>
                             </div>
                             <div className={styles.bodyopciones}>
-                                    <div className={styles.opciones}>
+                                <div className={styles.opciones}>
                                     {Opciones}
                                 </div>
                                 <div className={styles.terminacion}>
-                                    <div>Total: <br/>{this.state.total}</div>
-                                    <button className={styles.btnTerminacion}>Terminar venta</button>
+                                    <div className={styles.subTotal}>Total: <br/> {this.state.total}MXN.</div>
+                                    <button className={styles.btnTerminacion}>Terminar <br/>venta</button>
                                 </div>
                             </div>
-                            
-                            
                         </div>
                     </div>
                 </div>

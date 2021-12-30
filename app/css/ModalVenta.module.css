@@ -10,274 +10,282 @@ div.backgroundModal{
     position: fixed;
 }
 
-@media (min-width: 500px){
-    div.modal{
-        background-color:#bd856f;
-        width: 85%;
-        height: 70%;
-        margin: 2px;
-        border:none;
-        padding: 5px;
-        border-radius: 15px;
-    }
-    div.modal p{
-        color: rgba(13, 14, 13, 0.966);
-    }
-    div.titulo{
-        display: flex;
-        flex-direction: row;
-        height: 8%;
-    }
-    div.cuerpo{
-        display: flex;
-        flex-direction: row;
-        height: 92%;
-        background-color: #bd856fcb;
-        border-radius: 10px;
-    }
-    div.tabla{
-        overflow:auto;
-        width: 66%;
-        height: 94%;
-        margin: 2%;
-    }
-    table.tabla{
-        width: 100%;
-    }
-    table.tabla th{
-        text-align: left;
-        background-color: #b1591a;
-    }
-    table.tabla tr:nth-child(even){
-        background-color: #dfbfbb;
-    }
+div.modal{
+    background-color:#bd856f;
+    width: 85%;
+    height: 70%;
+    margin: 2px;
+    border:none;
+    padding: 5px;
+    border-radius: 15px;
+}
+div.modal p{
+    color: rgba(13, 14, 13, 0.966);
+}
+div.titulo{
+    display: flex;
+    flex-direction: row;
+    height: 8%;
+}
+div.cuerpo{
+    display: flex;
+    flex-direction: row;
+    height: 92%;
+    border-radius: 10px;
+}
+div.tabla{
+    overflow:auto;
+    width: 66%;
+    height: 94%;
+    margin: 2%;
+}
+table.tabla{
+    width: 100%;
+}
+table.tabla th{
+    text-align: left;
+    background-color: #b1591a;
+}
+table.tabla tr:nth-child(even){
+    background-color: #dfbfbb;
+}
     
-    div.bodyopciones{
-        display: flex;
-        flex-direction: column;
-        width: 28%;
-        height: 100%;
-    }
-    div.terminacion{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 15%;
-        justify-content: space-around;
-        align-items: center;
-        border-radius: 15px;
-        background-color: #be723c;
-        font-weight: bolder;
-        font-size: 2vw;
-    }
-    div.terminacion button.btnTerminacion{
-        height: 90%;
-        border-radius: 15px;
-        background-color: #b1591a;
-        border: none;
-    }
-
-
-
-    div.opciones{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 80%;
-    }
-    div.form{
-        display: flex;
-        flex-direction: column;
-        width: 96%;
-        height: 16%;
-        margin: 2%;
-    }
-    div.formulario{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 96%;
-        height: 94%;
-        margin: 3% 0%;
-    }
-    div.formulario button{
-        width: 20%;
-        height: 100%;
-    }
-    div.formulario input{
-        width: 80%;
-        height: 100%;
-    }
-    div.listados{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: 96%;
-        height: 76%;
-        margin: 2%;
-        overflow: auto;
-    }
-    div.listados button{
-        margin: 1px;
-    }
-    div.formSeleccion{
-        display: flex;
-        flex-direction: column;
-        width: 96%;
-        height: 96%;
-        margin: 2%;
-    }
-    div.formHeader{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 20%;
-        margin: 5% 0% 3%;
-        padding: 5%;
-    }
-    div.formBody{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-        height: 20%;
-        margin: 2% 0% 5%;
-        padding: 10% 5% 1% 5%;
-    }
-    div.formBody input{
-        width: 50%;
-    }
-    div.formFooter{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        height: 30%;
-        margin: 5% 0% 5% 0%;
-    }
-    div.formFooter button{
-        width: 30%;
-        height: 35%;
-    }
-
+div.bodyopciones{
+    display: flex;
+    flex-direction: column;
+    width: 28%;
+    height: 100%;
+}
+div.terminacion{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #be723c;
+    
+}
+div.terminacion div.subTotal{
+    margin: 5px;
+    width: 40%;
+    font-weight: bolder;
+    font-size: 2vw;
+}
+div.terminacion button.btnTerminacion{
+    color: #ffffff;
+    height: 96%;
+    border-radius: 15px;
+    width: 45%;
+    background-color: #442C2E;
+    border:none;
+    margin: 0;
+    padding: 2px;
+    font-size: 2vh;
+}
+div.terminacion button.btnTerminacion:hover{
+    background-color: #442c2ebd;
 }
 
-@media (max-width: 499px){
-    div.modal{
-        background-color:#442c2e;
-        width: 95%;
-        height: 80%;
-        margin: 2px;
-        border: none;
-        padding: 5px;
-        border-radius: 15px;
-    }
-    div.modal p{
-       color:rgba(192,201,200,0.996)
-    }
-    div.titulo{
-       display: flex;
-       flex-direction: row;
-       height: 8%;
-    }
-    div.cuerpo{
-        display: flex;
-        flex-direction: column;
-        height: 92%;
-    }
-    div.tabla{
-       overflow: auto;
-        width: 96%;
-        height: 55%;
-        margin: 2%;
-    }
-    table.tabla{
-       width: 100%;
-    }
-    table.tabla th{
-       text-align: left;
-       background-color: rgb(177, 89, 26);
-   }
-   table.tabla tr:nth-child(even){background-color: rgb(190, 114, 60);}
-   
-    div.opciones{
-        display: flex;
-        flex-direction: column;
-        width: 96%;
-        height: 43%;
-        margin: 2% 0% 0%;
-    }
-    div.form{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 40%;
-        margin:2%
-    }
-    div.formulario{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        height: 70%;
-        margin: 1px 0px;
-    }
-    div.formulario button{
-        width: 20%;
-        height: 100%;
-    }
-    div.formulario input{
-        width: 80%;
-        height: 100%;
-    }
-    div.listados{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: 100%;
-        height: 60%;
-        overflow: auto;
-    }
-    div.listados button{
-        width: 90%;
-        height: 45px;
-        margin: 1px;
-    }
-    div.formSeleccion{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        margin: 2%;
-    }
-    div.formHeader{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 20%;
-        margin: 0%;
-        padding: 0%;
-    }
-    div.formBody{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-        height: 38%;
-        margin: 2% 0% 0% 0%;
-        padding: 0%;
- 
-    }
-    div.formFooter{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 100%;
-        height: 38%;
-        margin: 2% 0% 0% 0%;
-    }
-    div.formFooter button{
-        width: 30%;
-        height: 35%;
-    }
+div.opciones{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
 }
+div.form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 20%;
+}
+div.formulario{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 70%;
+}
+div.formulario button{
+    width: 20%;
+    height: 100%;
+    border-radius: 0 10px 10px 0;
+    background-color: #442C2E;
+    border:none;
+}
+div.formulario button:hover{
+    background-color: #442c2ebd;
+}
+div.formulario input{
+    width: 80%;
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+    border:none;
+}
+div.listados{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+}
+div.listados button{
+    margin: 1px;
+}
+div.formSeleccion{
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    height: 96%;
+    margin: 2%;
+}
+div.formHeader{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 20%;
+    margin: 5% 0% 3%;
+    padding: 5%;
+}
+div.formBody{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 20%;
+    margin: 2% 0% 5%;
+    padding: 10% 5% 1% 5%;
+}
+div.formBody input{
+    width: 50%;
+}
+div.formFooter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 30%;
+    margin: 5% 2% 5% 2%;
+}
+div.formFooter button.btnAddProducto{
+    width: 30%;
+    height: 35%;
+    background-color: #442C2E;
+    border:none;
+    border-radius: 10px;
+    color: #ffffff;
+}
+div.formFooter button.btnCancelProducto{
+    width: 30%;
+    height: 35%;
+    background-color: #a7313b;
+    border:none;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+
+
+
+    @media (max-width: 499px){
+        div.modal{
+            width: 95%;
+            height: 90%;
+        }
+        div.modal p{
+        }
+        div.titulo{
+        }
+        div.cuerpo{
+            flex-direction: column;
+        }
+        div.tabla{
+           overflow: auto;
+            width: 96%;
+            height: 60%;
+        }
+        table.tabla{
+        }
+        table.tabla th{
+       }
+       table.tabla tr:nth-child(even){
+    
+       }
+    
+       div.bodyopciones{
+            width: 100%;
+            height: 40%;
+       }
+       div.terminacion{
+            width: 100%;
+            height: 20%;
+       }
+       div.terminacion button.btnTerminacion{
+    
+       }
+        div.opciones{
+            width: 100%;
+            height: 78%;
+            margin: 2% 0% 1%;
+        }
+        div.form{
+            width: 100%;
+            height: 40%;
+        }
+        div.formulario{
+            width: 100%;
+            height: 70%;
+            margin: 1px 0px;
+        }
+        div.formulario button{
+        }
+        div.formulario input{
+        }
+        div.listados{
+            width: 100%;
+            height: 60%;
+        }
+        div.listados button{
+            width: 90%;
+            height: 45px;
+        }
+        div.formSeleccion{
+            width: 96%;
+            height: 100%;
+        }
+        div.formHeader{
+            margin: 0%;
+            padding: 0%;
+        }
+        div.formBody{
+            width: 100%;
+            height: 38%;
+            margin: 2% 0% 0% 0%;
+            padding: 0%;
+     
+        }
+        div.formBody input{
+    
+        }
+        div.formFooter{
+            width: 100%;
+            height: 38%;
+            margin: 2% 0% 0% 0%;
+        }
+        div.formFooter button.btnAddProducto{
+            width: 30%;
+            height: 70%;
+            background-color: #442C2E;
+            border:none;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+        div.formFooter button.btnCancelProducto{
+            width: 30%;
+            height: 70%;
+            background-color: #a7313b;
+            border:none;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+    }
