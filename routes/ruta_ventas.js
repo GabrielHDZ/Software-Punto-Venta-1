@@ -48,17 +48,21 @@ router.post('/addProducto/:id', async(req,res)=>{
     await newProductVenta.save();
     res.json({status:'Producto agregado a la lista'})
 })
-
 router.get('/listaProducts/activa/:id', async(req, res) => {
     const venta="^"+req.params.id+"";
     const tarea = await prodVenta.find({idVenta:{$regex:venta}});
     res.json(tarea);
 });
+router.delete('/deleteProdList/:id', async(req, res) => {
+    await prodVenta.findByIdAndRemove(req.params.id);
+    res.json({ status: 'Producto eliminado de la lista de venta actual' });
+});
 
 // UPDATE a new task
 router.put('/:id', async(req, res) => {
-    const { nombre,cantidad,preciou,preciot} = req.body;
-    const newVenta= { nombre,cantidad,preciou,preciot,fecha};
+    const { comprador,totalVenta} = req.body;
+    const estado=false;
+    const newVenta= { comprador,totalVenta,fecha,estado};
     await Venta.findByIdAndUpdate(req.params.id, newVenta);
     res.json({ status: 'Venta actualizada' });
 });

@@ -2,8 +2,6 @@ import React,{Component}from 'react';
 import Boton_flotante from '../components/Boton_flotante';
 import ModalNuevoProducto from '../components/ModalNuevoProducto';
 import styles from '../css/productos.module.css'
-import {RiMoneyDollarCircleFill, RiMoneyDollarCircleLine} from 'react-icons/ri';
-import { IconContext } from 'react-icons/lib';
 
 class CardProducto extends React.Component{
     constructor(props){

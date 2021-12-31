@@ -24,9 +24,13 @@ class ProdEncontrados extends Component{
 class ListaProductos extends Component{
     constructor(props){
         super(props)
+        this.deleteProduct=this.deleteProduct.bind(this);
     }
     componentDidMount(){
         this.props.totales(this.props.datos.importe);
+    }
+    deleteProduct(){
+        this.props.deleteP(this.props.datos._id,this.props.datos.importe)
     }
     render(){
         return(
@@ -35,7 +39,7 @@ class ListaProductos extends Component{
                 <td><p>{this.props.datos.cantidad}</p></td>
                 <td><p>{this.props.datos.precioUnitario}</p></td>
                 <td><p>{this.props.datos.importe}</p></td>
-                <td><button>Delete</button></td>
+                <td><button onClick={this.deleteProduct}>Delete</button></td>
             </tr> 
         )
     }
@@ -68,6 +72,8 @@ export default class ModalVenta extends React.Component{
         this.addProduct=this.addProduct.bind(this);
         this.Consulta_productos_venta=this.Consulta_productos_venta.bind(this);
         this.sumaTotales=this.sumaTotales.bind(this);
+        this.deleteProducto=this.deleteProducto.bind(this);
+        this.completeBuy=this.completeBuy.bind(this);
 
     }
     componentDidMount(){
@@ -170,7 +176,51 @@ export default class ModalVenta extends React.Component{
         })
     }
     sumaTotales(importe){
-        this.setState((state)=>({total:state.total+importe}));
+        this.setState((state)=>({total:parseInt(state.total)+importe}));
+    }
+    deleteProducto(id,importe){
+        if(confirm('eliminar producto?')){
+            fetch(`api/ventas/deleteProdList/${id}`,{
+                method: 'DELETE',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                }
+            })
+            .then(res=> {
+                this.Consulta_productos_venta();
+                this.setState((state)=>({total:parseInt(state.total)-importe}));
+                console.log(res);
+        });
+        }
+        
+    }
+    completeBuy(){
+        console.log(this.state);
+        let cliente=prompt(`Venta finalizada, el monto total a pagar es: ${this.state.total} MNX, \n ¿Desea agregar el nombre del cliente?`);
+        //Detectamos si el usuario ingreso un valor
+        if (cliente != null){
+            alert('Venta concluida a nombre de: '+cliente);
+            fetch(`/api/ventas/${this.state.id_venta_activa}`,{
+                method:'PUT',
+                body:JSON.stringify({
+                    comprador:cliente,
+                    totalVenta:this.state.total
+                }),
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                
+            });
+        }
+            //Detectamos si el usuario NO ingreso un valor
+        else {
+        alert("Venta cancelada");
+        }
     }
 
     render(){
@@ -237,7 +287,6 @@ export default class ModalVenta extends React.Component{
                     <button className={styles.btnCancelProducto} onClick={()=>{this.setState({opciones:true,cantidad:1})}}>Cancelar</button>
                     <button className={styles.btnAddProducto} onClick={this.addProduct}>Agregar</button>
                 </div>
-
             </div>;
         return(
             <> 
@@ -270,7 +319,7 @@ export default class ModalVenta extends React.Component{
                                     <tbody>
                                         {this.state.lista_product_add.map((producto)=>{
                                             return(
-                                                <ListaProductos key={producto._id} datos={producto} totales={this.sumaTotales}/>
+                                                <ListaProductos key={producto._id} datos={producto} totales={this.sumaTotales} deleteP={this.deleteProducto}/>
                                             )
                                         })}
                                     </tbody>
@@ -282,7 +331,7 @@ export default class ModalVenta extends React.Component{
                                 </div>
                                 <div className={styles.terminacion}>
                                     <div className={styles.subTotal}>Total: <br/> {this.state.total}MXN.</div>
-                                    <button className={styles.btnTerminacion}>Terminar <br/>venta</button>
+                                    <button className={styles.btnTerminacion} onClick={this.completeBuy}>Terminar <br/>venta</button>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Ul,List,List2,Input,Form,P,DivButtons,Contenedor3} from '../components/formularioComponent';
 import Boton_flotante from '../components/Boton_flotante';
 import ModalVenta from '../components/componentsVenta/ModalVenta';
+import styles from '../css/ventas.module.css';
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -73,10 +73,19 @@ class Home extends React.Component {
         id_Venta={this.state.ventaActiva}
         />:null;
         return(
-                <div>
+                <>
+                    <div className={styles.container}>
+                        {this.state.ventas.map(venta=>{
+                            return(
+                                <div className={styles.card} key={venta._id}>{venta._id}</div>
+                            )
+                            
+                        })}
+                    </div>  
                     {ModaldeVentas}
                     <Boton_flotante Clase={this.state.propiedad_btn} openVenta={this.activarModalVenta}/>
-                </div>
+                </>
+                
         ); 
     }
 }
