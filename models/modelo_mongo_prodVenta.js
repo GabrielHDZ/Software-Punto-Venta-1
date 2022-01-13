@@ -1,13 +1,12 @@
-const mongoose= require('mongoose');
-const {Schema}=mongoose;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const esquema_prodVenta=new Schema({
-    idProd:{type:String, require:true},
-    nombre:{type:String,require:false},
-    idVenta:{type:String,require:true},
-    cantidad:{type:Number,require:true},
-    precioUnitario:{type:Number,require:true},
-    importe:{type:Number,require:true}
+const esquema_prodVenta = new Schema({
+    idProd: { type: String, require: true },
+    nombre: { type: String, require: false },
+    cantidad: { type: Number, require: true },
+    precioUnitario: { type: Number, require: true },
+    importe: { type: Number, require: true }
 });
 
-module.exports=mongoose.model('prodVenta',esquema_prodVenta);
+module.exports = mongoose.model('prodVenta', esquema_prodVenta);

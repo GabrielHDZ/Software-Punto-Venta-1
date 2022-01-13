@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-let dates=new Date();
+const dates=new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+const fecha=dates.toLocaleDateString('en-US', options)
 //FORMATO DE FECHA DD/MM/YYYY
 //let formato=Intl.DateTimeFormat('nl-BE');
 //FORMATO DE FECHA MM/DD/YYYY
-let formato=Intl.DateTimeFormat('en-US');
-let fecha=formato.format(dates);
+/* const formato=Intl.DateTimeFormat('en-US');
+const fecha=formato.format(dates); */
 
 //MODELO DE LAS CARACTERISTICAS DE UNA VENTA REALIZADA
 const Venta = require('../models/modelo_mongo_venta');
