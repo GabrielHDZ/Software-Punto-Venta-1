@@ -13,7 +13,6 @@ class ProductoList extends React.Component {
             lista_prod: []
         }
     }
-
     componentDidMount() {
         fetch(`/api/ventas/listaProducts/activa/${this.state.venta}`, {
             method: 'GET',
@@ -30,14 +29,29 @@ class ProductoList extends React.Component {
     }
     render() {
         return (
-            <ul>
-                {this.state.lista_prod.map(producto => {
-                    return (
-                        <li key={producto._id}>{producto.nombre} {producto.precioUnitario} {producto.cantidad} {producto.importe}</li>
-                    )
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.lista_prod.map(producto => {
+                        return (
+                            <tr key={producto._id}>
+                                <td>{producto.nombre}</td>
+                                <td>{producto.precioUnitario} MXN</td>
+                                <td>{producto.cantidad}</td>
+                                <td>{producto.importe} MXN</td>
+                            </tr>
+                        )
 
-                })}
-            </ul>
+                    })}
+                </tbody>
+            </table>
 
         )
 
@@ -118,7 +132,10 @@ class Home extends React.Component {
             /> : null;
         return (
             <>
-                <div className={styles.container}>
+                <div className={styles.aside}>
+                    <input type='checkbox'></input>
+                </div>
+                <section className={styles.container}>
                     {this.state.ventas.map(venta => {
                         let fecha = venta.fecha;
                         let format = fecha.slice(0, 10);
@@ -138,15 +155,12 @@ class Home extends React.Component {
                                 </details>
                                 <span>Total: {venta.totalVenta} MXN.</span>
                             </div>
-
                         )
-
                     })}
-                </div>
+                </section>
                 {ModaldeVentas}
                 <Boton_flotante Clase={this.state.propiedad_btn} openVenta={this.activarModalVenta} />
             </>
-
         );
     }
 }
