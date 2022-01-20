@@ -1,4 +1,4 @@
-div.aside {
+aside.aside {
   float: left;
   height: 578px;
   width: 30%;
@@ -8,7 +8,7 @@ div.aside {
   left: 0px;
   color: bisque;
 }
-div.aside h1 {
+aside.aside h1 {
   height: 100%;
 }
 section.container {

@@ -4,6 +4,7 @@ import ModalVenta from '../components/componentsVenta/ModalVenta';
 import styles from '../css/ventas.module.css';
 import { GrAddCircle } from 'react-icons/gr'
 import { IconContext } from "react-icons";
+import { TiHeadphones } from 'react-icons/ti';
 
 class ProductoList extends React.Component {
     constructor(props) {
@@ -59,6 +60,79 @@ class ProductoList extends React.Component {
 
 
 }
+
+class Filtros extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dia: new Date(),
+            typeInput: 'text',
+            fechaConsulta: '',
+        }
+        this.filtroSelect = this.filtroSelect.bind(this);
+        this.handleChange = this.filtroSelect.bind(this);
+        this.escritura = this.escritura.bind(this);
+    }
+    filtroSelect(e) {
+        const { value } = e.target;
+        console.log(value);
+        switch (value) {
+            case 'Dia':
+                this.setState({ typeInput: 'date' })
+                break;
+            case 'Semana':
+                this.setState({ typeInput: 'week' })
+                break;
+            case 'Mes':
+                this.setState({ typeInput: 'month' })
+                break;
+            default:
+                this.setState({ typeInput: 'text' })
+                break;
+        }
+    }
+    handleChange(event) {
+        const { value } = event.target;
+        this.setState({ fechaConsulta: value }, () => { console.log('4') });
+    }
+    escritura() {
+        console.log(`tipo de consulta ${this.state.typeInput}, fecha tentativa ${this.state.fechaConsulta}`)
+    }
+    render() {
+        console.log(typeof this.state.dia)
+        let options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric' };
+        let fecha = this.state.dia.toLocaleDateString('en-US', options)
+        let format = fecha.slice(4);
+        return (
+            <>
+                <h2>Ventas del dia {format}</h2>
+                <details>
+                    <summary>Aplicar filtros de busqueda</summary>
+                    <div>
+                        <input type='radio' name='presentacion' value='Dia' onClick={this.filtroSelect} />
+                        <label>Dia</label>
+                        <input type='radio' name='presentacion' value='Semana' onClick={this.filtroSelect} />
+                        <label>Semana</label>
+                        <input type='radio' name='presentacion' value='Mes' onClick={this.filtroSelect} />
+                        <label>Mes</label>
+
+                        <select value='Semana' onChange={this.filtroSelect}>
+                            <option value='Dia'>Dia</option>
+                            <option value='Semana'>Semana</option>
+                            <option value='Mes'>Mes</option>
+                        </select>
+
+                        <input type={this.state.typeInput} name='fecha' onChange={this.handleChange}></input>
+                        <button onClick={this.escritura}>Consultar</button>
+                    </div>
+
+                </details>
+            </>
+
+
+        )
+    }
+}
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -73,6 +147,7 @@ class Home extends React.Component {
             modalVenta: false,
             ventaActiva: '',
             lista_prod: [],
+            dia: new Date(),
         };
         this.activarModalVenta = this.activarModalVenta.bind(this);
         this.desactivarModalVenta = this.desactivarModalVenta.bind(this);
@@ -132,9 +207,12 @@ class Home extends React.Component {
             /> : null;
         return (
             <>
-                <div className={styles.aside}>
-                    <input type='checkbox'></input>
-                </div>
+                <aside className={styles.aside}>
+
+                    <Filtros fecha={this.state.dia} />
+
+
+                </aside>
                 <section className={styles.container}>
                     {this.state.ventas.map(venta => {
                         let fecha = venta.fecha;
