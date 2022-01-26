@@ -70,12 +70,11 @@ class Filtros extends React.Component {
             fechaConsulta: '',
         }
         this.filtroSelect = this.filtroSelect.bind(this);
-        this.handleChange = this.filtroSelect.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.escritura = this.escritura.bind(this);
     }
     filtroSelect(e) {
         const { value } = e.target;
-        console.log(value);
         switch (value) {
             case 'Dia':
                 this.setState({ typeInput: 'date' })
@@ -91,12 +90,12 @@ class Filtros extends React.Component {
                 break;
         }
     }
-    handleChange(event) {
-        const { value } = event.target;
-        this.setState({ fechaConsulta: value }, () => { console.log('4') });
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     }
     escritura() {
-        console.log(`tipo de consulta ${this.state.typeInput}, fecha tentativa ${this.state.fechaConsulta}`)
+        console.log(this.state.fechaConsulta)
     }
     render() {
         console.log(typeof this.state.dia)
@@ -116,13 +115,7 @@ class Filtros extends React.Component {
                         <input type='radio' name='presentacion' value='Mes' onClick={this.filtroSelect} />
                         <label>Mes</label>
 
-                        <select value='Semana' onChange={this.filtroSelect}>
-                            <option value='Dia'>Dia</option>
-                            <option value='Semana'>Semana</option>
-                            <option value='Mes'>Mes</option>
-                        </select>
-
-                        <input type={this.state.typeInput} name='fecha' onChange={this.handleChange}></input>
+                        <input type={this.state.typeInput} name='fechaConsulta' onChange={this.handleChange}></input>
                         <button onClick={this.escritura}>Consultar</button>
                     </div>
 
