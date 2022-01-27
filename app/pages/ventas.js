@@ -67,7 +67,7 @@ class Filtros extends React.Component {
         this.state = {
             dia: new Date(),
             typeInput: 'text',
-            fechaConsulta: '',
+            fechaConsulta: new Date(),
         }
         this.filtroSelect = this.filtroSelect.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -95,7 +95,8 @@ class Filtros extends React.Component {
         this.setState({ [name]: value });
     }
     escritura() {
-        console.log(this.state.fechaConsulta)
+        console.log(this.state.fechaConsulta);
+        this.props.addStateFilter(this.state.fechaConsulta);
     }
     render() {
         console.log(typeof this.state.dia)
@@ -141,9 +142,11 @@ class Home extends React.Component {
             ventaActiva: '',
             lista_prod: [],
             dia: new Date(),
+            dateFilter: '',
         };
         this.activarModalVenta = this.activarModalVenta.bind(this);
         this.desactivarModalVenta = this.desactivarModalVenta.bind(this);
+        this.updateStateFilter = this.updateStateFilter.bind(this);
     }
     activarModalVenta() {
         fetch('/api/ventas/state/63437')
@@ -189,7 +192,13 @@ class Home extends React.Component {
             .then(data => {
                 this.setState({ ventas: data });
                 console.log(this.state.ventas);
+                console.log(this.state);
             });
+    }
+
+    updateStateFilter(date) {
+        this.setState({ dateFilter: date });
+        this.fetchTask();
     }
 
     render() {
@@ -201,10 +210,7 @@ class Home extends React.Component {
         return (
             <>
                 <aside className={styles.aside}>
-
-                    <Filtros fecha={this.state.dia} />
-
-
+                    <Filtros fecha={this.state.dia} addStateFilter={this.updateStateFilter} />
                 </aside>
                 <section className={styles.container}>
                     {this.state.ventas.map(venta => {
@@ -220,9 +226,7 @@ class Home extends React.Component {
                                     <summary>
                                         Lista de productos
                                     </summary>
-
                                     <ProductoList venta={venta._id} />
-
                                 </details>
                                 <span>Total: {venta.totalVenta} MXN.</span>
                             </div>
