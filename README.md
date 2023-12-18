@@ -5,3 +5,5 @@ se presenta como una solucion al control de inventario y de ventas, reducido, ya
 
  -remove mongodb, add mysql or postgre
 
+ 
+
