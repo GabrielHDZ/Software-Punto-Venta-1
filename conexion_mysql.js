@@ -8,11 +8,11 @@ const pool_mysql = mysql.createPool({
   password: password,
   database: 'sakila'
 });
-module.export=pool_mysql;
+module.exports=pool_mysql;
 
 
 // Ejemplo de conexión:
-(async () => {
+/* (async () => {
   try {
     const connection = await pool_mysql.getConnection();
     console.log('Conexión a la base de datos establecida');
@@ -24,4 +24,4 @@ module.export=pool_mysql;
   } catch (error) {
     console.error('Error al conectar a la base de datos:', error);
   }
-})();
+})(); */

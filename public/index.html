@@ -16,7 +16,38 @@
         <noscript>Es necesario habilitar Javascript para ejecutarse correctamente la app.</noscript>
         <div id="app"></div>
         <div id="modal"></div>
+        <p>parfo</p>
+        <button id='send'type="button">clik return data to server</button>
+        <script>
+            const ajax=async(url,{method="POST",data})=>{
+                return await fetch(url,{
+                    method,
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify(data)
+                });
+            }
+            document.getElementById('send').addEventListener('click',
+            function(e){
+                e.preventDefault();
+/*                 fetch('/api/ventas')
+ */             ajax("/api/ventas",{method:"GET",})                
+                .then(response=>response.json())
+                .then(function(response){
+                    response.forEach(element => {
+                        document.getElementById('app').innerHTML=`
+                            <p>${element.store_id}</p>
+                            <p>${element.last_update}</p>
+                        `;
+                    });
+                })
+                .catch(function(error){
+                    console.log(`Error in fetch data ${error}`)
+                })
+
+            })
+            
+        </script>
         <!--script-->
-        <script src="bundle.js"></script>
-    </body>
+<!--         <script src="bundle.js"></script>
+ -->    </body>
 </html>

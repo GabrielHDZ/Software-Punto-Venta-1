@@ -1,8 +1,8 @@
 import React from 'react';
-//import React,{Component} from 'react';
 import ReactDOM,{ render } from 'react-dom';
-import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
+import Navbar from './components/Navbar';
 import Productos from './pages/productos';
 import Distribuidor from './pages/distribuidores';
 import Clientes from './pages/clientes';

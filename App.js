@@ -1,11 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
-//const mysql = require('mysql');
-const { mongoose } = require('./conexion_mongodb');
-
 //SETTINGS
 app.set('port', process.env.PORT || 3000);
 
@@ -21,14 +19,12 @@ app.use('/api/productos', require('./routes/ruta_prod'));
 app.use('/api/clientes', require('./routes/ruta_clientes'));
 app.use('/api/ventas',require('./routes/ruta_ventas'));
 
-app.use('/Productos',express.static(path.join(__dirname, 'public')));
+app.use('/productos',express.static(path.join(__dirname, 'public')));
 
 //RUTA NO DEFINIDA ERROR 404
-app.use((req, res, next)=> {
+app.use((_, res,__)=> {
     res.status(404).send('Direccion inexistente');
   });
 
 //INICIAR SERVER
-app.listen(app.get('port'), () => {
-    console.log('Escuchando en el puerto: ', app.get('port'));
-});
+app.listen(app.get('port'), () =>console.log(`Escuchando en el puerto:, ${app.get('port')}`));

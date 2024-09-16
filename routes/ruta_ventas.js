@@ -1,4 +1,5 @@
 const express = require('express');
+const pool_mysql =require('../conexion_mysql');
 const router = express.Router();
 const dates=new Date();
 const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
@@ -14,10 +15,22 @@ const Venta = require('../models/modelo_mongo_venta');
 const prodVenta=require('../models/modelo_mongo_prodVenta');
 
 //RUTA LISTAR TODAS LOS PRODUCTOS
-router.get('/', async(req, res) => {
+/* router.get('/', async(req, res) => {
     const tarea = await Venta.find();
     res.json(tarea);
-});
+}); */
+router.get('/',async(req,res)=>{
+    try {
+        const connection = await pool_mysql.getConnection();
+        console.log('Conexión a la base de datos establecida');
+        await connection.release();
+        const [rows, _] = await connection.execute('SELECT * FROM store');
+        res.json(rows)
+        await connection.end();
+      } catch (error) {
+        console.error('Error al conectar a la base de datos:', error);
+      }
+})
 
 router.get('/:id', async(req, res) => {
     const tarea = await Venta.findById(req.params.id);

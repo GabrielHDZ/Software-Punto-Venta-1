@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Boton_flotante from '../components/Boton_flotante';
 import ModalVenta from '../components/componentsVenta/ModalVenta';
 import styles from '../css/ventas.module.css';
-import { GrAddCircle } from 'react-icons/gr'
-import { IconContext } from "react-icons";
-import { TiHeadphones } from 'react-icons/ti';
 
 class ProductoList extends React.Component {
     constructor(props) {
@@ -190,9 +187,10 @@ class Home extends React.Component {
         fetch('/api/ventas')
             .then(res => res.json())
             .then(data => {
-                this.setState({ ventas: data });
-                console.log(this.state.ventas);
-                console.log(this.state);
+                console.log(data)
+/*                 this.setState({ ventas: data });
+            console.log(this.state.ventas);
+                console.log(this.state); */
             });
     }
 
