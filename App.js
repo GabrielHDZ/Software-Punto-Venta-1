@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 //RUTAS DE CARGA ESTATICA
 //RUTAS
-app.use('/api/productos', require('./routes/ruta_prod'));
+//app.use('/api/productos', require('./routes/ruta_prod'));
 app.use('/api/clientes', require('./routes/ruta_clientes'));
 app.use('/api/ventas',require('./routes/ruta_ventas'));
 app.use('/productos',express.static(path.join(__dirname, 'public')));

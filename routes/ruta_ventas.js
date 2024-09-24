@@ -2,9 +2,9 @@ const express = require('express');
 const cors=require('cors');
 const pool_mysql =require('../conexion_mysql');
 const router = express.Router();
-const dates=new Date();
+/* const dates=new Date();
 const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-const fecha=dates.toLocaleDateString('en-US', options)
+const fecha=dates.toLocaleDateString('en-US', options) */
 //FORMATO DE FECHA DD/MM/YYYY
 //let formato=Intl.DateTimeFormat('nl-BE');
 //FORMATO DE FECHA MM/DD/YYYY
@@ -27,12 +27,11 @@ router.get('/',cors(),async(req,res)=>{
         await connection.release();
         const [rows, _] = await connection.execute('SELECT * FROM store');
         res.json(rows)
-        await connection.end();
       } catch (error) {
         console.error('Error al conectar a la base de datos:', error);
       }
 })
-
+/* 
 router.get('/:id', async(req, res) => {
     const tarea = await Venta.findById(req.params.id);
     res.json(tarea);
@@ -87,5 +86,5 @@ router.delete('/:id', async(req, res) => {
     await Venta.findByIdAndRemove(req.params.id);
     res.json({ status: 'Venta eliminada, dinero devuelto :(' });
 });
-
+ */
 module.exports = router;

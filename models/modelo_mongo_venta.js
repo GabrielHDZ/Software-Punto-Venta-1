@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/* const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const esquema_venta= new Schema({
@@ -8,4 +8,4 @@ const esquema_venta= new Schema({
     estado:{type:Boolean,requere:true}
 });
 
-module.exports = mongoose.model('Venta', esquema_venta);
+module.exports = mongoose.model('Venta', esquema_venta); */

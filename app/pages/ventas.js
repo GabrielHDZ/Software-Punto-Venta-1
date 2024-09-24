@@ -238,4 +238,11 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+
+const ventas = () => {
+  return (
+    <div>ventas</div>
+  )
+}
+
+export default ventas

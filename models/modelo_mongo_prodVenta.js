@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/* const mongoose = require('mongoose');
 const { Schema } = mongoose;
 //definicion del esquema fijo usado en mongodb
 const esquema_prodVenta = new Schema({
@@ -10,3 +10,4 @@ const esquema_prodVenta = new Schema({
 });
 
 module.exports = mongoose.model('prodVenta', esquema_prodVenta);
+ */

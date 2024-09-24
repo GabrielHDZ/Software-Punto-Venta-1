@@ -1,14 +1,33 @@
-import React from 'react';
-import ReactDOM,{ render } from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import * as React from 'react';
+import * as ReactDOM  from 'react-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
 
 import Navbar from './components/Navbar';
 import Productos from './pages/productos';
 import Distribuidor from './pages/distribuidores';
 import Clientes from './pages/clientes';
 import Ventas from './pages/ventas';
+//import router from '../routes/ruta_ventas';
 
-const appRoot=document.getElementById('app');
+const router=createBrowserRouter([
+    {
+        path:'/',
+        element:<Navbar/>
+    }
+])
+
+
+ReactDOM
+    .createRoot(document.getElementById('app'))
+    .render(
+        <React.StrictMode>
+            <RouterProvider router={router}/>
+        </React.StrictMode>
+    )
+
+
+/* const appRoot=document.getElementById('app');
 class App extends React.Component {
     render() {
         return (
@@ -26,4 +45,4 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render( <App/> , appRoot);
+ReactDOM.render( <App/> , appRoot); */
