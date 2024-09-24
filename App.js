@@ -21,7 +21,7 @@ app.use('/api/ventas',require('./routes/ruta_ventas'));
 app.use('/productos',express.static(path.join(__dirname, 'public')));
 //RUTA NO DEFINIDA ERROR 404
 app.use((_, res,__)=> {
-    res.status(404).send('Direccion inexistente');
+    res.status(404).send('Direccion inexistente 404');
   });
 //INICIAR SERVER
 app.listen(app.get('port'), () =>console.log(`Escuchando en el puerto:, ${app.get('port')}`));
