@@ -1,4 +1,5 @@
 const express = require('express');
+const cors=require('cors');
 const pool_mysql =require('../conexion_mysql');
 const router = express.Router();
 const dates=new Date();
@@ -19,7 +20,7 @@ const prodVenta=require('../models/modelo_mongo_prodVenta');
     const tarea = await Venta.find();
     res.json(tarea);
 }); */
-router.get('/',async(req,res)=>{
+router.get('/',cors(),async(req,res)=>{
     try {
         const connection = await pool_mysql.getConnection();
         console.log('Conexión a la base de datos establecida');

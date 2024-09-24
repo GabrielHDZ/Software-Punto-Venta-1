@@ -29,8 +29,8 @@
             document.getElementById('send').addEventListener('click',
             function(e){
                 e.preventDefault();
-/*                 fetch('/api/ventas')
- */             ajax("/api/ventas",{method:"GET",})                
+                //fetch('/api/ventas')
+                ajax("/api/ventas",{method:"GET",})                
                 .then(response=>response.json())
                 .then(function(response){
                     response.forEach(element => {
