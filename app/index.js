@@ -13,7 +13,7 @@ import Ventas from './pages/ventas';
 const router=createBrowserRouter([
     {
         path:'/',
-        element:<Navbar/>
+        element:<h1>hola mundo</h1>
     }
 ])
 

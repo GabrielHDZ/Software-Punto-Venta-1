@@ -1,5 +1,4 @@
 const express = require('express');
-const cors=require('cors');
 const pool_mysql =require('../conexion_mysql');
 const router = express.Router();
 /* const dates=new Date();
@@ -12,15 +11,15 @@ const fecha=dates.toLocaleDateString('en-US', options) */
 const fecha=formato.format(dates); */
 
 //MODELO DE LAS CARACTERISTICAS DE UNA VENTA REALIZADA
-const Venta = require('../models/modelo_mongo_venta');
-const prodVenta=require('../models/modelo_mongo_prodVenta');
+/* const Venta = require('../models/modelo_mongo_venta');
+const prodVenta=require('../models/modelo_mongo_prodVenta'); */
 
 //RUTA LISTAR TODAS LOS PRODUCTOS
 /* router.get('/', async(req, res) => {
     const tarea = await Venta.find();
     res.json(tarea);
 }); */
-router.get('/',cors(),async(req,res)=>{
+router.get('/',async(req,res)=>{
     try {
         const connection = await pool_mysql.getConnection();
         console.log('Conexión a la base de datos establecida');

@@ -1,4 +1,5 @@
 module.exports = {
+    mode:'development',
     entry: './app/index.js',
     output: {
         path: __dirname + '/public',
@@ -12,16 +13,7 @@ module.exports = {
         },
         {
             test: /\.css$/i,
-            use: ['style-loader', 'css-loader']
-        },
-        {
-            test: /\.s[ac]ss$/i,
-            use: [
-              // Creates `style` nodes from JS strings
-              "style-loader",
-              // Translates CSS into CommonJS
-              "css-loader",
-            ]
-          }]
+            use: ['style-loader',{ loader:'css-loader',modules:true}]
+        }]
     }
 };
