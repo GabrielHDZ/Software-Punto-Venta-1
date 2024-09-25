@@ -1,11 +1,7 @@
-import React,{Component} from 'react';
+import React, { Component } from "react";
 
-class Clientes extends Component{
-    render(){
-        return(
-            <h1>ADMINISTRACION DE LOS CLIENTES FRECUENTES</h1>
-        )
-    }
+import React from "react";
+
+export default function () {
+  return <div>clientes</div>;
 }
-
-export default Clientes;

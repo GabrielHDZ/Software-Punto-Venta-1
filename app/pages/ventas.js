@@ -140,10 +140,8 @@ class Filtros extends React.Component {
     );
   }
 }
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+export default Ventas() {
+  const [ventaData,setVentaData]=useState({
       propiedad_btn: "venta",
       nombre: "",
       cantidad: "",
@@ -156,12 +154,9 @@ class Home extends React.Component {
       lista_prod: [],
       dia: new Date(),
       dateFilter: "",
-    };
-    this.activarModalVenta = this.activarModalVenta.bind(this);
-    this.desactivarModalVenta = this.desactivarModalVenta.bind(this);
-    this.updateStateFilter = this.updateStateFilter.bind(this);
+    });
   }
-  activarModalVenta() {
+  function activarModalVenta() {
     fetch("/api/ventas/state/63437")
       .then((res) => res.json())
       .then((data) => {
@@ -192,32 +187,29 @@ class Home extends React.Component {
       });
   }
 
-  desactivarModalVenta() {
+  function desactivarModalVenta() {
     this.setState({ modalVenta: false });
   }
 
-  componentDidMount() {
-    this.fetchTask();
-  }
+  useEffect(() => {
+     fetch("/api/ventas")
+       .then((res) => res.json())
+       .then((data) => {
+         console.log(data);
+         /*                 this.setState({ ventas: data });
+             console.log(this.state.ventas);
+                 console.log(this.state); */
+       });
+  }, [])
+  
 
-  fetchTask() {
-    fetch("/api/ventas")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        /*                 this.setState({ ventas: data });
-            console.log(this.state.ventas);
-                console.log(this.state); */
-      });
-  }
-
-  updateStateFilter(date) {
+  function updateStateFilter(date) {
     this.setState({ dateFilter: date });
     this.fetchTask();
   }
 
-  render() {
-    let ModaldeVentas = this.state.modalVenta ? (
+
+  let ModaldeVentas = this.state.modalVenta ? (
       <ModalVenta
         onClose={this.desactivarModalVenta}
         id_Venta={this.state.ventaActiva}
@@ -273,4 +265,5 @@ class Home extends React.Component {
       </>
     );
   }
-}
+  
+
