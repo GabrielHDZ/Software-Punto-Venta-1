@@ -1,15 +1,14 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 
-const password=process.env.DATABASE_MYSQL_KEY;
+const password = process.env.DATABASE_MYSQL_KEY;
 const pool_mysql = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
+  host: "localhost",
+  user: "root",
   password: password,
-  database: 'sakila'
+  database: "store_diaz",
 });
-module.exports=pool_mysql;
-
+module.exports = pool_mysql;
 
 // Ejemplo de conexión:
 /* (async () => {

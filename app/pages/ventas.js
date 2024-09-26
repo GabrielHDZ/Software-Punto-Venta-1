@@ -1,147 +1,11 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Boton_flotante from "../components/Boton_flotante";
 import ModalVenta from "../components/componentsVenta/ModalVenta";
 import styles from "../css/ventas.module.css";
 
-class ProductoList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      venta: props.venta,
-      lista_prod: [],
-    };
-  }
-  componentDidMount() {
-    fetch(`/api/ventas/listaProducts/activa/${this.state.venta}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ lista_prod: data });
-        console.log(this.state);
-      });
-  }
-  render() {
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.lista_prod.map((producto) => {
-            return (
-              <tr key={producto._id}>
-                <td>{producto.nombre}</td>
-                <td>{producto.precioUnitario} MXN</td>
-                <td>{producto.cantidad}</td>
-                <td>{producto.importe} MXN</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    );
-  }
-}
 
-class Filtros extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dia: new Date(),
-      typeInput: "text",
-      fechaConsulta: new Date(),
-    };
-    this.filtroSelect = this.filtroSelect.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.escritura = this.escritura.bind(this);
-  }
-  filtroSelect(e) {
-    const { value } = e.target;
-    switch (value) {
-      case "Dia":
-        this.setState({ typeInput: "date" });
-        break;
-      case "Semana":
-        this.setState({ typeInput: "week" });
-        break;
-      case "Mes":
-        this.setState({ typeInput: "month" });
-        break;
-      default:
-        this.setState({ typeInput: "text" });
-        break;
-    }
-  }
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
-  escritura() {
-    console.log(this.state.fechaConsulta);
-    this.props.addStateFilter(this.state.fechaConsulta);
-  }
-  render() {
-    console.log(typeof this.state.dia);
-    let options = {
-      weekday: "short",
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-    };
-    let fecha = this.state.dia.toLocaleDateString("en-US", options);
-    let format = fecha.slice(4);
-    return (
-      <>
-        <h2>Ventas del dia {format}</h2>
-        <details>
-          <summary>Aplicar filtros de busqueda</summary>
-          <div>
-            <input
-              type="radio"
-              name="presentacion"
-              value="Dia"
-              onClick={this.filtroSelect}
-            />
-            <label>Dia</label>
-            <input
-              type="radio"
-              name="presentacion"
-              value="Semana"
-              onClick={this.filtroSelect}
-            />
-            <label>Semana</label>
-            <input
-              type="radio"
-              name="presentacion"
-              value="Mes"
-              onClick={this.filtroSelect}
-            />
-            <label>Mes</label>
-
-            <input
-              type={this.state.typeInput}
-              name="fechaConsulta"
-              onChange={this.handleChange}
-            ></input>
-            <button onClick={this.escritura}>Consultar</button>
-          </div>
-        </details>
-      </>
-    );
-  }
-}
-export default Ventas() {
-  const [ventaData,setVentaData]=useState({
+export default function Ventas() {
+  const [ventaData,setVentaData]= useState({
       propiedad_btn: "venta",
       nombre: "",
       cantidad: "",
@@ -167,7 +31,7 @@ export default Ventas() {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: {
-              Accept: "Application/json",
+              "Accept": "Application/json",
               "Content-Type": "application/json",
             },
           })
@@ -207,15 +71,8 @@ export default Ventas() {
     this.setState({ dateFilter: date });
     this.fetchTask();
   }
-
-
-  let ModaldeVentas = this.state.modalVenta ? (
-      <ModalVenta
-        onClose={this.desactivarModalVenta}
-        id_Venta={this.state.ventaActiva}
-      />
-    ) : null;
-    return (
+    
+  return (
       <>
         <section className={styles.container}>
           {this.state.ventas.map((venta) => {
@@ -263,7 +120,5 @@ export default Ventas() {
           openVenta={this.activarModalVenta}
         />
       </>
-    );
-  }
-  
-
+    ); 
+}
