@@ -16,7 +16,8 @@
         <noscript>Es necesario habilitar Javascript para ejecutarse correctamente la app.</noscript>
         <div id="app"></div>
         <div id="modal"></div>
-        <!-- <script>
+        <button id="send">recibir datos</button>
+        <script>
             const ajax=async(url,{method="POST",data})=>{
                 return await fetch(url,{
                     method,
@@ -28,22 +29,33 @@
             function(e){
                 e.preventDefault();
                 //fetch('/api/ventas')
-                ajax("/api/ventas",{method:"GET",})                
+                ajax("/api/clientes/1",{method:"DELETE",})                
                 .then(response=>response.json())
                 .then(function(response){
-                    response.forEach(element => {
+                    console.log(response);
+                    /* response.forEach(element => {
                         document.getElementById('app').innerHTML=`
-                            <p>${element.store_id}</p>
-                            <p>${element.last_update}</p>
+                            <p>${element.nombre}</p>
+                            <p>${element.apellido}</p>
                         `;
-                    });
+                    }); */
                 })
                 .catch(function(error){
                     console.log(`Error in fetch data ${error}`)
                 })
-
             })
+        </script>
+
+       <!--  <script>
+            fetch(`api/clientes`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => console.log(res));
         </script> -->
-        <script src="bundle.js"></script>
-    </body>
+<!--         <script src="bundle.js"></script>
+ -->    </body>
 </html>

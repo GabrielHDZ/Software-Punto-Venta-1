@@ -5,7 +5,6 @@ const pool_mysql = require("../conexion_mysql");
 router.get("/", async (_, res) => {
   try {
     const connection = await pool_mysql.getConnection();
-    console.log("Conexión a la base de datos establecida");
     await connection.release();
     const [rows, _] = await connection.execute("SELECT * FROM cliente");
     res.json(rows);
@@ -15,18 +14,35 @@ router.get("/", async (_, res) => {
 });
 
 router.post("/", async function (req, res) {
-  const data = Object.values(req.body);
   try {
+    const data = Object.values(req.body);
     const connection = await pool_mysql.getConnection();
-    console.log("Conexión a la base de datos establecida");
     await connection.release();
     const sql =
       "INSERT INTO `cliente`(`id_cliente`,`nombre`,`apellido`,`direccion`,`telefono`,`email`) VALUES (?,?,?,?,?,?)";
     const values = [null, ...data];
-    const [result, fields] = await connection.execute(sql, values);
+    const [result, _] = await connection.execute(sql, values);
     console.log(result);
-
     res.json(result.serverStatus);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//localhost:3001/api/clientes/3?id=12
+router.delete("/:id", async function (req, res) {
+  /* console.log(req.params.id);
+  console.log(req.query.id); */
+  try {
+    const connection = await pool_mysql.getConnection();
+    await connection.release();
+    const call = "CALL EliminarCliente(?)";
+    const values = [req.params.id];
+    const [result, _] = await connection.execute(call, values);
+    console.log(result);
+    res.json({
+      response: `${result.serverStatus}${result.warningStatus}${result.changedRows}`,
+    });
   } catch (err) {
     console.log(err);
   }
