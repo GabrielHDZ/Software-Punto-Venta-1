@@ -29,15 +29,32 @@ router.post("/", async function (req, res) {
   }
 });
 
-//localhost:3001/api/clientes/3?id=12
-router.delete("/:id", async function (req, res) {
+//localhost:3001/api/clientes/3?clave=12
+router.delete("/:clave", async function (req, res) {
   /* console.log(req.params.id);
-  console.log(req.query.id); */
+  console.log(req.query.clave); */
   try {
     const connection = await pool_mysql.getConnection();
     await connection.release();
     const call = "CALL EliminarCliente(?)";
     const values = [req.params.id];
+    const [result, _] = await connection.execute(call, values);
+    console.log(result);
+    res.json({
+      response: `${result.serverStatus}${result.warningStatus}${result.changedRows}`,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.put("/:id", async function (req, res) {
+  const data = Object.values(req.body);
+  try {
+    const connection = await pool_mysql.getConnection();
+    await connection.release();
+    const call = "CALL ACTUALIZAR_CLIENTE(?,?,?,?,?,?)";
+    const values = [req.params.id, ...data];
     const [result, _] = await connection.execute(call, values);
     console.log(result);
     res.json({

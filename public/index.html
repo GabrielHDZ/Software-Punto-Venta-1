@@ -1,61 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="theme-color" content="#442c2e"/>
-        <!-- Windows Phone --> 
-        <meta name="msapplication-navbutton-color" content="#442c2e"/> 
-        <!-- iOS Safari --> 
-        <meta name="apple-mobile-web-app-status-bar-style" content="#442c2e"> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#442c2e" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#442c2e" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#442c2e" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Inicio</title>
+  </head>
 
-        <link rel="stylesheet" href="./css/styles.css">
-        <title>Inicio</title>
-    </head>
-    <body>
-        <noscript>Es necesario habilitar Javascript para ejecutarse correctamente la app.</noscript>
-        <div id="app"></div>
-        <div id="modal"></div>
-        <button id="send">recibir datos</button>
-        <script>
-            const ajax=async(url,{method="POST",data})=>{
-                return await fetch(url,{
-                    method,
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify(data)
-                });
-            }
-            document.getElementById('send').addEventListener('click',
-            function(e){
-                e.preventDefault();
-                //fetch('/api/ventas')
-                ajax("/api/clientes/1",{method:"DELETE",})                
-                .then(response=>response.json())
-                .then(function(response){
-                    console.log(response);
-                    /* response.forEach(element => {
-                        document.getElementById('app').innerHTML=`
-                            <p>${element.nombre}</p>
-                            <p>${element.apellido}</p>
-                        `;
-                    }); */
-                })
-                .catch(function(error){
-                    console.log(`Error in fetch data ${error}`)
-                })
-            })
-        </script>
+  <body>
+    <noscript
+      >Es necesario habilitar Javascript para ejecutarse correctamente la
+      app.</noscript
+    >
+    <div id="app"></div>
+    <div id="modal"></div>
+    <button id="send">recibir datos</button>
+    <script>
+      /**
+       * Peticion fetch
+       * @param {string} url de peticion
+       * @param {string,{string,string,string,string,string}} destructuring
+       */
+      const ajax = async (url, {method,data}) => {
+        return await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+      };
 
-       <!--  <script>
-            fetch(`api/clientes`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(res => console.log(res));
-        </script> -->
-<!--         <script src="bundle.js"></script>
- -->    </body>
+      document.getElementById("send").addEventListener("click", function (e) {
+        e.preventDefault();
+        const informacion = {
+          method: "PUT",
+          data: {
+            nombre: "cassandra",
+            apellido: "NoSQL",
+            direccion: "3ra av Norte",
+            telefono: "1204985",
+            email: "cassandra@cassandra.com"
+          },
+        };
+        ajax("/api/clientes/1", informacion)
+          .then((response) => response.json())
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(`Error in fetch data ${error}`);
+          });
+      });
+    </script>
+    <!--         <script src="bundle.js"></script>
+ -->
+  </body>
 </html>
