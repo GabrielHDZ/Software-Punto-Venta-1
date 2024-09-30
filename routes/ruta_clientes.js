@@ -12,7 +12,6 @@ router.get("/", async (_, res) => {
     console.error("Error al conectar a la base de datos:", error);
   }
 });
-
 router.post("/", async function (req, res) {
   try {
     const data = Object.values(req.body);
@@ -22,24 +21,19 @@ router.post("/", async function (req, res) {
       "INSERT INTO `cliente`(`id_cliente`,`nombre`,`apellido`,`direccion`,`telefono`,`email`) VALUES (?,?,?,?,?,?)";
     const values = [null, ...data];
     const [result, _] = await connection.execute(sql, values);
-    console.log(result);
     res.json(result.serverStatus);
   } catch (err) {
     console.log(err);
   }
 });
-
-//localhost:3001/api/clientes/3?clave=12
-router.delete("/:clave", async function (req, res) {
-  /* console.log(req.params.id);
-  console.log(req.query.clave); */
+//localhost:3001/api/clientes/?id=12
+router.delete("/", async function (req, res) {
   try {
     const connection = await pool_mysql.getConnection();
     await connection.release();
-    const call = "CALL EliminarCliente(?)";
-    const values = [req.params.id];
-    const [result, _] = await connection.execute(call, values);
-    console.log(result);
+    const procedure = "CALL EliminarCliente(?)";
+    const values = [req.query.id];
+    const [result, _] = await connection.execute(procedure, values);
     res.json({
       response: `${result.serverStatus}${result.warningStatus}${result.changedRows}`,
     });
@@ -47,16 +41,15 @@ router.delete("/:clave", async function (req, res) {
     console.log(err);
   }
 });
-
+//localhost:3001/api/clientes/12
 router.put("/:id", async function (req, res) {
-  const data = Object.values(req.body);
   try {
+    const data = Object.values(req.body);
     const connection = await pool_mysql.getConnection();
     await connection.release();
-    const call = "CALL ACTUALIZAR_CLIENTE(?,?,?,?,?,?)";
+    const procedure = "CALL ACTUALIZAR_CLIENTE(?,?,?,?,?,?)";
     const values = [req.params.id, ...data];
-    const [result, _] = await connection.execute(call, values);
-    console.log(result);
+    const [result, _] = await connection.execute(procedure, values);
     res.json({
       response: `${result.serverStatus}${result.warningStatus}${result.changedRows}`,
     });
