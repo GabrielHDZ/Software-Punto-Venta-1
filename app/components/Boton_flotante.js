@@ -7,7 +7,7 @@ import ModalCamera from "./LectorCodeBarras";
 import ModalNuevoProducto from "./ModalNuevoProducto";
 import styles from "../css/boton_flotante.module.css";
 
-function Boton_flotante({ clase }) {
+export default function Boton_flotante({ clase }) {
   const [menu, setMenu] = useState({
     showBtnEscaner: true,
     showBtnNewProducto: false,
@@ -125,8 +125,8 @@ function Boton_flotante({ clase }) {
     </button>
   ) : null;
 
-  let boton2 = this.state.showBtnEscaner ? (
-    <button className={styles.Btn_flotante2} onClick={this.openCamera}>
+  let boton2 = state.showBtnEscaner ? (
+    <button className={styles.Btn_flotante2} onClick={openCamera}>
       <IconContext.Provider
         value={{ color: "white", size: "1.5em", title: "Ventas" }}
       >
@@ -137,18 +137,15 @@ function Boton_flotante({ clase }) {
     </button>
   ) : null;
 
-  let modalEscaner = this.state.showModalEscaner ? (
-    <ModalCamera
-      openMenu={this.closeModals}
-      escribirCodigo={this.asignar_codigo}
-    />
+  let modalEscaner = state.showModalEscaner ? (
+    <ModalCamera openMenu={closeModals} escribirCodigo={asignar_codigo} />
   ) : null;
   let ModalNewProducto = this.state.showNuevoProducto ? (
     <ModalNuevoProducto
-      onClose={this.closeModals}
-      codigo={this.state.codigo_barra}
-      openCam={this.openCamera}
-      onConsult={this.onConsult}
+      onClose={closeModals}
+      codigo={state.codigo_barra}
+      openCam={openCamera}
+      onConsult={onConsult}
     />
   ) : null;
   return (
