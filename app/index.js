@@ -1,31 +1,24 @@
-import * as React from 'react';
-import * as ReactDOM  from 'react-dom';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
 
-import Navbar from './components/Navbar';
-import Productos from './pages/productos';
-import Distribuidor from './pages/distribuidores';
-import Clientes from './pages/clientes';
-import Ventas from './pages/ventas';
-//import router from '../routes/ruta_ventas';
+const routerv6 = createBrowserRouter([
+  {
+    path: "/",
+    element: <h1>hola mundo</h1>,
+  },
+  {
+    path: "/get",
+    element: <h1>hello path</h1>,
+  },
+]);
 
-const router=createBrowserRouter([
-    {
-        path:'/',
-        element:<h1>hola mundo</h1>
-    }
-])
-
-
-ReactDOM
-    .createRoot(document.getElementById('app'))
-    .render(
-        <React.StrictMode>
-            <RouterProvider router={router}/>
-        </React.StrictMode>
-    )
-
+ReactDOM.createRoot(document.getElementById("app")).render(
+  <React.StrictMode>
+    <RouterProvider router={routerv6} />
+  </React.StrictMode>
+);
 
 /* const appRoot=document.getElementById('app');
 class App extends React.Component {
