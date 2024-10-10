@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-
 import React from "react";
 
-export default function () {
+export default function Clientes() {
   return <div>clientes</div>;
 }

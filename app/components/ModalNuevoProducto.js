@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Modal from "../Modal";
-import { Form, P, Input, Button } from "./formularioComponent";
 import { IconContext } from "react-icons";
 import { ImQrcode } from "react-icons/im";
 import { TiDelete } from "react-icons/ti";
@@ -55,7 +54,7 @@ function ModalNuevoPorducto() {
   function retornoExitosoLector(code) {
     this.setState({ openLector: false, codigo: code });
   }
-  function mostrarForm() {
+  function mostrarform() {
     this.setState({ form: true, existeDatos: false, inexistenciaDatos: false });
   }
   function handleChange(e) {
@@ -121,26 +120,26 @@ function ModalNuevoPorducto() {
 
   let alertaEscrituraPrecioVenta = this.state.precioVentaError ? (
     <span>
-      <P>Se esta ecribiendo caracteres no aceptados</P>
+      <p>Se esta ecribiendo caracteres no aceptados</p>
     </span>
   ) : null;
   let alertaEscrituraPrecioCompra = this.state.precioCompraError ? (
     <span>
-      <P>Se esta ecribiendo caracteres no aceptados</P>
+      <p>Se esta ecribiendo caracteres no aceptados</p>
     </span>
   ) : null;
   let form = this.state.form ? (
-    <Form>
-      <P>Nombre del Producto</P>
-      <Input
+    <form>
+      <p>Nombre del producto</p>
+      <input
         name="nombre"
         type="text"
         onChange={this.handleChange}
         value={this.state.nombre}
         placeholder=""
-      ></Input>
-      <P>Presentacion</P>
-      <Input
+      ></input>
+      <p>presentacion</p>
+      <input
         name="presentacion"
         type="text"
         onChange={this.handleChange}
@@ -148,89 +147,85 @@ function ModalNuevoPorducto() {
         min="1"
         max="50"
         placeholder=""
-      ></Input>
-      <P>Codigo de barras</P>
-      <div className="style.componente4">
-        <Input name="codigo" value={this.state.codigo} disabled></Input>
-        <Button onClick={this.modalLector}>
-          <IconContext.Provider
+      ></input>
+      <p>Codigo de barras</p>
+      <div className={style.contenedor4}>
+        <input name="codigo" value={this.state.codigo} disabled></input>
+        <button className={style.button} onClick={this.modalLector}>
+          <IconContext.provider
             value={{ color: "dark", size: "1.5em", title: "Ventas" }}
           >
             <div>
               <ImQrcode />
             </div>
-          </IconContext.Provider>
-        </Button>
+          </IconContext.provider>
+        </button>
       </div>
-      <P>Descripcion</P>
-      <Input
+      <p>Descripcion</p>
+      <input
         name="descripcion"
         onChange={this.handleChange}
         value={this.state.descripcion}
-      ></Input>
-      <P>Precio de compra</P>
-      <Input
+      ></input>
+      <p>precio de compra</p>
+      <input
         name="precioCompra"
         onChange={this.handleChange}
         value={this.state.precioCompra}
         type="number"
-      ></Input>
-      {alertaEscrituraPrecioCompra}
-      <P>Precio en venta</P>
-      <Input
+      ></input>
+      {alertaEscrituraprecioCompra}
+      <p>precio en venta</p>
+      <input
         name="precioVenta"
         onChange={this.handleChange}
         value={this.state.precioVenta}
         type="number"
-      ></Input>
-      {alertaEscrituraPrecioVenta}
+      ></input>
+      {alertaEscrituraprecioVenta}
 
-      <Button onClick={this.simulate_barra}>Simular Code</Button>
-      <Button onClick={this.addNewProduct}>Guardar</Button>
-    </Form>
+      <button>Simular Code</button>
+      <button></button>
+    </form>
   ) : null;
   let lectorModal = this.state.openLector ? (
-    <ModalCamera
-      escribir
-      Codigo={this.retornoExitosoLector}
-      openMenu={this.closeModalLector}
-    />
+    <ModalCamera escribir Codigo openMenu />
   ) : null;
 
   let mensajeExistencia = this.state.existeDatos ? (
-    <Form>
-      <P>{this.state.nombre}</P>
+    <form>
+      <p>{this.state.nombre}</p>
       <br />
-      <P>{this.state.presentacion}</P>
+      <p>{this.state.presentacion}</p>
       <br />
-      <P>{this.state.codigo}</P>
+      <p>{this.state.codigo}</p>
       <br />
-      <P>{this.state.descripcion}</P>
+      <p>{this.state.descripcion}</p>
       <br />
-      <P>{this.state.precioVenta}</P>
+      <p>{this.state.precioVenta}</p>
       <br />
-      <Button>Agregar a venta</Button>
-      <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-    </Form>
+      <button>Agregar a venta</button>
+      <button>Escanear de nuevo</button>
+    </form>
   ) : null;
   let mensajeInexistencia = this.state.inexistenciaDatos ? (
-    <Form>
-      <P>
+    <form>
+      <p>
         El codigo {this.state.codigo} no pertenece a ningun producto, ¿Desea
         añadir un nuevo producto?
-      </P>
-      <Button onClick={this.props.openCam}>Escanear de nuevo</Button>
-      <Button onClick={this.mostrarForm}>
+      </p>
+      <button onClick={this.props.openCam}>Escanear de nuevo</button>
+      <button onClick={this.mostrarform}>
         Agregar a lista productos de venta
-      </Button>
-    </Form>
+      </button>
+    </form>
   ) : null;
   return (
     <>
       <Modal>
-        <Contenedor>
-          <Contenedor2>
-            <Contenedor3>
+        <div>
+          <div2>
+            <div3>
               <button onClick={this.props.onClose}>
                 <IconContext.Provider
                   value={{
@@ -244,12 +239,9 @@ function ModalNuevoPorducto() {
                   </div>
                 </IconContext.Provider>
               </button>
-              {form}
-              {mensajeExistencia}
-              {mensajeInexistencia}
-            </Contenedor3>
-          </Contenedor2>
-        </Contenedor>
+            </div3>
+          </div2>
+        </div>
       </Modal>
       {lectorModal}
     </>
