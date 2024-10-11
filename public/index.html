@@ -3,48 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#442c2e" />
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#442c2e" />
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#442c2e" />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <title>Inicio</title>
+    <title>Document</title>
   </head>
-
   <body>
-    <noscript
-      >Es necesario habilitar Javascript para ejecutarse correctamente la app.
-    </noscript>
     <div id="app"></div>
     <div id="modal"></div>
     <!-- <script>
-      /**
-       * Peticion fetch
-       * @param {string} url de peticion
-       * @param {string,{string,string,string,string,string}} destructuring
-       */
-      const ajax = async (url, {method,data}) => {
+      const ajax = async (url, { method, data }) => {
         return await fetch(url, {
           method,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
       };
-
-      document.getElementById("send").addEventListener("click", function (e) {
-        e.preventDefault();
-        const informacion = {
-          method: "PUT",
-          data: {
-            nombre: "cassandra",
-            apellido: "NoSQL",
-            direccion: "3ra av Norte",
-            telefono: "1204985",
-            email: "cassandra@cassandra.com"
-          },
-        };
-        ajax("/api/clientes/1", informacion)
+      const informacion = {
+        method: "GET",
+        data: {
+          nombre: "cassandra",
+          apellido: "NoSQL",
+          direccion: "3ra av Norte",
+          telefono: "1204985",
+          email: "cassandra@cassandra.com",
+        },
+      };
+      (() => {
+        ajax("/api/productos", { method: "GET" })
           .then((response) => response.json())
           .then(function (response) {
             console.log(response);
@@ -52,8 +35,8 @@
           .catch(function (error) {
             console.log(`Error in fetch data ${error}`);
           });
-      });
+      })();
     </script> -->
-    <script src="bundle.js"></script>
+    <script type="module" src="./bundle.js"></script>
   </body>
 </html>

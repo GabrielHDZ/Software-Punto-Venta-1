@@ -1,5 +1,5 @@
 import React from "react";
-
-export default function Clientes() {
+function Clientes() {
   return <div>clientes</div>;
 }
+export default Clientes;
