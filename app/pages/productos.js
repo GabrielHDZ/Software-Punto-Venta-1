@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CardProducto from "../components/productos/cardProductos";
 import { ajax } from "../utils/fetch";
 
-function Productos() {
+export default function Productos() {
   const [productos, setProductos] = useState([]);
   useEffect(() => {
     ajax("/api/productos", { method: "GET" })
@@ -25,4 +25,3 @@ function Productos() {
     </>
   );
 }
-export default Productos;
