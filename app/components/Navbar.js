@@ -3,7 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <section>
+    <section id="nav">
       <article>
         <nav>
           <ul>

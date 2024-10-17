@@ -8,17 +8,31 @@ module.exports = {
   module: {
     rules: [
       {
-        loader: "babel-loader",
-        options: { presets: ["@babel/preset-react"] },
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: { presets: ["@babel/preset-env", "@babel/preset-react"] },
+          },
+        ],
       },
       {
-        test: /\.css$/i,
+        test: /\.module\.css$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader", options: { modules: true } },
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            },
+          },
         ],
+      },
+      {
+        test: /\.css$/, // Para archivos CSS regulares (no módulos)
+        exclude: /\.module\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },

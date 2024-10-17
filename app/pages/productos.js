@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import CardProducto from "../components/productos/cardProductos";
 import { ajax } from "../utils/fetch";
+
 function Productos() {
   const [productos, setProductos] = useState([]);
   useEffect(() => {
     ajax("/api/productos", { method: "GET" })
       .then((res) => res.json())
       .then(function (response) {
-        console.log("render");
         setProductos(Object.values(response));
       })
       .catch(function (error) {
@@ -16,12 +17,11 @@ function Productos() {
   return (
     <>
       <h1>Productos</h1>
-      {productos.map((e) => (
-        <div key={e.id_producto}>
-          <h1>{e.nombre}</h1>
-          <h1>{e.precio_unitario}</h1>
-        </div>
-      ))}
+      <section className="page_productos">
+        {productos.map((e) => (
+          <CardProducto key={e.id_producto} prop={e} />
+        ))}
+      </section>
     </>
   );
 }

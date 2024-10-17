@@ -5,6 +5,7 @@ import Clientes from "./pages/clientes";
 import Productos from "./pages/productos";
 import Navbar from "./components/Navbar";
 import ErrorPage from "./pages/error";
+import "./index.css";
 
 const ListRouter = createBrowserRouter([
   {

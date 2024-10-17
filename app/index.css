@@ -24,3 +24,25 @@ code {
   max-width: 500px;
   border-radius: 8px;
 }
+
+section.page_productos{
+  padding: 0 24px;
+  display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 24px;
+
+  /* this is a C  omponent*/
+  article.ComponentCard{
+  width: 100%;
+  background: #7E4EAC;
+  aspect-ratio: 1/1;
+  height: auto;
+  border-radius: 10px;
+  padding: 10px;
+  & h1{
+    background-color: aqua;
+    margin: 5px;
+    }
+  }
+  
+}
