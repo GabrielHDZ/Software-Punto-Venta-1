@@ -1,13 +1,10 @@
 import React from "react";
 import { createPortal } from "react-dom";
 
-function Modal({ children }) {
+export default function Modal({ children }) {
   return (
-    <div>
-      <p>Menu modal</p>
+    <section className="backgroundModal">
       {createPortal(children, document.getElementById("modal"))}
-    </div>
+    </section>
   );
 }
-
-export default Modal;

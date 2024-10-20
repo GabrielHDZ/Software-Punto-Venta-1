@@ -6,7 +6,7 @@ export default function Navbar() {
     <section id="nav">
       <article>
         <nav>
-          <ul>
+          <ul className="nav">
             <li>
               <Link to={`/`}>
                 <h1>Productos</h1>

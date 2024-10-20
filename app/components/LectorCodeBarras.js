@@ -3,7 +3,6 @@ import Quagga from "quagga";
 import Modal from "../Modal";
 import { IconContext } from "react-icons";
 import { TiDelete, TiZoom } from "react-icons/ti";
-import styles from "../css/lectorCodeBarras.module.css";
 
 //interface for the component quagga scanner
 export default class ModalCamera extends React.Component {
@@ -119,12 +118,12 @@ export default class ModalCamera extends React.Component {
   render() {
     return (
       <Modal>
-        <Contenedor>
-          <Contenedor2>
-            <div id="interactive" className={styles.viewport} />
+        <div>
+          <div>
+            <div id="interactive" className="viewport" />
             <br></br>
-            <Contenedor3>
-              <button className={styles.buttonSucess} onClick={this.runCamera}>
+            <div>
+              <button className="buttonSucess" onClick={this.runCamera}>
                 <IconContext.Provider
                   value={{ color: "black", size: "2em", title: "Ventas" }}
                 >
@@ -133,10 +132,7 @@ export default class ModalCamera extends React.Component {
                   </div>
                 </IconContext.Provider>
               </button>
-              <button
-                className={styles.buttonCancel}
-                onClick={this.handleInputChange}
-              >
+              <button onClick={this.handleInputChange}>
                 <IconContext.Provider
                   value={{ color: "black", size: "2em", title: "Ventas" }}
                 >
@@ -145,9 +141,9 @@ export default class ModalCamera extends React.Component {
                   </div>
                 </IconContext.Provider>
               </button>
-            </Contenedor3>
-          </Contenedor2>
-        </Contenedor>
+            </div>
+          </div>
+        </div>
       </Modal>
     );
   }
