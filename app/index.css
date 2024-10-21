@@ -4,6 +4,8 @@ html {
 
 * {
   box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -13,9 +15,32 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+section.body{
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  background-color: #442C2E;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  & article.menu-int{
+    display: grid;
+    background-color: #4CAF50;
+    grid-column: 1/2;
+    grid-row: 1;
+  }
+  & article.outlet{
+    display: grid;
+    background-color: #7E4EAC;
+    grid-column: 2/5;
+    grid-row: 1;
+  }
+}
+
 ul.nav{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   color:aliceblue;
@@ -49,6 +74,49 @@ section.page_productos{
     margin: 5px;
     }
   }
+}
+
+
+section.backgroundModal{
+  background-color:rgba(0, 0, 0, 0.4);
+  width:100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+div.modal{
+  background-color:#bd856f;
+  width: 85%;
+  height: 70%;
+  margin: 2px;
+  border:none;
+  padding: 0 0 5px 5px;
+  border-radius: 15px;
+  top: 0;
+  z-index: 3;
+  position: absolute;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 999; /* Asegúrate de que esté por encima de otros elementos */
 }
 
 .btn_flotante{
@@ -113,8 +181,7 @@ section.page_productos{
       right: 25px;
   }
 }
-/* div
-*/.menu{
+.menu{
   font-size: 25px; /* Cambiar el tamaño de la tipografia */
   text-transform: uppercase; /* Texto en mayusculas */
   font-weight: bold; /* Fuente en negrita o bold */
@@ -198,28 +265,3 @@ section.page_productos{
       margin-left: -300px;
   }
 } 
-
-section.backgroundModal{
-  background-color:rgba(0, 0, 0, 0.4);
-  width:100%;
-  height: 100%;
-  top:0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  z-index: 2;
-}
-  div.modal{
-    background-color:#bd856f;
-    width: 85%;
-    height: 70%;
-    margin: 2px;
-    border:none;
-    padding: 0 0 5px 5px;
-    border-radius: 15px;
-    top: 0;
-    z-index: 3;
-    position: absolute;
-  }

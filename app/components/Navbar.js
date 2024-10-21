@@ -3,8 +3,8 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <section id="nav">
-      <article>
+    <section className="body">
+      <article className="menu-int">
         <nav>
           <ul className="nav">
             <li>
@@ -21,7 +21,7 @@ export default function Navbar() {
         </nav>
       </article>
       <br />
-      <article>{<Outlet />}</article>
+      <article className="outlet">{<Outlet />}</article>
     </section>
   );
 }

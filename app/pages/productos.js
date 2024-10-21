@@ -3,6 +3,8 @@ import CardProducto from "../components/productos/cardProductos";
 import { ajax } from "../utils/fetch";
 import Modal from "../Modal";
 import BotonFlotante from "../components/Boton_flotante";
+import { IconContext } from "react-icons";
+import { ImPlus } from "react-icons/im";
 function ModalP({ close }) {
   return (
     <div className="modal">
@@ -34,13 +36,20 @@ export default function Productos() {
         {productos.map((e) => (
           <CardProducto key={e.id_producto} prop={e} />
         ))}
-        <button onClick={() => setShowModal(true)}>Show modal</button>
+        <button className="floating-button" onClick={() => setShowModal(true)}>
+          <IconContext.Provider
+            value={{ color: "white", size: "2em", title: "Ventas" }}
+          >
+            <div>
+              <ImPlus />
+            </div>
+          </IconContext.Provider>
+        </button>
         {showModal && (
           <Modal>
             <ModalP close={() => setShowModal(false)}></ModalP>
           </Modal>
         )}
-        <BotonFlotante />
       </section>
     </>
   );

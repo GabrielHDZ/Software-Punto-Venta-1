@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TiPlusOutline } from "react-icons/ti";
-import { ImQrcode } from "react-icons/im";
+import { ImQrcode, ImPlus } from "react-icons/im";
 import { MdAddShoppingCart } from "react-icons/md";
 import { IconContext } from "react-icons";
 import ModalCamera from "./LectorCodeBarras";
@@ -81,13 +81,13 @@ export default function BotonFlotante() {
     );
   }
   return (
-    <>
+    <div className="floating-button">
       <h1>Menu</h1>
       <BtnNewProducto />
       <BtnNewVenta />
       <Boton2 />
       <ModalEscaner />
       <ModalNewProducto />
-    </>
+    </div>
   );
 }
