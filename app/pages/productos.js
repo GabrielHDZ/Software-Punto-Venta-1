@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CardProducto from "../components/productos/cardProductos";
+import NuevoProducto from "../components/productos/NuevoProducto";
 import { ajax } from "../utils/fetch";
 import Modal from "../Modal";
 import BotonFlotante from "../components/Boton_flotante";
@@ -47,7 +48,7 @@ export default function Productos() {
         </button>
         {showModal && (
           <Modal>
-            <ModalP close={() => setShowModal(false)}></ModalP>
+            <NuevoProducto close={() => setShowModal(false)}></NuevoProducto>
           </Modal>
         )}
       </section>

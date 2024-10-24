@@ -4,13 +4,14 @@ import { Outlet, Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <section className="body">
-      <div className="menu-int">
+      <article className="menu-int">
         <nav>
           <ul className="nav">
             <li>
               <Link to={`/`}>
-                <h1>Productos</h1>
+                <h2>Productos</h2>
               </Link>
+              <button>Nuevo producto</button>
             </li>
             <li>
               <Link to={`/clientes`}>
@@ -19,8 +20,8 @@ export default function Navbar() {
             </li>
           </ul>
         </nav>
-      </div>
-      <div className="outlet">{<Outlet />}</div>
+      </article>
+      <article className="outlet">{<Outlet />}</article>
     </section>
   );
 }
