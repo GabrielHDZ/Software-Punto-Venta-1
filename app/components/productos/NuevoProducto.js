@@ -1,16 +1,9 @@
 import React from "react";
 
-function NuevoProducto({ close }) {
+export default function NuevoProducto({ close }) {
   return (
-    <form>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          close;
-        }}
-      >
-        Cerrar
-      </button>
+    <form className="producto">
+      <button onClick={close}>Cerrar</button>
       <details>
         <summary>Nombre del producto</summary>
         <p>Escriba el nombre del producto que desea agregar</p>
@@ -40,5 +33,3 @@ function NuevoProducto({ close }) {
     </form>
   );
 }
-
-export default NuevoProducto;

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ContextProvider } from "./utils/StateProvider";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Clientes from "./pages/clientes";
 import Productos from "./pages/productos";
@@ -24,6 +25,8 @@ const ListRouter = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("app")).render(
   <React.StrictMode>
-    <RouterProvider router={ListRouter} />
+    <ContextProvider>
+      <RouterProvider router={ListRouter} />
+    </ContextProvider>
   </React.StrictMode>
 );
