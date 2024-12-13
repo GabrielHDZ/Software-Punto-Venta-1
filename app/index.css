@@ -79,10 +79,28 @@ section.page_productos{
     }
   }
 }
-form.producto{
+div#modal{
   position: absolute;
   top: 0;
-  
+  & div.backgroundModal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #201e1e86;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 10% 80% 10%;
+    margin: 0 auto;
+    @media(max-width:768px){
+      grid-template-columns: 5% 90% 5%;
+    }
+    form.producto{
+      grid-column-start: 2;
+      grid-row-start: 2;
+      background-color: #7397e4;
+      border-radius: 10px;
+    }
+  }
 }
 
 div.modal{
